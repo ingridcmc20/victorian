@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pretty-config xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	elementFormDefault="qualified" targetNamespace="http://ocpsoft.com/prettyfaces/3.3.3"
+	xmlns="http://ocpsoft.com/prettyfaces/3.3.3">
+
+	<url-mapping id="login">
+		<pattern value="/login" />
+		<view-id value="/faces/control_acceso/login.xhtml" />
+	</url-mapping>
+
+	<url-mapping id="principal">
+		<pattern value="/" />
+		<view-id value="/faces/principal.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="cambioPass">
+		<pattern value="/cambioPass" />
+		<view-id value="/faces/control_acceso/cambiar_password.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="sistemas">
+		<pattern value="/seguridad/sistemas" />
+		<view-id value="/faces/control_acceso/sistemas.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="usuarios">
+		<pattern value="/seguridad/usuarios" />
+		<view-id value="/faces/control_acceso/usuarios.xhtml" />
+	</url-mapping>
+
+	<url-mapping id="perfiles">
+		<pattern value="/seguridad/perfiles" />
+		<view-id value="/faces/control_acceso/perfiles.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="menuSistema">
+		<pattern value="/seguridad/menuSistema" />
+		<view-id value="/faces/control_acceso/addMenuSistema.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="asignaPermisosPerfil">
+		<pattern value="/seguridad/asignaPermisosPerfil" />
+		<view-id value="/faces/control_acceso/asignarPermisos.xhtml" />
+	</url-mapping>
+
+	<url-mapping id="addPerfilUsuario">
+		<pattern value="/seguridad/addPerfilUsuario" />
+		<view-id value="/faces/control_acceso/addPerfilUsuario.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="parametros">
+		<pattern value="/seguridad/parametros" />
+		<view-id value="/faces/control_acceso/parametros.xhtml" />
+	</url-mapping>
+		
+	<url-mapping id="tipoDocumento">
+		<pattern value="/tipoDocumento" />
+		<view-id value="/faces/Configuracion/tipoDocumento.xhtml" />
+	</url-mapping>
+		
+	<url-mapping id="estadoCivil">
+		<pattern value="/estadoCivil" />
+		<view-id value="/faces/Configuracion/estadoCivil.xhtml" />
+	</url-mapping>
+		
+	<url-mapping id="cargo">
+		<pattern value="/cargo" />
+		<view-id value="/faces/Configuracion/cargo.xhtml" />
+	</url-mapping>		
+	
+	<url-mapping id="tipoMoneda">
+		<pattern value="/tipoMoneda" />
+		<view-id value="/faces/Configuracion/tipoMoneda.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="producto">
+		<pattern value="/producto" />
+		<view-id value="/faces/Configuracion/producto.xhtml" />
+	</url-mapping>	
+		
+	<url-mapping id="ubigeo">
+		<pattern value="/ubigeo" />
+		<view-id value="/faces/Configuracion/ubigeo.xhtml" />
+	</url-mapping>	
+	
+<!-- 	CONSULTAS -->
+	<url-mapping id="proveedor">
+		<pattern value="/proveedor" />
+		<view-id value="/faces/Configuracion/proveedor.xhtml" />
+	</url-mapping>
+
+<!-- 	PRODUCCION -->
+	<url-mapping id="registrarOrdenTrabajo">
+		<pattern value="/registrarOrdenTrabajo" />
+		<view-id value="/faces/produccion/registrarOrdenTrabajo.xhtml" />
+	</url-mapping>
+
+	<url-mapping id="registroPlanProduccion">
+		<pattern value="/registroPlanProduccion" />
+		<view-id value="/faces/produccion/registroPlanProduccion.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="dashboard">
+		<pattern value="/dashboard" />
+		<view-id value="/faces/produccion/dashboard.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="aprobarPlanProduccion">
+		<pattern value="/aprobarPlanProduccion" />
+		<view-id value="/faces/produccion/aprobarPlanProduccion.xhtml" />
+	</url-mapping>
+
+	<url-mapping id="asignarBonoOperario">
+		<pattern value="/asignarBonoOperario" />
+		<view-id value="/faces/rrhh/asignarBonoOperario.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="actualizarOrdenTrabajo">
+		<pattern value="/actualizarOrdenTrabajo" />
+		<view-id value="/faces/produccion/actualizarOrdenTrabajoXPerfil.xhtml" />
+	</url-mapping>	
+	
+</pretty-config>

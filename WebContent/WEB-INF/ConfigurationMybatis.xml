@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<properties resource="classpath:src/com/victorian/produccion/propiedades/database.properties"/>
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driverClassName" value="org.postgresql.Driver" />
+				<property name="url" value="${jdbc.url}" />
+				<property name="username" value="${jdbc.username}" />
+				<property name="password" value="${jdbc.password}" />
+			</dataSource>
+		</environment>
+	</environments>
+	<mappers>
+		<mapper resource="com/victorian/produccion/mapper/impl/UsuarioMapper.xml" />
+		<mapper resource="com/victorian/produccion/mapper/impl/SistemaMapper.xml" />
+        <mapper resource="com/victorian/produccion/mapper/impl/PerfilMapper.xml"/>
+        <mapper resource="com/victorian/produccion/mapper/impl/ParametroMapper.xml"/>
+        <mapper resource="com/victorian/produccion/mapper/impl/MenuMapper.xml"/>
+        <mapper resource="com/victorian/produccion/mapper/impl/LogMapper.xml"/>
+        <mapper resource="com/victorian/produccion/mapper/impl/LoteMapper.xml"/>
+        <mapper resource="com/victorian/produccion/mapper/impl/UbigeoMapper.xml"/>
+        <mapper resource="com/victorian/produccion/mapper/impl/CargoMapper.xml"/>       
+        <mapper resource="com/victorian/produccion/mapper/impl/TipoDocumentoMapper.xml"/>
+        <mapper resource="com/victorian/produccion/mapper/impl/EstadoCivilMapper.xml"/>
+        <mapper resource="com/victorian/produccion/mapper/impl/TipoMonedaMapper.xml"/>
+        <mapper resource="com/victorian/produccion/mapper/impl/ProductoMapper.xml"/>    
+        <mapper resource="com/victorian/produccion/mapper/impl/EstadosMapper.xml"/>
+        <mapper resource="com/victorian/produccion/mapper/impl/EmpresaMapper.xml"/>
+        <mapper resource="com/victorian/produccion/mapper/impl/FormatoMapper.xml"/>
+		<mapper resource="com/victorian/produccion/mapper/impl/ProveedorMapper.xml"/>
+		<mapper resource="com/victorian/produccion/mapper/impl/InsumoMapper.xml"/>
+		<mapper resource="com/victorian/produccion/mapper/impl/FichaTecnicaMapper.xml"/>
+		<mapper resource="com/victorian/produccion/mapper/impl/EtapaMapper.xml"/>
+		<mapper resource="com/victorian/produccion/mapper/impl/MermaMapper.xml"/>
+		<mapper resource="com/victorian/produccion/mapper/impl/NivelMapper.xml"/>
+		<mapper resource="com/victorian/produccion/mapper/impl/OrdenTrabajoMapper.xml"/>
+		<mapper resource="com/victorian/produccion/mapper/impl/OrdenTrabajoDetalleMapper.xml"/>
+		<mapper resource="com/victorian/produccion/mapper/impl/OrdenTrabajoMaquinariaMapper.xml"/>
+		<mapper resource="com/victorian/produccion/mapper/impl/OrdenTrabajoOperarioMapper.xml"/>
+		<mapper resource="com/victorian/produccion/mapper/impl/PrioridadMapper.xml"/>
+	</mappers>
+</configuration>

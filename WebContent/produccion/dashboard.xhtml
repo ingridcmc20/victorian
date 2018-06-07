@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/WEB-INF/plantillas/plantilla.xhtml">
+	<ui:define name="contenido">
+	<style type="text/css">
+	.pendiente{
+		background-color: red;
+	}
+	</style>
+		<h:form>
+			<p:breadCrumb style="font-size: 11px; height: 13px; margin-top: 0px">
+				<p:menuitem value="Home" url="#" />
+				<p:menuitem value="Produccion" url="#" />
+				<p:menuitem value="Dashboard" url="dashboard" />
+			</p:breadCrumb>
+		</h:form>
+		<br />
+		<!-- growl general -->
+		<p:messages id="msgGeneral" showDetail="false" showSummary="true"
+			closable="true" />
+		<!-- listado de Pedido -->
+		<h:form id="formLista">
+			<p:commandButton id="refrescar" value="Refrescar" update=":formLista:dataTable :formLista:mermas :formLista:dtOperariosRanking" actionListener="#{dashboardMB.refrescar()}" style="visibility: hidden; height: 1px;"/>
+			<h:panelGrid columns="2">
+				<p:chart id="mermas" type="metergauge" model="#{dashboardMB.mgmMermas}" style="width:400px;height:250px" />
+				
+				<p:dataTable id="dtOperariosRanking" var="p" widgetVar="dtPOperariosRanking" 
+					value="#{dashboardMB.listaOperarios}"
+					emptyMessage="No hay operarios para asignación de bono." rowIndexVar="nro" 
+					rows="5" paginatorPosition="bottom" style="FONT-SIZE: 14px; width: 100%">									 
+					<f:facet name="header">Lista de operarios para bono</f:facet>
+					
+					<p:column headerText="#" style="width:4%" >
+						#{nro+1}
+					</p:column>
+					<p:column headerText="Nombre" style="width:60%" >
+						<h:outputText value="#{p.nombre_operario}" />
+					</p:column>
+					<p:column headerText="Cargo" style="width:20%">
+						<h:outputText value="#{p.tipo_operario}" />
+					</p:column>			
+					<p:column headerText="NIvel">
+						<h:outputText value="#{p.id_nivel}" />
+					</p:column>
+				</p:dataTable>
+			</h:panelGrid>
+			<h:panelGrid columns="1">
+				<p:dataTable id="dataTable" var="p"
+					value="#{dashboardMB.listaOrdenTrabajo}" widgetVar="dtPedido"
+					emptyMessage="No hay Pedido Disponibles." rowIndexVar="nro"
+					scrollRows="10" scrollable="true" liveScroll="true" scrollHeight="250"	
+					style="FONT-SIZE: 14px; width: 100%">
+	
+					<f:facet name="header">Lista ordenes de trabajo</f:facet>
+	
+					<p:column headerText="#" style="width:3%">
+							#{nro+1}
+						</p:column>
+					<p:column headerText="Nro. Orden trabajo" style="width:9%; text-align: center;" >
+						<h:outputText value="#{p.id_orden_trabajo}"/>
+					</p:column>
+					<p:column headerText="Cliente">
+						<h:outputText value="#{p.nombre_cliente}" />
+					</p:column>
+					<p:column headerText="Fecha registro" style="width:10%">
+						<h:outputText value="#{p.fecha_registro}" />
+					</p:column>
+					<p:column headerText="F. Entrega orden" style="width:10%">
+						<h:outputText value="#{p.fecha_entrega_orden}" />
+					</p:column>
+					<p:column headerText="F. Entrega cliente" style="width:10%">
+						<h:outputText value="#{p.fecha_entrega_pedido}" />
+					</p:column>
+					<p:column headerText="Etapa" style="width:10%">
+						<h:outputText value="#{p.des_etapa}" />
+					</p:column>
+				</p:dataTable>	
+			</h:panelGrid>
+		</h:form>
+	<script>
+		setInterval('contador()',10000);
+		
+		function contador(){
+			console.log("contador");
+			document.getElementById("formLista:refrescar").click();
+		}
+	</script>
+	</ui:define>
+</ui:composition>
+</html>

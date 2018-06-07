@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.victorian.produccion.mapper.Log">
+
+<resultMap id="logResult" type="com.victorian.produccion.domain.Log">
+	<id column="pk_log_id" property="pk_log_id" />
+	<result column="idusuario" property="idusuario" />
+	<result column="cod_menu" property="cod_menu"/>
+	<result column="descripcion" property="descripcion"/>
+	<result column="ip_client" property="ip_client"/>
+	<result column="host_client" property="host_client"/>
+	<result column="fecha" property="fecha"/>
+	<result column="hora" property="hora"/>
+	<result column="anio" property="anio"/>
+	<result column="ip_server_img" property="ip_server_img"/>
+
+</resultMap>
+
+</mapper>	

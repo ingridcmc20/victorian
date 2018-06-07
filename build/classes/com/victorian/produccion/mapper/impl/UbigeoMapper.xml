@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.victorian.produccion.mapper.UbigeoMapper">
+
+<resultMap id="estadoResult" type="com.victorian.produccion.domain.Ubigeo">
+	<id column="sid_ubigeo" property="sid_ubigeo" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+	<result column="sdepartamento" property="sdepartamento" javaType="java.lang.String" jdbcType="VARCHAR"/>
+    <result column="sprovincia" property="sprovincia" javaType="java.lang.String" jdbcType="VARCHAR"/>	
+    <result column="sdistrito" property="sdistrito" javaType="java.lang.String" jdbcType="VARCHAR"/>	
+	<result column="estado" property="estado" javaType="java.lang.Boolean" jdbcType="BOOLEAN"/>
+
+</resultMap>
+
+
+</mapper>
+

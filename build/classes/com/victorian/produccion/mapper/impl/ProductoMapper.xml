@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.victorian.produccion.mapper.ProductoMapper">
+
+	<resultMap id="productoResult" type="com.victorian.produccion.domain.Producto">
+		<id column="id_producto" property="id_producto" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+		<!-- <id column="id_negocio" property="id_negocio" javaType="java.lang.Integer" jdbcType="INTEGER"/>-->
+		<result column="descripcion" property="descripcion" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result column="estado" property="estado" javaType="java.lang.Boolean" jdbcType="BOOLEAN"/>
+		<result column="codigoProducto" property="codigoProducto" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result column="codigo_banco" property="codigoBanco" />
+		
+		<association property="formato" column="idformato" select="selectFormato"/>
+	</resultMap>
+
+	<select id="selectFormato" parameterType="int" resultType="com.victorian.produccion.domain.Formato">
+		SELECT * FROM t_formato WHERE idformato=#{idformato}
+	</select>
+
+	<select id="listaProductosxFormato"  resultMap="productoResult" >
+		Select * from t_producto where  idformato= #{idformato}  
+	</select>
+</mapper>	

@@ -1,0 +1,155 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/WEB-INF/plantillas/plantilla.xhtml">
+	<ui:define name="contenido">
+		<h:form>
+			<p:breadCrumb style="font-size: 11px; height: 13px; margin-top: 0px">  
+   				<p:menuitem value="Home" url="#" />  
+   				<p:menuitem value="Produccion" url="#" />
+   				<p:menuitem value="Registro de orden de trabajo" url="registrarOrdenTrabajo" />   
+			</p:breadCrumb>	
+		</h:form>
+		<br/>
+		<!-- growl general -->			
+		<p:messages  id="msgGeneral" showDetail="false" showSummary="true" closable="true" />		
+			
+		<!-- listado de Pedido -->
+		<h:form id="formLista">			
+			<p:dataTable id="dataTable" var="p"
+				value="#{actualizarOrdenTrabajoPorPerfilMB.listaOrdenTrabajo}" 
+				widgetVar="dtPedido" 
+				emptyMessage="No hay ordenes de trabajo registradas." rowIndexVar="nro" 
+				paginator="true"
+				rows="10" paginatorPosition="bottom" 
+				 style="FONT-SIZE: 10px; width: 100%">
+									 
+				<f:facet name="header">Lista de orden de trabajo</f:facet>
+				
+				<p:column headerText="#" style="width:4%" >
+					#{nro+1}
+				</p:column>
+				<p:column headerText="Nro. Orden">
+					<h:outputText value="#{p.id_orden_trabajo}"/>
+				</p:column>
+				<p:column headerText="Cliente" width="200">
+					<h:outputText value="#{p.nombre_cliente}" />
+				</p:column>
+				<p:column headerText="F. Inicio">
+					<h:outputText value="#{p.fecha_inicio}" />
+				</p:column>
+				<p:column headerText="F. Fin">
+					<h:outputText value="#{p.fecha_fin}" />
+				</p:column>
+				<p:column headerText="Tipo de prenda">
+					<h:outputText value="#{p.des_tipo_prenda}" />
+				</p:column>
+				<p:column headerText="Tipo de confección">
+					<h:outputText value="#{p.des_tipo_confeccion}" />
+				</p:column>
+				<p:column headerText="Prioridad" width="50">
+					<h:outputText value="#{p.des_prioridad}" />
+				</p:column>
+				<p:column headerText="Etapa" width="50">
+					<h:outputText value="#{p.des_etapa}" />
+				</p:column>
+				<p:column headerText="Opciones" width="50">
+					<p:commandButton title="Registrar mermas" icon="icon-merma"
+						actionListener="#{actualizarOrdenTrabajoPorPerfilMB.obtenerMermas(p)}" 
+						update=":dlgDetMerma" oncomplete="PF('dlgMerma').show();" 
+						rendered="#{actualizarOrdenTrabajoPorPerfilMB.gamification}"/>
+					<p:commandButton title="Terminar" icon="icon-validate"
+						actionListener="#{actualizarOrdenTrabajoPorPerfilMB.terminar(p)}" 
+						update=":dlgDetNuevo" oncomplete="PF('dlgNuevo').show();" />
+				</p:column>
+			</p:dataTable>
+		</h:form>
+			
+		<!-- #############    Dialogos      ################ -->
+		<p:dialog header="Registro de mermas" widgetVar="dlgMerma" appendTo="@(body)" resizable="false" id="dlgDetMerma" modal="true" width="600">
+			<p:messages showDetail="false" showSummary="true" id="msgMermas" closable="true"/>
+			<h:form id="frmMerma">
+				<p:panelGrid style="width:100%; vertical-align: top;">
+					<p:row>
+						<p:column><p:outputLabel value="Nro. Orden de trabajo"/></p:column>
+						<p:column><p:outputLabel  value="#{actualizarOrdenTrabajoPorPerfilMB.ordenTrabajoSelected.id_orden_trabajo}"/></p:column>
+					</p:row>
+					<p:row>
+						<p:column><p:outputLabel value="Merma"/></p:column>
+						<p:column><p:inputTextarea id="merma" value="#{actualizarOrdenTrabajoPorPerfilMB.mermaSelected.descripcion}" rows="2" cols="60"/></p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="2">
+							<p:commandButton value="Agregar merma" icon="icon-disk" actionListener="#{actualizarOrdenTrabajoPorPerfilMB.registrarMerma()}" update=":frmMerma:dtbMermas :frmMerma:merma"/>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="2">
+							<p:dataTable id="dtbMermas"
+								value="#{actualizarOrdenTrabajoPorPerfilMB.listaMerma}"  
+								var="p" widgetVar="dtMermas" 
+								emptyMessage="No hay mermas registradas." rowIndexVar="nro" 
+								paginator="true"
+								rows="10" paginatorPosition="bottom" 
+								 style="FONT-SIZE: 10px; width: 100%">
+
+								<f:facet name="header">Lista de mermas por orden de trabajo</f:facet>
+								
+								<p:column headerText="#" style="width:4%" >
+									#{nro+1}
+								</p:column>
+								<p:column headerText="Descripcion merma">
+									<h:outputText value="#{p.descripcion}" />
+								</p:column>
+							</p:dataTable>
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+			</h:form>
+			<h:form>
+				<p:commandButton value="Cerrar" actionListener="#{actualizarOrdenTrabajoPorPerfilMB.cerrarMerma()}" icon="icon-cancel"/>
+			</h:form>
+		</p:dialog>
+		
+		<p:dialog header="Terminar" widgetVar="dlgNuevo" appendTo="@(body)" resizable="false" id="dlgDetNuevo" modal="true" width="600">
+			<p:messages showDetail="false" showSummary="true" id="msgNuevo" closable="true"/>
+			<h:form>
+				<p:panelGrid style="width:100%; vertical-align: top;">
+					<p:row>
+						<p:column><p:outputLabel value="Nro. Orden de trabajo"/></p:column>
+						<p:column><p:outputLabel  value="#{actualizarOrdenTrabajoPorPerfilMB.ordenTrabajoSelected.id_orden_trabajo}"/></p:column>
+					</p:row>
+				</p:panelGrid>
+				<p:commandButton value="Terminar" icon="icon-validate" actionListener="#{actualizarOrdenTrabajoPorPerfilMB.actualizarRegistro()}" />
+				<p:commandButton value="Cancelar" type="button" onclick="PF('dlgNuevo').hide()" icon="icon-cancel" />
+			</h:form>
+		</p:dialog>
+		<p:dialog header="Listo" widgetVar="dlgListo" appendTo="@(body)">
+			<p:outputLabel value="Tarea terminada"/>
+			<p:commandButton value="Terminar" icon="icon-validate" actionListener="#{actualizarOrdenTrabajoPorPerfilMB.obtenerListaOrdenTrabajo()}" update=":formLista" oncomplete="PF('dlgListo').hide();" />
+		</p:dialog>
+		<p:dialog header="Felicitaciones" widgetVar="dlgPuntual" appendTo="@(body)">
+			<h:panelGrid columns="3" style="FONT-SIZE: 14px;">
+				<p:graphicImage url="/resources/img/52025.png"/>
+				<p:graphicImage url="/resources/img/exito.png"/>
+				<p:graphicImage url="/resources/img/trofeo.png"/>
+			</h:panelGrid>
+			<p:commandButton value="Terminar" icon="icon-validate" actionListener="#{actualizarOrdenTrabajoPorPerfilMB.obtenerListaOrdenTrabajo()}" update=":formLista" oncomplete="PF('dlgPuntual').hide();" />
+		</p:dialog>
+		<p:dialog header="Perdiste" widgetVar="dlgTarde" appendTo="@(body)">
+			<h:panelGrid columns="3" style="FONT-SIZE: 14px;">
+				<p:graphicImage url="/resources/img/don_ramon.png"/>
+				<p:graphicImage url="/resources/img/perdiste.png"/>
+				<p:graphicImage url="/resources/img/sorteo.png"/>
+			</h:panelGrid>
+			<p:commandButton value="Terminar" icon="icon-validate" actionListener="#{actualizarOrdenTrabajoPorPerfilMB.obtenerListaOrdenTrabajo()}" update=":formLista" oncomplete="PF('dlgTarde').hide();" />
+		</p:dialog>
+	</ui:define>
+</ui:composition>
+</html>

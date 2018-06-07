@@ -1,0 +1,247 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/WEB-INF/plantillas/plantilla.xhtml">
+	<ui:define name="contenido">
+	
+			<h:form>
+				<p:breadCrumb style="font-size: 11px; height: 13px; margin-top: 0px">  
+    				<p:menuitem value="Home" url="#" />  
+    				<p:menuitem value="Configuracion" url="#" />
+    				<p:menuitem value="Gestion de Producto" url="producto" />   
+				</p:breadCrumb>	
+			</h:form>
+			
+			
+			<br/>
+			<!-- growl general -->			
+			<p:messages  id="msgGeneral" showDetail="false" showSummary="true" closable="true" />		
+			<!-- listado de Producto -->
+				
+				
+			<h:form id="formLista">
+				<p:commandButton value="Nuevo Producto" icon="icon-add" update=":dlgDetNuevo :formNew" oncomplete="PF('dlgNuevo').show();"
+						actionListener="#{productoMB.nuevoProducto()}"/>
+				
+				<p:dataTable id="selProductos" var="p" value="#{productoMB.listaProductos}" widgetVar="dtProducto" filteredValue="#{productoMB.listaProductosFilter}"
+					emptyMessage="No hay Producto Disponibles." rowIndexVar="nro" 
+					 selection="#{productoMB.productoSelec}"  style="FONT-SIZE: 10px; width:60%">
+										 
+					<f:facet name="header">Lista Productos</f:facet>
+					
+					<p:column headerText="Orden"  style="width:3px" >
+						#{nro+1}
+					</p:column>
+																									
+					<p:column style="width:60px" headerText="Producto" filterBy="#{p.descripcion}"  filterStyle="width:95%;" filterMatchMode="contains">
+						<h:outputText value="#{p.descripcion}" />
+					</p:column>
+														
+					<p:column style="width:2px" headerText="Estado">
+					
+						<p:commandLink update="@form :msgGeneral" actionListener="#{productoMB.cambiarEstado(p)}"  > 
+							<h:graphicImage value="#{p.estado?'/resources/img/icon-ok.png':'/resources/img/icon-block.png'}" 
+							title="#{p.estado?'Activo':'Bloqueado'}" />
+						</p:commandLink>
+						
+					</p:column>
+					<p:column headerText="Ficha tecnica" style="width:10%;text-align: center">					
+						<p:commandButton   
+							actionListener="#{productoMB.abrirFichaTecnica(p)}" update=":dlgDetFichaTecnica"
+							oncomplete="PF('dlgFichaTecnica').show();" title="Ficha Tecnica" icon="icon-report" />
+					</p:column>
+					<p:column headerText="Opciones" style="width:40px;text-align: center">
+					
+						<p:commandButton title="Editar"  update=":dlgDetNuevo :formNew" actionListener="#{productoMB.editarProducto(p)}"
+						 	oncomplete="PF('dlgNuevo').show();" icon="icon-edit">
+						 	<f:setPropertyActionListener value="#{p}" target="#{productoMB.productoSelec}" />
+						</p:commandButton>
+
+						<ui:remove>
+						<p:commandButton
+							actionListener="#{productoMB.eliminarProducto(p)}"
+							oncomplete="PF('dlgEliminar').show();" title="Eliminar"
+							icon="icon-delete" />
+						</ui:remove>							
+					</p:column>
+
+				</p:dataTable>
+			</h:form>
+			
+			<!-- #############    Dialogos      ################ -->
+			
+			<!-- dialogo nuevo/editar Producto -->
+			
+			<p:dialog header="Producto" widgetVar="dlgNuevo" appendTo="@(body)"
+					resizable="false" id="dlgDetNuevo" modal="true" style="width: 900px;" >
+					
+					<h:form id="formNew">
+					<p:messages showDetail="false" showSummary="true" id="msgNuevo" closable="true"/>
+					
+					<h:panelGrid columns="2">									
+						#{"Producto:"}
+						<p:inputText value="#{productoMB.productoSelec.descripcion}" id="producto"
+							 maxlength="200" label="nombre" 
+							style="width:200px;" />
+							
+						#{"Estado:"}
+						<p:selectOneMenu style="width:210px" value="#{productoMB.productoSelec.estado}" >
+								
+							<f:selectItem itemLabel="ACTIVO" itemValue="TRUE" />
+							<f:selectItem itemLabel="DESACTIVO" itemValue="FALSE" />
+						</p:selectOneMenu>							
+
+					</h:panelGrid>
+					<br/>
+					<p:commandButton value="Guardar" actionListener="#{productoMB.guardarProducto()}"
+						update=":formLista :formNew:msgNuevo: :formLista:selProductos" oncomplete="validar(xhr, status, args)" icon="icon-disk" />
+					
+					<p:commandButton value="Cancelar" type="button" onclick="PF('dlgNuevo').hide()" icon="icon-cancel" />
+					</h:form>	
+			</p:dialog>
+			
+			<p:dialog header="Ficha tecnica" widgetVar="dlgFichaTecnica" appendTo="@(body)"
+					resizable="false" id="dlgDetFichaTecnica" modal="true" width="800">
+					<h:form>
+					<p:messages showDetail="false" showSummary="true" id="msgFichaTecnica" closable="true"/>
+					<p:panelGrid>
+						<p:row>
+							<p:column>
+								<p:outputLabel value="Producto:" style="font-weight: bold;"/>
+							</p:column>
+							<p:column colspan="5">
+								<p:outputLabel value="#{productoMB.productoSelec.descripcion}"/>
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column><p:outputLabel value="Material:" style="font-weight: bold;"/></p:column>
+							<p:column>
+								<p:selectOneMenu id="cmbInsumo" value="#{productoMB.fichaTecnica.idinsumo}">
+									<f:selectItem itemLabel="Seleccionar" itemValue=""/>
+									<f:selectItems value="#{productoMB.listInsumos}" var="of" itemLabel="#{of.descripcion}" itemValue="#{of.idinsumo}" />
+									<p:ajax update="inputPrecio" listener="#{productoMB.obtenerPrecio}" event="change" />
+								</p:selectOneMenu>	
+							</p:column>
+							<p:column><p:outputLabel value="Descripción:" style="font-weight: bold;"/></p:column>
+							<p:column>
+								<p:inputText value="#{productoMB.fichaTecnica.nombreinsumo}"/>
+							</p:column>
+							<p:column>
+								<p:outputLabel value="Medida:" style="font-weight: bold;"/>
+							</p:column>
+							<p:column>
+								<p:selectOneMenu value="#{productoMB.fichaTecnica.unidad}" >
+									<f:selectItem itemLabel="Metro" itemValue="m" />
+									<f:selectItem itemLabel="Unidad" itemValue="und" />
+									<f:selectItem itemLabel="Glb" itemValue="glb" />
+								</p:selectOneMenu>	
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+								<p:outputLabel value="Cantidad" style="font-weight: bold;"/>
+							</p:column>
+							<p:column>
+								<p:inputText value="#{productoMB.fichaTecnica.cantidad}"/>
+							</p:column>
+							<p:column>
+								<p:outputLabel value="Precio:" style="font-weight: bold;"/>
+							</p:column>
+							<p:column>
+								<p:inputText id="inputPrecio" readonly="#{productoMB.fichaTecnica.preciounidad ne null}" value="#{productoMB.fichaTecnica.preciounidad}"/>
+							</p:column>
+							<p:column colspan="2">
+								
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column colspan="6">
+								<p:commandButton value="Agregar" actionListener="#{productoMB.agregarMaterial()}" update="listaFichaTecnica msgFichaTecnica" oncomplete="validar(xhr, status, args)" icon="icon-disk" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column colspan="6">
+								<p:dataTable id="listaFichaTecnica" var="p" value="#{productoMB.listFichasTecnicas}" widgetVar="dtFichasTecnicas" emptyMessage="No hay Fichas Tecnicas Disponibles." rowIndexVar="nro" 
+									paginator="true" rows="10" paginatorPosition="bottom" style="FONT-SIZE: 10px; width: 100%">
+									<f:facet name="header">Lista Fichas Tecnicas</f:facet>
+									
+									<p:column headerText="Orden" style="width:6%" >
+										#{nro+1}
+									</p:column>
+									
+									<p:column headerText="Insumo" filterBy="#{p.nom_insumo}"  filterStyle="width:95%;" filterMatchMode="contains">
+										<h:outputText value="#{p.nom_insumo}" />
+									</p:column>
+									
+									<p:column headerText="Descripcion" filterBy="#{p.nombreinsumo}"  filterStyle="width:95%;" filterMatchMode="contains">
+										<h:outputText value="#{p.nombreinsumo}" />
+									</p:column>
+									
+									<p:column headerText="Unidad" filterBy="#{p.unidad}"  filterStyle="width:95%;" filterMatchMode="contains">
+										<h:outputText value="#{p.unidad}" />
+									</p:column>	
+									
+									<p:column headerText="Cantidad">
+										<h:outputText value="#{p.cantidad}" />
+									</p:column>	
+									
+									<p:column headerText="Precio Unitario">
+										<h:outputText value="#{p.preciounidad}" />
+									</p:column>
+									
+									<p:column headerText="Precio Total">
+										<h:outputText value="#{p.preciototal}" />
+									</p:column>
+									<p:column headerText="Eliminar">
+										<p:commandButton actionListener="#{productoMB.retirarMaterial(p)}" title="Eliminar" icon="icon-delete" update="listaFichaTecnica"/>
+									</p:column>	
+								</p:dataTable>
+							</p:column>
+						</p:row>
+					</p:panelGrid>					
+				</h:form>	
+			</p:dialog>
+			
+			<!-- dialogo eliminar -->	
+			<p:confirmDialog id="dlgDetEliminar" appendToBody="true" appendTo="@(body)"
+					message="¿Desea eliminar este Producto?" header="Eliminar Producto"
+					severity="alert" widgetVar="dlgEliminar">
+				<h:form>
+					<p:commandButton value="Eliminar"
+						update=":formLista :msgGeneral"
+						actionListener="#{productoMB.confirmaEliminar()}"
+						oncomplete="PF('dlgEliminar').hide();" icon="icon-delete" />
+
+					<p:commandButton value="Cancelar" type="button"
+						onclick="PF('dlgEliminar').hide()" icon="icon-cancel" />
+
+				</h:form>
+			</p:confirmDialog>
+		
+		<script>
+			
+		function validar(xhr, status, args) {
+			if (!args.esValido) {
+				jQuery('#dlgDetNuevo').effect("shake", {
+					times : 1
+				}, 100);
+			} else {
+				//limpiando
+				PF('dlgNuevo').hide();
+				console.log("cerro")
+			}
+		}
+		
+		
+
+		</script>
+		
+	</ui:define>
+</ui:composition>
+</html>

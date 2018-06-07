@@ -1,0 +1,134 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<ui:composition template="/WEB-INF/plantillas/plantilla.xhtml">
+	<ui:define name="contenido">
+			<h:form>
+				<p:breadCrumb style="font-size: 11px; height: 13px; margin-top: 0px">  
+    				<p:menuitem value="Home" url="#" />  
+    				<p:menuitem value="Configuracion" url="#" />
+    				<p:menuitem value="Gestion de Tipo Documento" url="tipoDocumento" />   
+				</p:breadCrumb>	
+			</h:form>
+			
+			<!-- sms general -->			
+			<p:messages  id="sms" showDetail="false" showSummary="true"  closable="true"/>		
+			
+				<!-- listado de documen -->
+			<h:form id="formListaTipoDocumento" style="margin-top: 4px;">
+				<p:commandButton value="Nuevo Tipo Documento" icon="icon-add" update=":dlgDetNuevo" oncomplete="PF('dlgNuevo').show();" actionListener="#{tipoDocumentoMB.nuevoTipoDocumento()}" />
+				<p:dataTable widgetVar="dtTipoDocumento" var="p" value="#{tipoDocumentoMB.listaTipoDocumento}" 
+					emptyMessage="No hay Tipo Documento Disponibles." rowIndexVar="nro" 
+					paginator="true"
+					rows="10" paginatorPosition="bottom" 
+					style="FONT-SIZE: 10px; width:60% ">
+					<f:facet name="header">Lista de Tipo Documento</f:facet>
+					
+					<p:column headerText="Ord." style="width:6%" >
+						#{nro+1}
+					</p:column>
+					<p:column headerText="Descripción" filterBy="#{p.descripcion}"  filterStyle="width:95%;" filterMatchMode="contains">
+						<h:outputText value="#{p.descripcion}" />
+					</p:column>
+					
+					<p:column style="width:15%; text.align: center" headerText="Estado">
+						<p:commandLink update="@form :sms" actionListener="#{tipoDocumentoMB.cambiarEstado(p)}" > 
+							<h:graphicImage value="#{p.estado?'/resources/img/icon-ok.png':'/resources/img/icon-block.png'}" 
+							title="#{p.estado?'Activo':'Bloqueado'}" />
+						</p:commandLink>
+					</p:column>
+					
+					
+					<p:column headerText="Opciones." style="width:15%;text-align: center">
+					
+						<p:commandButton title="Editar"  update=":dlgDetNuevo" actionListener="#{tipoDocumentoMB.editarTipoDocumento(p)}"
+										 oncomplete="PF('dlgNuevo').show();" icon="icon-edit">
+						</p:commandButton>
+
+						<p:commandButton title="Eliminar" oncomplete="PF('dlgEliminar').show()" actionListener= "#{tipoDocumentoMB.eliminarTipoDocumento(p)}" 
+								update=":dlgDetEliminar" icon="icon-delete">
+							 
+						</p:commandButton>
+								
+					</p:column>
+
+				</p:dataTable>
+			</h:form>
+			
+			<!-- #############    Dialogos      ################ -->
+			
+			<!-- dialogo nuevo/editar Documento -->
+			
+			<p:dialog header="Datos del Documento" widgetVar="dlgNuevo" appendTo="@(body)"
+					  resizable="false" id="dlgDetNuevo" modal="true">
+					
+					<h:form>
+						<p:messages showDetail="false" showSummary="true" id="msgNuevo" closable="true"/>
+						
+						<h:panelGrid columns="2">
+
+							#{"Descripción:"}
+							<p:inputText style="width:200px" value="#{tipoDocumentoMB.documentoSelec.descripcion}" required="true" maxlength="50" requiredMessage="Se necesita una descripcion" />
+		
+							#{"Estado:"}
+							<p:selectOneMenu style="width:200px" value="#{tipoDocumentoMB.documentoSelec.estado}" required="true" requiredMessage="Seleccione un Estado">
+								<f:selectItem itemLabel="Seleccione..." itemValue="" />
+								<f:selectItem itemLabel="ACTIVO" itemValue="TRUE" />
+								<f:selectItem itemLabel="DESACTIVO" itemValue="FALSE" />
+							</p:selectOneMenu>
+						
+						</h:panelGrid>
+						<br/>
+						<p:commandButton value="Guardar" actionListener="#{tipoDocumentoMB.guardarTipoDocumento()}"
+									 update=":formListaTipoDocumento msgNuevo"
+									 oncomplete="validar(xhr, status, args)" icon="icon-disk" />
+									 
+						<p:commandButton value="Cancelar" type="button"	 onclick="PF('dlgNuevo').hide();"  icon="icon-cancel" />
+					</h:form>	
+			</p:dialog>
+			
+
+			<!-- dialogo eliminar -->	
+			<p:confirmDialog id="dlgDetEliminar" appendTo="@(body)"
+					message="¿Desea eliminar este Tipo Documento?" header="Eliminar Tipo Documento"
+					severity="alert" widgetVar="dlgEliminar">
+				<h:form>
+					Tipo Documento a eliminar: <h:outputText value="#{tipoDocumentoMB.tipoDocumento.descripcion}" style="font-size:12px;font-weight: bold;" /> 
+					<br/>
+					<p:commandButton value="Eliminar"
+						update=":formListaTipoDocumento :sms"
+						actionListener="#{tipoDocumentoMB.confirmaEliminar()}"
+						oncomplete="PF('dlgEliminar').hide();" icon="icon-delete" />
+
+					<p:commandButton value="Cancelar"  type="button" 
+						onclick="PF('dlgEliminar').hide()" icon="icon-cancel"/>
+
+				</h:form>
+			</p:confirmDialog>
+			
+		<script>
+			
+		function validar(xhr, status, args) {
+			if (!args.esValido) {
+				jQuery('#dlgDetNuevo').effect("shake", {
+					times : 1
+				}, 100);
+			} else {
+				//limpiando
+				
+				PF('dlgNuevo').hide();
+			}
+		}
+
+		</script>
+		
+	</ui:define>
+</ui:composition>
+</html>

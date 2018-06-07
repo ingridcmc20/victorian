@@ -1,0 +1,173 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/WEB-INF/plantillas/plantilla.xhtml">
+	<ui:define name="contenido">
+			<h:form>
+				<p:breadCrumb style="font-size: 11px; height: 13px; margin-top: 0px">  
+    				<p:menuitem value="Home" url="#" />  
+    				<p:menuitem value="Produccion" url="#" />
+    				<p:menuitem value="Registro de Plan de producción" url="registroPlanProduccion" />   
+				</p:breadCrumb>	
+			</h:form>
+			<br/>
+			<!-- growl general -->			
+			<p:messages  id="msgGeneral" showDetail="false" showSummary="true" closable="true" />		
+			
+				<!-- listado de Pedido -->
+			<h:form id="formLista">
+				<p:panelGrid style="width: 100%;">
+					<p:row>
+						<p:column colspan="8"><p:outputLabel value="RECURSOS DISPONIBLES: " style="font-weight: bold;"/></p:column>
+					</p:row>
+					<p:row>
+						<p:column style="width: 20%;"><p:outputLabel value="PERSONAL DISEÑO: " style="font-weight: bold;"/></p:column>
+						<p:column><p:outputLabel value="#{planProduccionMB.cantidad_personal_diseniadores}"/></p:column>
+						<p:column style="width: 20%;"><p:outputLabel value="PERSONAL CORTE: " style="font-weight: bold;"/></p:column>
+						<p:column><p:outputLabel value="#{planProduccionMB.cantidad_personal_cortadores}"/></p:column>
+						<p:column style="width: 20%;"><p:outputLabel value="PERSONAL CONFECCION: " style="font-weight: bold;"/></p:column>
+						<p:column><p:outputLabel value="#{planProduccionMB.cantidad_personal_confeccionistas}"/></p:column>
+						<p:column style="width: 20%;"><p:outputLabel value="PERSONAL EMPAQUETADOR: " style="font-weight: bold;"/></p:column>
+						<p:column><p:outputLabel value="#{planProduccionMB.cantidad_empaquetadores}"/></p:column>
+					</p:row>
+					<p:row>
+						<p:column><p:outputLabel value="MAQUINAS CORTADORASS: " style="font-weight: bold;"/></p:column>
+						<p:column><p:outputLabel value="#{planProduccionMB.cantidad_maquina_cortadora}"/></p:column>
+						<p:column><p:outputLabel value="MAQUINAS CONFECCIONS: " style="font-weight: bold;"/></p:column>
+						<p:column><p:outputLabel value="#{planProduccionMB.cantidad_maquina_confeccionista}"/></p:column>
+						<p:column></p:column>
+						<p:column></p:column>
+						<p:column></p:column>
+						<p:column></p:column>
+					</p:row>					
+				</p:panelGrid>
+				<p:dataTable id="dataTable" var="p" value="#{planProduccionMB.listaPedidos}"
+					rowKey="#{p.idpedido}"  
+					selection="#{planProduccionMB.listaPedidosSelected}"
+					widgetVar="dtPedido" 
+					emptyMessage="NO EXISTEN PEDIDOS EN ESTADO ACEPTADO." rowIndexVar="nro" 
+					scrollRows="10" scrollable="true" scrollHeight="250"
+					 style="FONT-SIZE: 10px; width: 100%"
+					 disabledSelection="#{!p.bool_ficha_tecnica}">
+										 
+					<f:facet name="header">Lista Pedidos</f:facet>
+					<p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+					<p:column headerText="#" style="width:6%" >
+						#{nro+1}
+					</p:column>
+					<p:column headerText="Nro. Pedido">
+						<h:outputText value="#{p.idpedido}" />
+					</p:column>
+					<p:column headerText="Cliente">
+						<h:outputText value="#{p.nombre_cliente}" />
+					</p:column>			
+					<p:column headerText="Tipo prenda">
+						<h:outputText value="#{p.des_tipo_prenda}" />
+					</p:column>
+					<p:column headerText="Tipo Confeccion">
+						<h:outputText value="#{p.des_tipoconfeccion}" />
+					</p:column>
+					<p:column headerText="Fecha Entrega">
+						<h:outputText value="#{p.fechaentrega}" />
+					</p:column>
+					<p:column headerText="Estado">
+						<h:outputText value="#{p.des_estado}" />
+					</p:column>
+					<p:column headerText="Calcular ficha tecnica" style="width:10%;text-align: center">					
+						<p:commandButton   
+							actionListener="#{planProduccionMB.calcularFichaTecnica(p)}" 
+							title="Ficha Tecnica" icon="icon-report" rendered="#{p.bool_ficha_tecnica}"/>
+					</p:column>
+				</p:dataTable>
+				<p:commandButton value="Generar plan de produccion" actionListener="#{planProduccionMB.guardarPedido()}" update=":formLista" title="Editar"/>
+			</h:form>
+			
+			<p:dialog header="Ficha tecnica" widgetVar="dlgFichaTecnica" appendTo="@(body)"
+					resizable="false" id="dlgDetFichaTecnica" modal="true" width="800">
+					
+				<h:form>
+				<p:messages showDetail="false" showSummary="true" id="msgFichaTecnica" closable="true"/>
+				
+				<p:panelGrid>
+					<p:row>
+						<p:column style="width: 20%;"><h:outputText value="Nro. Pedido:" /></p:column>
+						<p:column><h:outputText value="#{planProduccionMB.pedidoSelec.idpedido}" /></p:column>
+						<p:column style="width: 20%;"><h:outputText value="Producto:" /></p:column>
+						<p:column><h:outputText value="#{planProduccionMB.pedidoSelec.des_tipo_prenda}" /></p:column>
+					</p:row>
+					<p:row>
+						<p:column><h:outputText value="Cliente:" /></p:column>
+						<p:column colspan="3"><h:outputText value="#{planProduccionMB.pedidoSelec.nombre_cliente}" /></p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="4">
+							<p:dataTable id="listaFichaTecnica" var="p" value="#{planProduccionMB.listFichasTecnicas}" widgetVar="dtFichasTecnicas" emptyMessage="No hay Fichas Tecnicas Disponibles." rowIndexVar="nro" 
+								paginator="true" rows="10" paginatorPosition="bottom" style="FONT-SIZE: 10px; width: 100%">
+								<f:facet name="header">Lista Fichas Tecnicas</f:facet>
+								
+								<p:column headerText="Orden" style="width:6%" >
+									#{nro+1}
+								</p:column>
+								
+								<p:column headerText="Insumo">
+									<h:outputText value="#{p.nom_insumo}" />
+								</p:column>
+								
+								<p:column headerText="Descripcion">
+									<h:outputText value="#{p.nombreinsumo}" />
+								</p:column>
+								
+								<p:column headerText="Unidad">
+									<h:outputText value="#{p.unidad}" />
+								</p:column>	
+								
+								<p:column headerText="Cantidad">
+									<h:outputText value="#{p.cantidad}" />
+								</p:column>	
+								
+								<p:column headerText="Precio Unitario">
+									<h:outputText value="#{p.preciounidad}" />
+								</p:column>
+								
+								<p:column headerText="Precio Total">
+									<h:outputText value="#{p.preciototal}" />
+								</p:column>
+							</p:dataTable>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="3"><h:outputText value="Subtotal:" /></p:column>
+						<p:column style="width: 20%;">
+							<h:outputText value="#{planProduccionMB.pedidoSelec.subTotalProducto}">
+								<f:convertNumber type="currency" currencySymbol="S/." maxFractionDigits="2"/>
+							</h:outputText>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="3"><h:outputText value="Cantidad:" /></p:column>
+						<p:column style="width: 20%;">
+							<h:outputText value="#{planProduccionMB.pedidoSelec.cantidad_prenda}" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="3"><h:outputText value="Subtotal Pedido:" /></p:column>
+						<p:column style="width: 20%;">
+							<h:outputText value="#{planProduccionMB.pedidoSelec.subTotalPedido}" >
+								<f:convertNumber type="currency" currencySymbol="S/." maxFractionDigits="2"/>
+							</h:outputText>
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				
+				<p:commandButton value="Cancelar" type="button" onclick="PF('dlgFichaTecnica').hide()" icon="icon-cancel" />
+				</h:form>	
+			</p:dialog>
+	</ui:define>
+</ui:composition>
+</html>

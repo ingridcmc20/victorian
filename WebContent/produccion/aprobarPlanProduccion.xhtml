@@ -1,0 +1,119 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/WEB-INF/plantillas/plantilla.xhtml">
+	<ui:define name="contenido">
+			<h:form>
+				<p:breadCrumb style="font-size: 11px; height: 13px; margin-top: 0px">  
+    				<p:menuitem value="Home" url="#" />  
+    				<p:menuitem value="Produccion" url="#" />
+    				<p:menuitem value="Registro de Plan de producción" url="registroPlanProduccion" />   
+				</p:breadCrumb>	
+			</h:form>
+			<br/>
+			<!-- growl general -->			
+			<p:messages  id="msgGeneral" showDetail="false" showSummary="true" closable="true" />		
+			
+				<!-- listado de Pedido -->
+			<h:form id="formLista">
+				<p:dataTable id="dataTable" var="p" value="#{aprobarPlanProduccionMB.listaPedidos}" widgetVar="dtPedido" 
+					emptyMessage="No hay Pedido Disponibles." rowIndexVar="nro" 
+					paginator="true"
+					rows="10" paginatorPosition="bottom" 
+					 style="FONT-SIZE: 10px; width: 100%">
+										 
+					<f:facet name="header">Lista Planes</f:facet>
+					
+					<p:column headerText="Orden" style="width:6%" >
+						#{nro+1}
+					</p:column>
+					<p:column headerText="Nro. Plan">
+						<h:outputText value="#{p.idplan}" />
+					</p:column>
+					<p:column headerText="Fecha inicio">
+						<h:outputText value="#{p.fechainicioplan}" />
+					</p:column>			
+					<p:column headerText="Fecha fin">
+						<h:outputText value="#{p.fechafinplan}" />
+					</p:column>
+					<p:column headerText="Estado">
+						<h:outputText value="#{p.estado}" />
+					</p:column>
+					<p:column headerText="Aprobar" style="width:10%;text-align: center">	
+						<p:commandButton   
+							actionListener="#{aprobarPlanProduccionMB.guardarPedido(p)}" update=":formLista"
+							title="Editar" icon="icon-disk" />
+					</p:column>
+				</p:dataTable>
+			</h:form>
+			
+			<!-- #############    Dialogos      ################ -->
+			
+			<!-- dialogo nuevo/editar Pedido -->
+			
+			<p:dialog header="Ficha tecnica" widgetVar="dlgFichaTecnica" appendTo="@(body)"
+					resizable="false" id="dlgDetFichaTecnica" modal="true">
+					
+					<h:form>
+					<p:messages showDetail="false" showSummary="true" id="msgFichaTecnica" closable="true"/>
+					<p:commandButton value="Guardar" actionListener="#{aprobarPlanProduccionMB.guardarPedido()}"
+						update=":formLista msgFichaTecnica" oncomplete="validar(xhr, status, args)" icon="icon-disk" />
+					
+					<p:commandButton value="Cancelar" type="button" onclick="PF('dlgFichaTecnica').hide()" icon="icon-cancel" />
+					</h:form>	
+			</p:dialog>
+			
+			<p:dialog header="Recursos" widgetVar="dlgRecursos" appendTo="@(body)"
+					resizable="false" id="dlgDetRecursos" modal="true">
+					<h:form>
+					<p:messages showDetail="false" showSummary="true" id="msgRecursos" closable="true"/>
+					
+					<h:panelGrid columns="2">
+					<p:outputLabel value="Cortador: "/>
+					<p:selectOneMenu id="cmbCortador" value="#{aprobarPlanProduccionMB.id_cortador_seleccionado}"
+						>
+						<f:selectItem itemLabel="Seleccionar" itemValue=""/>
+						<f:selectItems value="#{aprobarPlanProduccionMB.listaCortador}" var="of" itemLabel="#{of.nombre_operario}" itemValue="#{of.idoperario}" />
+					</p:selectOneMenu>	
+
+					<p:outputLabel value="Confeccionista: "/>
+					<p:selectOneMenu id="cmbConfeccionista" value="#{aprobarPlanProduccionMB.id_confeccionista_seleccionado}"
+						>
+						<f:selectItem itemLabel="Seleccionar" itemValue=""/>
+						<f:selectItems value="#{aprobarPlanProduccionMB.listaConfeccionista}" var="of" itemLabel="#{of.nombre_operario}" itemValue="#{of.idoperario}" />
+					</p:selectOneMenu>
+					
+					<p:outputLabel value="Empaquetador: "/>
+					<p:selectOneMenu id="cmbEmpaquetador" value="#{aprobarPlanProduccionMB.id_empaquetador_seleccionado}">
+						<f:selectItem itemLabel="Seleccionar" itemValue=""/>
+						<f:selectItems value="#{aprobarPlanProduccionMB.listaEmpaquetador}" var="of" itemLabel="#{of.nombre_operario}" itemValue="#{of.idoperario}" />
+					</p:selectOneMenu>
+					
+					<p:outputLabel value="Maquina corte: "/>
+					<p:selectOneMenu id="cmbMaquinaCorte" value="#{aprobarPlanProduccionMB.id_maquina_corte_seleccionado}">
+						<f:selectItem itemLabel="Seleccionar" itemValue=""/>
+						<f:selectItems value="#{aprobarPlanProduccionMB.listaMaquinaCorte}" var="of" itemLabel="#{of.descripcion}" itemValue="#{of.idmaquinaria}" />
+					</p:selectOneMenu>
+										
+					<p:outputLabel value="Maquina confeccion: "/>
+					<p:selectOneMenu id="cmbMaquinaConfeccion" value="#{aprobarPlanProduccionMB.id_maquina_confeccion_seleccionado}">
+						<f:selectItem itemLabel="Seleccionar" itemValue=""/>
+						<f:selectItems value="#{aprobarPlanProduccionMB.listaMaquinaConfeccion}" var="of" itemLabel="#{of.descripcion}" itemValue="#{of.idmaquinaria}" />
+					</p:selectOneMenu>	
+					
+					<p:commandButton value="Guardar" actionListener="#{aprobarPlanProduccionMB.asignarRecursos()}"
+						update=":formLista msgRecursos" oncomplete="validar(xhr, status, args)" icon="icon-disk" />
+					
+					<p:commandButton value="Cancelar" type="button" onclick="PF('dlgRecursos').hide()" icon="icon-cancel" />
+					</h:panelGrid>
+					</h:form>	
+			</p:dialog>
+	</ui:define>
+</ui:composition>
+</html>

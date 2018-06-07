@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/WEB-INF/plantillas/plantilla.xhtml">
+	<ui:define name="contenido">
+		<h:form>
+			<p:breadCrumb style="font-size: 11px; height: 13px; margin-top: 0px">  
+   				<p:menuitem value="Home" url="#" />  
+   				<p:menuitem value="Recursos Humanos" url="#" />
+   				<p:menuitem value="Asignar bono a operario" url="asignarBonoOperario" />   
+			</p:breadCrumb>	
+		</h:form>
+		<br/>
+		<!-- growl general -->			
+		<p:messages  id="msgGeneral" showDetail="false" showSummary="true" closable="true" />		
+			
+		<!-- listado de Pedido -->
+		<h:form id="formLista">
+			<p:dataTable id="dataTable" var="p" widgetVar="dtPedido" 
+				value="#{asignarBonoOperarioMB.listaOperarios}"
+				emptyMessage="No hay operarios para asignación de bono." rowIndexVar="nro" 
+				paginator="true" rows="10" paginatorPosition="bottom" style="FONT-SIZE: 14px; width: 100%">									 
+				<f:facet name="header">Lista de operarios para bono</f:facet>
+				
+				<p:column headerText="#" style="width:4%" >
+					#{nro+1}
+				</p:column>
+				<p:column headerText="Nombre" style="width:30%" >
+					<h:outputText value="#{p.nombre_operario}" />
+				</p:column>
+				<p:column headerText="Cargo">
+					<h:outputText value="#{p.tipo_operario}" />
+				</p:column>			
+				<p:column headerText="NIvel" style="width:15%">
+					<h:outputText value="#{p.id_nivel}" />
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

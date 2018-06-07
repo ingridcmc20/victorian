@@ -1,0 +1,295 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/WEB-INF/plantillas/plantilla.xhtml">
+	<ui:define name="contenido">
+		<h:form>
+			<p:breadCrumb style="font-size: 11px; height: 13px; margin-top: 0px">  
+   				<p:menuitem value="Home" url="#" />  
+   				<p:menuitem value="Produccion" url="#" />
+   				<p:menuitem value="Registro de orden de trabajo" url="registrarOrdenTrabajo" />   
+			</p:breadCrumb>	
+		</h:form>
+		<br/>
+		<!-- growl general -->			
+		<p:messages  id="msgGeneral" showDetail="false" showSummary="true" closable="true" />		
+			
+		<!-- listado de Pedido -->
+		<h:form id="formLista">
+			<p:commandButton value="Nueva orden de trabajo" icon="icon-add" update=":dlgDetNuevo" oncomplete="PF('dlgNuevo').show();" actionListener="#{registroOrdenTrabajoMB.nuevo()}"/>
+			<p:dataTable id="dataTable" var="p" widgetVar="dtPedido" value="#{registroOrdenTrabajoMB.lstOrdenTrabajo}"
+				emptyMessage="No hay ordenes de trabajo registradas." rowIndexVar="nro" 
+				paginator="true"
+				rows="10" paginatorPosition="bottom" 
+				 style="FONT-SIZE: 10px; width: 100%">
+									 
+				<f:facet name="header">Lista de orden de trabajo</f:facet>
+				
+				<p:column headerText="#" style="width:4%" >
+					#{nro+1}
+				</p:column>
+				<p:column headerText="Nro. Orden">
+					<h:outputText value="#{p.id_orden_trabajo}" />
+				</p:column>
+				<p:column headerText="F. Registro">
+					<h:outputText value="#{p.fecha_registro}" />
+				</p:column>			
+				<p:column headerText="Cliente" width="200">
+					<h:outputText value="#{p.nombre_cliente}" />
+				</p:column>
+				<p:column headerText="Tipo de prenda">
+					<h:outputText value="#{p.des_tipo_prenda}" />
+				</p:column>
+				<p:column headerText="Tipo de confección">
+					<h:outputText value="#{p.des_tipo_confeccion}" />
+				</p:column>
+				<p:column headerText="F. Entrega orden">
+					<h:outputText value="#{p.fecha_entrega_orden}" />
+				</p:column>
+				<p:column headerText="F. Entrega pedido">
+					<h:outputText value="#{p.fecha_entrega_pedido}" />
+				</p:column>
+				<p:column headerText="Prioridad" width="50">
+					<h:outputText value="#{p.des_prioridad}" />
+				</p:column>
+				<p:column headerText="Personal" width="50">
+					<p:commandButton icon="icon-user" actionListener="#{registroOrdenTrabajoMB.obtenerPersonal(p)}" update=":dlgDetPersonal" oncomplete="PF('dlgPersonal').show();" />
+				</p:column>
+				<p:column headerText="Maquinarias" width="50">
+					<p:commandButton icon="icon-priori" actionListener="#{registroOrdenTrabajoMB.obtenerMaquinarias(p)}" update=":dlgDetMaquinaria" oncomplete="PF('dlgMaquinaria').show();" />
+				</p:column>
+				<p:column headerText="Opciones" width="50" style="text-align: center">
+					<p:commandButton actionListener="#{registroOrdenTrabajoMB.editar(p)}" update=":dlgDetNuevo" oncomplete="PF('dlgNuevo').show();" title="Editar" icon="icon-edit" />
+					<p:commandButton actionListener="#{registroOrdenTrabajoMB.eliminar(p)}" oncomplete="PF('dlgEliminar').show();" title="Eliminar" icon="icon-delete" />							
+				</p:column>				
+			</p:dataTable>
+		</h:form>
+			
+		<!-- #############    Dialogos      ################ -->
+		<p:dialog header="Orden de trabajo" widgetVar="dlgNuevo" appendTo="@(body)" resizable="false" id="dlgDetNuevo" modal="true" width="800">
+			<h:form>
+				<p:messages showDetail="false" showSummary="true" id="msgNuevo" closable="true"/>
+
+				<p:panelGrid style="width:100%; vertical-align: top;">
+					<p:row>
+						<p:column><p:outputLabel value="Nro. Pedido"/></p:column>
+						<p:column>							
+							<h:inputText id="nroPedido" value="#{registroOrdenTrabajoMB.ordenTrabajoSelected.id_pedido}" required="true"
+									disabled="#{registroOrdenTrabajoMB.ordenTrabajoSelected.id_pedido ne null}" 
+									requiredMessage="Se necesita un pedido" style="font-size: 13px;">
+								<p:ajax  listener="#{registroOrdenTrabajoMB.obtenerDatosPedido}" update="pnlPedido pnlCosto msgNuevo"/>
+							</h:inputText>
+						</p:column>
+						<p:column rowspan="3" colspan="2">
+							<p:panel id="pnlCosto" header="Costo total">
+								<p:panelGrid style="width:100%">
+									<p:row>
+										<p:column><p:outputLabel value="SubTotal pedido:"/></p:column>
+										<p:column style="text-align: right;">
+											<p:outputLabel value="#{registroOrdenTrabajoMB.pedidoSelected.subTotalPedido}">
+												<f:convertNumber type="currency" currencySymbol="S/." maxFractionDigits="2"/>
+											</p:outputLabel>
+										</p:column>
+									</p:row>
+									<p:row>
+										<p:column><p:outputLabel value="Gastos generales:"/></p:column>
+										<p:column style="text-align: right;">
+											<p:outputLabel value="#{registroOrdenTrabajoMB.pedidoSelected.gastosGenerales}">
+												<f:convertNumber type="currency" currencySymbol="S/." maxFractionDigits="2"/>
+											</p:outputLabel>
+										</p:column>
+									</p:row>
+									<p:row>
+										<p:column><p:outputLabel value="Utilidades:"/></p:column>
+										<p:column style="text-align: right;">
+											<p:outputLabel value="#{registroOrdenTrabajoMB.pedidoSelected.utilidades}">
+												<f:convertNumber type="currency" currencySymbol="S/." maxFractionDigits="2"/>
+											</p:outputLabel>
+										</p:column>
+									</p:row>
+									<p:row>
+										<p:column><p:outputLabel value="SubTotal:"/></p:column>
+										<p:column style="text-align: right;">
+											<p:outputLabel value="#{registroOrdenTrabajoMB.pedidoSelected.subTotal}">
+												<f:convertNumber type="currency" currencySymbol="S/." maxFractionDigits="2"/>
+											</p:outputLabel>
+										</p:column>
+									</p:row>
+									<p:row>
+										<p:column><p:outputLabel value="IGV:"/></p:column>
+										<p:column style="text-align: right;">
+											<p:outputLabel value="#{registroOrdenTrabajoMB.pedidoSelected.igv}">
+												<f:convertNumber type="currency" currencySymbol="S/." maxFractionDigits="2"/>
+											</p:outputLabel>
+										</p:column>
+									</p:row>
+									<p:row>
+										<p:column><p:outputLabel value="Total:"/></p:column>
+										<p:column style="text-align: right;">
+											<p:outputLabel value="#{registroOrdenTrabajoMB.pedidoSelected.total}">
+												<f:convertNumber type="currency" currencySymbol="S/." maxFractionDigits="2"/>
+											</p:outputLabel>
+										</p:column>
+									</p:row>
+								</p:panelGrid>
+							</p:panel>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column><p:outputLabel value="Prioridad"/></p:column>
+						<p:column>
+							<p:selectOneMenu value="#{registroOrdenTrabajoMB.ordenTrabajoSelected.id_prioridad}" required="true" requiredMessage="Seleccione una prioridad">
+								<f:selectItem itemLabel="Seleccione..." itemValue="" />							
+								<f:selectItems value="#{registroOrdenTrabajoMB.listPrioridad}" var="ex" itemLabel="#{ex.descripcion}" itemValue="#{ex.id_prioridad}" />
+							</p:selectOneMenu>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="2">
+							<p:panel id="pnlPedido" header="Datos del pedido">
+								<p:panelGrid style="width:100%">
+									<p:row>
+										<p:column><p:outputLabel value="Cliente:"/></p:column>
+										<p:column colspan="3">
+											<p:outputLabel value="#{registroOrdenTrabajoMB.ordenTrabajoSelected.nombre_cliente}"/>
+										</p:column>
+									</p:row>
+									<p:row>
+										<p:column><p:outputLabel value="Prenda:"/></p:column>
+										<p:column>
+											<p:outputLabel value="#{registroOrdenTrabajoMB.ordenTrabajoSelected.des_tipo_prenda}"/>
+										</p:column>
+										<p:column><p:outputLabel value="Cantidad:"/></p:column>
+										<p:column>
+											<p:outputLabel value="#{registroOrdenTrabajoMB.pedidoSelected.cantidad_prenda}"/>
+										</p:column>
+									</p:row>
+									<p:row>
+										<p:column><p:outputLabel value="Fecha entrega:"/></p:column>
+										<p:column>
+											<p:outputLabel value="#{registroOrdenTrabajoMB.ordenTrabajoSelected.fecha_entrega_pedido}"/>
+										</p:column>
+										<p:column><p:outputLabel value="Estado:"/></p:column>
+										<p:column>
+											<p:outputLabel value="#{registroOrdenTrabajoMB.pedidoSelected.des_estado}"/>
+										</p:column>
+									</p:row>
+								</p:panelGrid>
+							</p:panel>						
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				<p:commandButton value="Guardar" actionListener="#{registroOrdenTrabajoMB.guardarOrdenTrabajo()}" update=":formLista msgNuevo" icon="icon-disk" />
+				
+				<p:commandButton value="Cancelar" type="button" onclick="PF('dlgNuevo').hide()" icon="icon-cancel" />
+			</h:form>	
+		</p:dialog>
+		
+		<p:dialog header="Personal" widgetVar="dlgPersonal" appendTo="@(body)" resizable="false" id="dlgDetPersonal" modal="true" width="800">
+			<h:form>
+				<p:messages showDetail="false" showSummary="true" id="msgNuevo" closable="true"/>
+
+				<p:panelGrid style="width:100%; vertical-align: top;">
+					<p:row>
+						<p:column style="width:10%;"><p:outputLabel value="Nro. Orden de trabajo"/></p:column>
+						<p:column colspan="3"><p:outputLabel id="nroPedido" value="#{registroOrdenTrabajoMB.ordenTrabajoSelected.id_orden_trabajo}"/></p:column>						
+					</p:row>
+					<p:row>
+						<p:column colspan="2" style="width:40%; vertical-align: top;">
+							<p:panel id="pnlPDiseno" header="Diseño">
+								<p:selectManyMenu id="lmmPDiseno" value="#{registroOrdenTrabajoMB.lstPDisenoSelected}" filter="true" 
+									filterMatchMode="contains" showCheckbox="true" style="width:100%;" scrollHeight="100">
+            						<f:selectItems value="#{registroOrdenTrabajoMB.lstPDiseno}" var="usuario" itemLabel="#{usuario.nombre_operario}" itemValue="#{usuario.idoperario}" />
+						        </p:selectManyMenu>
+							</p:panel>
+						</p:column>
+						<p:column colspan="2" style="vertical-align: top;">
+							<p:panel id="pnlPCorte" header="Corte">
+								<p:selectManyMenu id="lmmPCorte" value="#{registroOrdenTrabajoMB.lstPCorteSelected}" filter="true" 
+									filterMatchMode="contains" showCheckbox="true" style="width:100%;" scrollHeight="100">
+						            <f:selectItems value="#{registroOrdenTrabajoMB.lstPCorte}" var="usuario" itemLabel="#{usuario.nombre_operario}" itemValue="#{usuario.idoperario}" />
+						        </p:selectManyMenu>
+							</p:panel>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="2" style="vertical-align: top;">
+							<p:panel id="pnlPConfeccion" header="Confección">
+								<p:selectManyMenu id="lmmPConfeccion" value="#{registroOrdenTrabajoMB.lstPConfeccionSelected}"
+									filter="true" filterMatchMode="contains" showCheckbox="true" style="width:100%;" scrollHeight="100">
+						            <f:selectItems value="#{registroOrdenTrabajoMB.lstPConfeccion}" var="usuario" itemLabel="#{usuario.nombre_operario}" itemValue="#{usuario.idoperario}" />
+						        </p:selectManyMenu>
+							</p:panel>
+						</p:column>
+						<p:column colspan="2" style="vertical-align: top;">
+							<p:panel id="pnlPEmpaquetado" header="Empaquetado">
+								<p:selectManyMenu id="lmmPEmpaquetado" value="#{registroOrdenTrabajoMB.lstPEmpaquetadoSelected}" 
+									filter="true" filterMatchMode="contains" showCheckbox="true" style="width:100%;" scrollHeight="100">
+						            <f:selectItems value="#{registroOrdenTrabajoMB.lstPEmpaquetado}" var="usuario" itemLabel="#{usuario.nombre_operario}" itemValue="#{usuario.idoperario}" />
+						        </p:selectManyMenu>
+							</p:panel>
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				<p:commandButton value="Guardar" actionListener="#{registroOrdenTrabajoMB.asignarPersonal()}" icon="icon-disk" />
+				
+				<p:commandButton value="Cancelar" type="button" onclick="PF('dlgPersonal').hide()" icon="icon-cancel" />
+			</h:form>	
+		</p:dialog>
+		<p:dialog header="Maquinaria" widgetVar="dlgMaquinaria" appendTo="@(body)" resizable="false" id="dlgDetMaquinaria" modal="true" width="800">
+			<h:form>
+				<p:messages showDetail="false" showSummary="true" id="msgNuevo" closable="true"/>
+
+				<p:panelGrid style="width:100%; vertical-align: top;">
+					<p:row>
+						<p:column style="width:10%;"><p:outputLabel value="Nro. Orden de trabajo"/></p:column>
+						<p:column colspan="3"><p:outputLabel id="nroPedido" value="#{registroOrdenTrabajoMB.ordenTrabajoSelected.id_orden_trabajo}"/></p:column>						
+					</p:row>
+					<p:row>
+						<p:column colspan="2" style="width:40%;">
+							<p:panel id="pnlMCorte" header="Corte">
+								<p:selectManyMenu id="lmmMCorte" value="#{registroOrdenTrabajoMB.lstMCorteSelected}" filter="true" 
+									filterMatchMode="contains" showCheckbox="true" style="width:100%;" scrollHeight="100">
+						            <f:selectItems value="#{registroOrdenTrabajoMB.lstMCorte}" var="maquinaria" itemLabel="#{maquinaria.descripcion}" itemValue="#{maquinaria.idmaquinaria}" />
+						        </p:selectManyMenu>
+							</p:panel>
+						</p:column>
+						<p:column colspan="2">
+							<p:panel id="pnlMConfeccion" header="Confección">
+								<p:selectManyMenu id="lmmMConfeccion" value="#{registroOrdenTrabajoMB.lstMConfeccionSelected}" filter="true" 
+									filterMatchMode="contains" showCheckbox="true" style="width:100%;" scrollHeight="100">
+						            <f:selectItems value="#{registroOrdenTrabajoMB.lstMConfeccion}" var="maquinaria" itemLabel="#{maquinaria.descripcion}" itemValue="#{maquinaria.idmaquinaria}" />
+						        </p:selectManyMenu>
+							</p:panel>
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				<p:commandButton value="Guardar" actionListener="#{registroOrdenTrabajoMB.asignarMaquinaria()}" icon="icon-disk" />
+				
+				<p:commandButton value="Cancelar" type="button" onclick="PF('dlgMaquinaria').hide()" icon="icon-cancel" />
+			</h:form>	
+		</p:dialog>
+		
+			<p:confirmDialog id="dlgDetEliminar" appendTo="@(body)"
+					message="¿Desea eliminar esta orden de trabajo" header="Eliminar orden de trabajo"
+					severity="alert" widgetVar="dlgEliminar">
+				<h:form>
+					<p:commandButton value="Eliminar"
+						update=":formLista :msgGeneral"
+						actionListener="#{registroOrdenTrabajoMB.confirmaEliminar}"
+						oncomplete="PF('dlgEliminar').hide();" icon="icon-delete" />
+
+					<p:commandButton value="Cancelar" type="button"
+						onclick="PF('dlgEliminar').hide()" icon="icon-cancel" />
+
+				</h:form>
+			</p:confirmDialog>
+	</ui:define>
+</ui:composition>
+</html>

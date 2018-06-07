@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.victorian.produccion.mapper.FichaTecnicaMapper">
+
+	<resultMap id="fichaTecnicaResult" type="com.victorian.produccion.domain.FichaTecnica">
+		<id column="idfichatecnica" property="idfichatecnica" />
+		<result column="nombreinsumo" property="nombreinsumo" />
+		<result column="unidad" property="unidad" />
+		<result column="cantidad" property="cantidad" />
+		<result column="preciounidad" property="preciounidad" />
+		<result column="preciototal" property="preciototal" />
+		<result column="idproducto" property="idproducto" />
+		<result column="idinsumo" property="idinsumo" />
+	</resultMap>
+
+
+</mapper>	
