@@ -40,5 +40,4 @@ public class Constante {
 	
 	// Menu oculto
 	public static final Integer MENU_LOGIN = 230;
-
 }

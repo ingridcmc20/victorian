@@ -3,6 +3,7 @@ package src.com.victorian.produccion.utils;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class Criteria {
     protected List<Criterion> criteria;
 
