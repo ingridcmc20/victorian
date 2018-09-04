@@ -22,11 +22,11 @@ public interface MenuMapper{
 	public List<Menu> listMenuxSistema(Perfil perfil) throws Exception;
 	
 	//recupera menus por sistema
-	@Select(" select cod_menu,cod_sistema,cod_menu_padre,nombre,descripcion,ind_activo,fecha_registro,fecha_modif,usuario_registro,usuario_modif,icono,action from t_opcion_menu where cod_sistema = #{p_sistemaid}")
+	@Select(" select cod_menu,cod_sistema,cod_menu_padre,nombre,descripcion,ind_activo,fecha_registro,fecha_modif,usuario_registro,usuario_modif,icono,action from victorian.t_opcion_menu where cod_sistema = #{p_sistemaid}")
 	public List<Menu> listMenuxSistemaId(@Param("p_sistemaid") Long sistemaid) throws Exception;
 	
 	//busca todos los sistemas/modulos implicados 
-	@Select("select sis.cod_sistema, sis.nombre_sistema,sis.descripcion,sis.ind_activo from t_sistema sis where sis.cod_sistema in ( select distinct cod_sistema from  t_opcion_menu  menu ) and sis.ind_activo=1")
+	@Select("select sis.cod_sistema, sis.nombre_sistema,sis.descripcion,sis.ind_activo from t_sistema sis where sis.cod_sistema in ( select distinct cod_sistema from victorian.t_opcion_menu  menu ) and sis.ind_activo=1")
 	public List<Sistema> listSistemas() throws Exception;
 	
 	public int opcionMenuByPrettyCod(String pretty) throws Exception;

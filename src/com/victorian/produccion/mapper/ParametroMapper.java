@@ -21,9 +21,9 @@ public interface ParametroMapper{
 	
 	
 	
-	@Select("select valor from t_parametro where nombre_parametro = #{p_nombre_parametro}")
+	@Select("select valor from victorian.t_parametro where nombre_parametro = #{p_nombre_parametro}")
 	public String findParametro_byNombre(@Param("p_nombre_parametro") String nombre_parametro) throws Exception;
 	
-	@Select("select * from t_parametro where nombre_parametro = #{p_nombre_parametro}")
+	@Select("select * from victorian.t_parametro where nombre_parametro = #{p_nombre_parametro}")
 	public Parametro findByNombre(@Param("p_nombre_parametro") String nombre_parametro) throws Exception;
 } 

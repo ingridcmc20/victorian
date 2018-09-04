@@ -32,7 +32,7 @@ public class UsuarioConverter implements Converter {
 	@Override
 	public String getAsString(FacesContext fc, UIComponent uic, Object object) {
 		if (object != null) {
-			 return String.valueOf(((Usuario) object).getIdusuario());
+			 return String.valueOf(((Usuario) object).getId_usuario());
 		} else {
 			return null;
 		}

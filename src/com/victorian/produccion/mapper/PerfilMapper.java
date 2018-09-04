@@ -8,7 +8,6 @@ import com.victorian.produccion.domain.Usuario;
 public interface PerfilMapper{ 
 
 	public List<Perfil> listPerfil() throws Exception;
-	//public void deletePerfil(Perfil perfil) throws Exception;
 	public void deletePerfil(int cod_perfil) throws Exception;
 	public void updatePerfil(Perfil perfil) throws Exception;
 	public void insertPerfil(Perfil perfil) throws Exception;

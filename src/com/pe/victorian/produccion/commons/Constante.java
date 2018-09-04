@@ -37,5 +37,8 @@ public class Constante {
 	
 	public static final String TO_CORTADOR = "CORTADOR";
 	public static final String TO_CONFECCIONISTA = "CONFECCIONISTA";
+	
+	// Menu oculto
+	public static final Integer MENU_LOGIN = 230;
 
 }

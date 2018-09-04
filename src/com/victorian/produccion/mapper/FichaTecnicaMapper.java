@@ -11,17 +11,17 @@ import org.apache.ibatis.annotations.Select;
 import com.victorian.produccion.domain.FichaTecnica;
 
 public interface FichaTecnicaMapper {
-	@Select("SELECT idfichatecnica, nombreinsumo, unidad, cantidad, preciounidad, preciototal, idproducto, idinsumo FROM t_fichatecnica")
+	@Select("SELECT idfichatecnica, nombreinsumo, unidad, cantidad, preciounidad, preciototal, idproducto, idinsumo FROM victorian.t_fichatecnica")
 	public List<FichaTecnica> findAll() throws Exception;
 	
-	@Select("SELECT idfichatecnica, nombreinsumo, unidad, cantidad, preciounidad, preciototal, idproducto, f.idinsumo, i.descripcion nom_insumo FROM t_fichatecnica f inner join t_insumo i on i.idinsumo=f.idinsumo WHERE idproducto=#{idproducto}")
+	@Select("SELECT idfichatecnica, nombreinsumo, unidad, cantidad, preciounidad, preciototal, idproducto, f.idinsumo, i.descripcion nom_insumo FROM victorian.t_fichatecnica f inner join t_insumo i on i.idinsumo=f.idinsumo WHERE idproducto=#{idproducto}")
 	public List<FichaTecnica> findByProducto(@Param("idproducto") Integer idproducto) throws Exception;
 
-	@Insert("INSERT INTO t_fichatecnica(nombreinsumo, unidad, cantidad, preciounidad, preciototal, idproducto, idinsumo) "
+	@Insert("INSERT INTO victorian.t_fichatecnica(nombreinsumo, unidad, cantidad, preciounidad, preciototal, idproducto, idinsumo) "
 			+ "VALUES (#{nombreinsumo}, #{unidad}, #{cantidad}, #{preciounidad}, #{preciototal}, #{idproducto}, #{idinsumo})")
 	public void insert(FichaTecnica fichaTecnica) throws Exception;
 	
-	@Delete("delete from t_fichatecnica where idfichatecnica = #{idfichatecnica}")
+	@Delete("delete from victorian.t_fichatecnica where idfichatecnica = #{idfichatecnica}")
 	@Options(flushCache=true)
 	public void delete(@Param("idfichatecnica") Integer idfichatecnica) throws Exception;
 }

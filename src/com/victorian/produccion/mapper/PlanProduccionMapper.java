@@ -13,13 +13,13 @@ public interface PlanProduccionMapper {
 
 	public void insert(PlanProduccion planProduccion) throws Exception;
 
-	@Update("UPDATE t_plan_produccion SET estado=#{estado} WHERE idplan=#{idplan}")
+	@Update("UPDATE victorian.t_plan_produccion SET estado=#{estado} WHERE idplan=#{idplan}")
 	@Options(flushCache=true,useCache=true)
 	public void update(PlanProduccion p);
 	
-	@Select("SELECT idplan, fechainicioplan, fechafinplan, cantidad_operarios, maquinaria, estado FROM t_plan_produccion where estado=#{estado}")
+	@Select("SELECT idplan, fechainicioplan, fechafinplan, cantidad_operarios, maquinaria, estado FROM victorian.t_plan_produccion where estado=#{estado}")
 	public List<PlanProduccion> findByEstado(@Param("estado") String estado);
 	
-	@Select("SELECT idplan, fechainicioplan, fechafinplan, cantidad_operarios, maquinaria, estado FROM t_plan_produccion where idplan=#{idplan}")
+	@Select("SELECT idplan, fechainicioplan, fechafinplan, cantidad_operarios, maquinaria, estado FROM victorian.t_plan_produccion where idplan=#{idplan}")
 	public PlanProduccion findById(@Param("idplan") Integer idplan);
 }

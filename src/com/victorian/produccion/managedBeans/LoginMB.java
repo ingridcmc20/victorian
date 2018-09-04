@@ -115,13 +115,12 @@ public class LoginMB extends GenericBeans implements Serializable {
 			// String localHost=
 			// String.valueOf(InetAddress.getLocalHost().getHostAddress());
 
-			log.setCod_menu(0);
+			log.setCod_menu(Constante.MENU_LOGIN);
 			log.setAccion("LOGIN");
 			log.setIp_client(ipClient);
 			setBean(log);
 			Log logEnSesion = (Log) getSpringBean(Constante.SESSION_LOG);
 			PropertyUtils.copyProperties(logEnSesion, log);
-			System.out.println("3");
 			listaPerfiles = new ArrayList<Perfil>();
 			listaModulos = new ArrayList<Sistema>();
 			listaMenu = new ArrayList<Menu>();
@@ -130,13 +129,13 @@ public class LoginMB extends GenericBeans implements Serializable {
 				log.setDescripcion("Usuario " + login + " no pudo logearse");
 				logmb.insertarLog(log);
 			} else {
-				log.setIdusuario(user.getIdusuario());
+				log.setIdusuario(user.getId_usuario());
 				if (list.get(0).getEstado()) {
 
 					usuario = (list.get(0));
 
 					setBean(usuario);
-					idUsuario = usuario.getIdusuario();
+					idUsuario = usuario.getId_usuario();
 					loginUsuario = usuario.getLogin();
 					Usuario usuarioEnSesion = (Usuario) getSpringBean(Constante.SESSION_USER);
 					PropertyUtils.copyProperties(usuarioEnSesion, usuario);

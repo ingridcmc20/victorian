@@ -86,8 +86,8 @@ public class ProductoMB extends GenericBeans implements Serializable{
 		
 		this.productoSelec = new Producto();		
 		this.editar = Boolean.FALSE;
-		this.listFormatos = new ArrayList<>();
-		this.listaProductosTotal=new ArrayList<>();
+		this.listFormatos = new ArrayList();
+		this.listaProductosTotal=new ArrayList();
 		this.fichaTecnica = new FichaTecnica();
 		
 		try {

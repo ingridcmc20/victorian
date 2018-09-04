@@ -14,25 +14,25 @@ import com.victorian.produccion.domain.Formato;
 
 public interface FormatoMapper {
 
-	@Select("select * from t_formato e where e.idformato = #{idformato}")
+	@Select("select * from victorian.t_formato e where e.idformato = #{idformato}")
 	public Formato findById(@Param("idformato") Integer idformato) throws Exception;
 	
-	@Select("select * from t_formato")
+	@Select("select * from victorian.t_formato")
 	public List<Formato> findAll() throws Exception;	
 	
-	@Insert("insert into t_formato (codigo, estado) values (#{codigo},#{estado})")
+	@Insert("insert into victorian.t_formato (codigo, estado) values (#{codigo},#{estado})")
 	public void crearFormato(Formato formato) throws Exception;
 	
-	@Update("update t_formato set codigo = #{codigo}, estado = #{estado} where idformato= #{idformato}")
+	@Update("update victorian.t_formato set codigo = #{codigo}, estado = #{estado} where idformato= #{idformato}")
 	@Options(flushCache=true,useCache=true)
     public void actualizarFormato(Formato formato) throws Exception;
 	
 	//no se puede borrar asi esta mal porque tiene foraneas
-	@Delete("delete  from t_formato where idformato = #{idformato}")
+	@Delete("delete from victorian.t_formato where idformato = #{idformato}")
 	@Options(flushCache=true)
 	public void eliminarFormato(@Param("idformato") Integer idformato) throws Exception;
 	
-	@Select("select f.codigo from t_formato f inner join t_producto p on p.idformato = f.idformato where id_producto =  #{id_producto}")
+	@Select("select f.codigo from victorian.t_formato f inner join t_producto p on p.idformato = f.idformato where id_producto =  #{id_producto}")
 	public List<Formato> listFormatoxProducto(@Param("id_producto") Integer id_producto) throws Exception;
 		
 	

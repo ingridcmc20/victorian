@@ -74,7 +74,7 @@ public class UsuarioMB extends GenericBeans implements Serializable {
 		this.usuario = new Usuario();
 		this.usuarios = usuarioServices.getlistaUsuario();
 		this.view = true;
-		this.listaEmpresa = new ArrayList<>();
+		this.listaEmpresa = new ArrayList<Empresa>();
 		this.empresaService = new EmpresaService();
 
 		try {
@@ -158,7 +158,7 @@ public class UsuarioMB extends GenericBeans implements Serializable {
 				boolean pasaDni = true;
 				boolean pasaLogin = true;
 
-				Usuario usu = this.usuarioServices.getUsuario_byIdUsuario(this.usuario.getIdusuario());
+				Usuario usu = this.usuarioServices.getUsuario_byIdUsuario(this.usuario.getId_usuario());
 				if (usu.getDni().equals(this.usuario.getDni())) {
 					pasaDni = true;
 				} else {
@@ -238,7 +238,7 @@ public class UsuarioMB extends GenericBeans implements Serializable {
 	public void eliminarUsuario() {
 		System.out.println("Vamos a Realizar una eliminacion ");
 		try {
-			usuarioServices.deleteUsuario(usuario.getIdusuario());
+			usuarioServices.deleteUsuario(usuario.getId_usuario());
 			usuarios = usuarioServices.getlistaUsuario();
 			/*
 			 * for(Usuario u : usuarios){ try { Centro_Atencion c = new
@@ -269,7 +269,7 @@ public class UsuarioMB extends GenericBeans implements Serializable {
 	public void newUpdate(Usuario usu) {
 		System.out.println("editando usuario");
 		this.editar = Boolean.TRUE;
-		this.usuario = usuarioServices.buscarPorId(usu.getIdusuario());
+		this.usuario = usuarioServices.buscarPorId(usu.getId_usuario());
 		lastLogin = usuario.getLogin();
 
 		try {
@@ -289,7 +289,7 @@ public class UsuarioMB extends GenericBeans implements Serializable {
 		RequestContext context2;
 		context2 = RequestContext.getCurrentInstance();
 
-		System.out.println("el idusuario que selecciono es  " + usuario.getIdusuario());
+		System.out.println("el idusuario que selecciono es  " + usuario.getId_usuario());
 
 		try {
 			this.usuarioServices.resetearPassword(this.usuario);

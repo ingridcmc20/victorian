@@ -13,7 +13,7 @@ public interface UsuarioMapper {
 
 	public List<Usuario> buscarPorLoginClave(Usuario usuario);
 
-	public Usuario buscarPorId(int idusuario);
+	public Usuario buscarPorId(int id_usuario);
 
 	public void insertUsuario(Usuario usuario);
 
@@ -27,15 +27,15 @@ public interface UsuarioMapper {
 
 	public Usuario buscarPorLogin(String string) throws Exception;
 
-	@Select("select * from t_usuario where dni =#{dni}")
+	@Select("select * from victorian.t_usuario where dni =#{dni}")
 	public Usuario buscarPorDni(@Param("dni") String dni) throws Exception;
 
-	public void deleteUsuario(Integer idusuario) throws Exception;
+	public void deleteUsuario(Integer id_usuario) throws Exception;
 
-	@Update("update t_usuario set password = #{login} where idusuario = #{idusuario}")
-	public void resetearPassword(Usuario usuario) throws Exception;
+	@Update("update victorian.t_usuario set password = #{login} where id_usuario = #{id_usuario}")
+	public void resetearPassword(Usuario id_usuario) throws Exception;
 
-	@Select("select * from t_usuario where idusuario =  #{idusuario}")
-	public Usuario getUsuario_byIdUsuario(Integer idusuario);
+	@Select("select * from victorian.t_usuario where id_usuario =  #{id_usuario}")
+	public Usuario getUsuario_byIdUsuario(Integer id_usuario);
 	
 }
