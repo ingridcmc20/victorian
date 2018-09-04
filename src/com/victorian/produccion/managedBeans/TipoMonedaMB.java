@@ -45,7 +45,7 @@ public class TipoMonedaMB extends GenericBeans implements Serializable{
 	public void inicia()
 	{
 		this.monedaSelec = new TipoMoneda();
-		this.listaTipoMoneda = new ArrayList<>();
+		this.listaTipoMoneda = new ArrayList();
 		this.editar = Boolean.FALSE;
 		menuServices = new MenuServices();
 		

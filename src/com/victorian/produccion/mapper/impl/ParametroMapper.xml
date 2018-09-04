@@ -17,16 +17,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 </resultMap>
 
 	<select id="listParametro" resultType="com.victorian.produccion.domain.Parametro">
-	Select * from public.t_parametro
+	Select * from victorian.t_parametro
 	</select>
 
 	<delete id="deleteParametro" parameterType="int">
-	    DELETE FROM t_parametro
+	    DELETE FROM victorian.t_parametro
  		WHERE cod_parametro =#{cod_parametro}
 	</delete>
 
 	<insert id="insertParametro" parameterType="com.victorian.produccion.domain.Parametro">
-		INSERT INTO t_parametro(
+		INSERT INTO victorian.t_parametro(
              nombre_parametro, descripcion, valor,  ind_activo)
     	VALUES (#{nombre_parametro}, #{descripcion}, #{valor}, #{ind_activo})
 	</insert>
@@ -35,11 +35,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<select id="findParametros" resultType="com.victorian.produccion.domain.Parametro">
-	Select * from public.t_parametro
+	Select * from victorian.t_parametro
 	</select>
 
 	<update id="updateParametro" parameterType="com.victorian.produccion.domain.Parametro">
-		UPDATE t_parametro
+		UPDATE victorian.t_parametro
    		SET nombre_parametro=#{nombre_parametro}, descripcion=#{descripcion}, valor=#{valor}, 
        	ind_activo = #{ind_activo}
  		WHERE cod_parametro = #{cod_parametro}
@@ -48,7 +48,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  	<select id="findParametroPorCodigo" resultMap="parametroResult" parameterType="int">
         SELECT cod_parametro, nombre_parametro, descripcion, valor, fecha_registro, 
        			fecha_modif, ind_activo
-  		FROM t_parametro
+  		FROM victorian.t_parametro
         where cod_parametro =#{cod_parametro}
     </select>
 

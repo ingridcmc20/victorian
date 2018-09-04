@@ -1,23 +1,15 @@
 package com.victorian.produccion.domain;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
 
-import org.primefaces.model.StreamedContent;
-
 /**
-@author IngridMC
-Fecha cambio: 01/02/2017
-Descripcion: Permite guardar la información del usuario.
-*/
-public class Usuario implements Serializable{
-
-	/**
-	 * 
-	 */
+ * @author IngridMC Fecha cambio: 01/02/2017 Descripcion: Permite guardar la
+ *         información del usuario.
+ */
+public class Usuario implements Serializable {
 	private static final long serialVersionUID = 1L;
-	public int idusuario;
+	public int id_usuario;
 	private String dni;
 	private String nombre;
 	private String apellido_paterno;
@@ -44,142 +36,25 @@ public class Usuario implements Serializable{
 	private String rpm;
 	private String rpc;
 	private String telefono;
-	private String codigoBanco; //el de ejecutivo
+	private String codigoBanco; // el de ejecutivo
 	private String codigoBancoSupervisor; // el de supervisor
 	private String codigo_quality; // codigo del sistema quality
 	private Integer dias_vacaciones;
 	private Integer dias_descanso;
 	private Integer idproducto;
-	
 	private String producto_principal;
 	private String otros_productos;
 	private String negocio_asignado;
 
-	/* Para ONP */
-
 	private String nombre_completo;
-	private String nombre_centro_atencion;
-	private int nro_impresiones;
-	private int nro_consultas;
-	private String desEmpresa;
-	private String desNegocio;
-
-	private int Totalimpresiones;
-	private int Totalconsultas;
-
-	/* campos alternos Para Ejecutivo */
-	private String desTipoPlanilla;
-	private String desCargo;
-	private Integer sid_ubigeo;	
-	public Date fecha_ingreso;
-	private String departamento;
-	private String provincia;
-	private String distrito;
-	private String des_responsable;
-	
-	private Integer cantidadExpedientesAsignados;
-	private String nombreSupervisor;
-	private String nombreCoordinador;
-	// para vista
-	private StreamedContent archivoFoto;
-	private String  des_cargo;
-	private String  nomSupervisor;
- 	private Boolean selected = Boolean.FALSE;
-	
-	//Transitorias:
-	private Integer numeroExpedienteFactura;
-	private BigDecimal montoExpedienteFactura;
-	private BigDecimal montoTotal;
-	
-	private Integer totalRegistros;
-	private Integer totalRegistrosEncontrados;
-	private Integer totalRegistrosNoEncontrados;
-	private BigDecimal montoSolicitado;
-	private BigDecimal montoAprobado;
-	private Boolean estadoFacturacion;
-	private Usuario usuarioJefe;
-	
-	private BigDecimal montoBono;
-	private Double bono_mi_vivienda;
-	
-	private String nom_supervisor;
-	private Integer sala;
-	private Boolean sala_dueno;
-	private Integer idpadre;
-	
-	// transitorias
-	private Integer cant_op = 0;
-	private double monto_soles =0;
-	
-	/* transitorias para proyeccion ventas*/
-	private Integer id_proyeccion_venta;
-	private Integer id_ejecutivo;
-	private double  meta;
-	private Date 	periodo;
-	private Integer id_ejecutivo_padre;
-	
-	private String estado_banco; // Visible Banco,No Visible Banco
-	//private n
-	
-	private double direccion_lat;
-	private double direccion_long;
-	private String lat_ultimo;
-	private String long_ultimo;
-	private String estado_gps;
-	
-	private String imei;
-	private Date ult_fecha_ubicacion;
-	
-	private double max_metros_casa;
-	private String desc_est_ubic;
-	
-	private Integer idusuario_referente;
-	
-	private String concesionario;
-	
-	private String territorio;
-	
-	private Integer cantidad = 0;
-	
 	private boolean dotacion;
-	
-	private String antiguedad;
-	
-	//elastix
-	private String anexo_telef;
-	private Integer nro_llamadas;
-	private Integer tiempo_llamada; // segundos
-	
-	private String desc_tiemp_llam;
-	
-	private Integer cant_answered;
-	private Integer cant_noanswered;
-	private Integer cant_busy;
-	private Integer cant_failed;
-	// Para guardar imagen en linux
-	private String nombre_imagen;
-	private String ruta_imagen;
-	
-	private Integer tipo_usuario_id;
-	private Integer expediente_id;
+	private String desEmpresa;
 
 	public Usuario() {
 	}
 
-	public BigDecimal getMontoBono() {
-		return montoBono;
-	}
-
-	public void setMontoBono(BigDecimal montoBono) {
-		this.montoBono = montoBono;
-	}
-
-	public BigDecimal getMontoTotal() {
-		return montoTotal;
-	}
-
-	public void setMontoTotal(BigDecimal montoTotal) {
-		this.montoTotal = montoTotal;
+	public Usuario(Integer id_usuario) {
+		this.id_usuario = id_usuario;
 	}
 
 	public Integer getId_cargo() {
@@ -188,22 +63,6 @@ public class Usuario implements Serializable{
 
 	public void setId_cargo(Integer id_cargo) {
 		this.id_cargo = id_cargo;
-	}
-
-	public String getDesEmpresa() {
-		return desEmpresa;
-	}
-
-	public void setDesEmpresa(String desEmpresa) {
-		this.desEmpresa = desEmpresa;
-	}
-
-	public String getDesNegocio() {
-		return desNegocio;
-	}
-
-	public void setDesNegocio(String desNegocio) {
-		this.desNegocio = desNegocio;
 	}
 
 	public Integer getId_empresa() {
@@ -222,25 +81,17 @@ public class Usuario implements Serializable{
 		this.id_proyecto = id_proyecto;
 	}
 
-	public void setNombre_completo(String nombre_completo) {
-		this.nombre_completo = nombre_completo;
+	public int getId_usuario() {
+		return id_usuario;
 	}
 
-	public Usuario(Integer idusuario) {
-		this.idusuario = idusuario;
+	public void setId_usuario(int id_usuario) {
+		this.id_usuario = id_usuario;
 	}
 
 	public Usuario(String login, String password) {
 		this.login = login;
 		this.password = password;
-	}
-
-	public int getIdusuario() {
-		return idusuario;
-	}
-
-	public void setIdusuario(int idusuario) {
-		this.idusuario = idusuario;
 	}
 
 	public String getDni() {
@@ -355,14 +206,6 @@ public class Usuario implements Serializable{
 		this.es_nuevo = es_nuevo;
 	}
 
-	public String getNombre_centro_atencion() {
-		return nombre_centro_atencion;
-	}
-
-	public void setNombre_centro_atencion(String nombre_centro_atencion) {
-		this.nombre_centro_atencion = nombre_centro_atencion;
-	}
-
 	public Date getFecha_cambio_password() {
 		return fecha_cambio_password;
 	}
@@ -379,72 +222,16 @@ public class Usuario implements Serializable{
 		this.fecha_cambio_pass = fecha_cambio_pass;
 	}
 
-	public int getNro_impresiones() {
-		return nro_impresiones;
-	}
-
-	public void setNro_impresiones(int nro_impresiones) {
-		this.nro_impresiones = nro_impresiones;
-	}
-
-	public int getNro_consultas() {
-		return nro_consultas;
-	}
-
-	public void setNro_consultas(int nro_consultas) {
-		this.nro_consultas = nro_consultas;
-	}
-
 	public String getNombre_completo() {
-		String apellidos="";
-		if (getApellido_paterno() != null) 
+		String apellidos = "";
+		if (getApellido_paterno() != null)
 			apellidos += " " + getApellido_paterno();
-		
-		if (getApellido_materno() != null) 
+
+		if (getApellido_materno() != null)
 			apellidos += " " + getApellido_materno();
-		
-		nombre_completo = (apellidos + " " +getNombre()).trim();
+
+		nombre_completo = (apellidos + " " + getNombre()).trim();
 		return nombre_completo;
-	}
-
-	public int getTotalimpresiones() {
-		return Totalimpresiones;
-	}
-
-	public void setTotalimpresiones(int totalimpresiones) {
-		Totalimpresiones = totalimpresiones;
-	}
-
-	public int getTotalconsultas() {
-		return Totalconsultas;
-	}
-
-	public void setTotalconsultas(int totalconsultas) {
-		Totalconsultas = totalconsultas;
-	}
-
-	public String getDesTipoPlanilla() {
-		return desTipoPlanilla;
-	}
-
-	public void setDesTipoPlanilla(String desTipoPlanilla) {
-		this.desTipoPlanilla = desTipoPlanilla;
-	}
-
-	public String getDesCargo() {
-		return desCargo;
-	}
-
-	public void setDesCargo(String desCargo) {
-		this.desCargo = desCargo;
-	}
-
-	public StreamedContent getArchivoFoto() {
-		return archivoFoto;
-	}
-
-	public void setArchivoFoto(StreamedContent archivoFoto) {
-		this.archivoFoto = archivoFoto;
 	}
 
 	public byte[] getImagen() {
@@ -453,118 +240,6 @@ public class Usuario implements Serializable{
 
 	public void setImagen(byte[] imagen) {
 		this.imagen = imagen;
-	}
-
-	public Integer getSid_ubigeo() {
-		return sid_ubigeo;
-	}
-
-	public void setSid_ubigeo(Integer sid_ubigeo) {
-		this.sid_ubigeo = sid_ubigeo;
-	}
-
-	public Date getFecha_ingreso() {
-		return fecha_ingreso;
-	}
-
-	public void setFecha_ingreso(Date fecha_ingreso) {
-		this.fecha_ingreso = fecha_ingreso;
-	}
-
-	public String getDepartamento() {
-		return departamento;
-	}
-
-	public void setDepartamento(String departamento) {
-		this.departamento = departamento;
-	}
-
-	public String getProvincia() {
-		return provincia;
-	}
-
-	public void setProvincia(String provincia) {
-		this.provincia = provincia;
-	}
-
-	public String getDistrito() {
-		return distrito;
-	}
-
-	public void setDistrito(String distrito) {
-		this.distrito = distrito;
-	}
-
-	public String getDes_responsable() {
-		return des_responsable;
-	}
-
-	public void setDes_responsable(String des_responsable) {
-		this.des_responsable = des_responsable;
-	}
-
-	public String getDes_cargo() {
-		return des_cargo;
-	}
-
-	public void setDes_cargo(String des_cargo) {
-		this.des_cargo = des_cargo;
-	}
-
-	public Integer getCantidadExpedientesAsignados() {
-		return cantidadExpedientesAsignados;
-	}
-
-	public void setCantidadExpedientesAsignados(Integer cantidadExpedientesAsignados) {
-		this.cantidadExpedientesAsignados = cantidadExpedientesAsignados;
-	}
-
-	public String getNombreSupervisor() {
-		return nombreSupervisor;
-	}
-
-	public void setNombreSupervisor(String nombreSupervisor) {
-		this.nombreSupervisor = nombreSupervisor;
-	}
-
-	public String getNombreCoordinador() {
-		return nombreCoordinador;
-	}
-
-	public void setNombreCoordinador(String nombreCoordinador) {
-		this.nombreCoordinador = nombreCoordinador;
-	}
-
-	public String getNomSupervisor() {
-		return nomSupervisor;
-	}
-
-	public void setNomSupervisor(String nomSupervisor) {
-		this.nomSupervisor = nomSupervisor;
-	}
-
-	public Boolean getSelected() {
-		return selected;
-	}
-
-	public void setSelected(Boolean selected) {
-		this.selected = selected;
-	}
-
-	public Integer getNumeroExpedienteFactura() {
-		return numeroExpedienteFactura;
-	}
-
-	public void setNumeroExpedienteFactura(Integer numeroExpedienteFactura) {
-		this.numeroExpedienteFactura = numeroExpedienteFactura;
-	}
-
-	public BigDecimal getMontoExpedienteFactura() {
-		return montoExpedienteFactura;
-	}
-
-	public void setMontoExpedienteFactura(BigDecimal montoExpedienteFactura) {
-		this.montoExpedienteFactura = montoExpedienteFactura;
 	}
 
 	public Date getFecha_cese() {
@@ -631,99 +306,12 @@ public class Usuario implements Serializable{
 		this.codigoBancoSupervisor = codigoBancoSupervisor;
 	}
 
-	public Integer getTotalRegistros() {
-		return totalRegistros;
-	}
-
-	public void setTotalRegistros(Integer totalRegistros) {
-		this.totalRegistros = totalRegistros;
-	}
-
-	public BigDecimal getMontoSolicitado() {
-		return montoSolicitado;
-	}
-
-	public void setMontoSolicitado(BigDecimal montoSolicitado) {
-		this.montoSolicitado = montoSolicitado;
-	}
-
-	public BigDecimal getMontoAprobado() {
-		return montoAprobado;
-	}
-
-	public void setMontoAprobado(BigDecimal montoAprobado) {
-		this.montoAprobado = montoAprobado;
-	}
-
-	public Boolean getEstadoFacturacion() {
-		return estadoFacturacion;
-	}
-
-	public void setEstadoFacturacion(Boolean estadoFacturacion) {
-		this.estadoFacturacion = estadoFacturacion;
-	}
-
-	public Usuario getUsuarioJefe() {
-		return usuarioJefe;
-	}
-
-	public void setUsuarioJefe(Usuario usuarioJefe) {
-		this.usuarioJefe = usuarioJefe;
-	}
-
-	public Integer getTotalRegistrosEncontrados() {
-		return totalRegistrosEncontrados;
-	}
-
-	public void setTotalRegistrosEncontrados(Integer totalRegistrosEncontrados) {
-		this.totalRegistrosEncontrados = totalRegistrosEncontrados;
-	}
-
-	public Integer getTotalRegistrosNoEncontrados() {
-		return totalRegistrosNoEncontrados;
-	}
-
-	public void setTotalRegistrosNoEncontrados(Integer totalRegistrosNoEncontrados) {
-		this.totalRegistrosNoEncontrados = totalRegistrosNoEncontrados;
-	}
 	public String getCodigo_quality() {
 		return codigo_quality;
 	}
 
 	public void setCodigo_quality(String codigo_quality) {
 		this.codigo_quality = codigo_quality;
-	}
-
-	public Double getBono_mi_vivienda() {
-		return bono_mi_vivienda;
-	}
-
-	public void setBono_mi_vivienda(Double bono_mi_vivienda) {
-		this.bono_mi_vivienda = bono_mi_vivienda;
-	}
-
-	public String getNom_supervisor() {
-		return nom_supervisor;
-	}
-
-	public void setNom_supervisor(String nom_supervisor) {
-		this.nom_supervisor = nom_supervisor;
-	}
-
-	public Integer getCant_op() {
-		return cant_op;
-	}
-
-	public void setCant_op(Integer cant_op) {
-		this.cant_op = cant_op;
-	}
-
-	public double getMonto_soles() {
-		return monto_soles;
-	}
-
-	public void setMonto_soles(double monto_soles) {
-		this.monto_soles = monto_soles;
 	}
 
 	public Integer getDias_vacaciones() {
@@ -742,76 +330,12 @@ public class Usuario implements Serializable{
 		this.dias_descanso = dias_descanso;
 	}
 
-	public Integer getSala() {
-		return sala;
-	}
-
-	public void setSala(Integer sala) {
-		this.sala = sala;
-	}
-
-	public Boolean getSala_dueno() {
-		return sala_dueno;
-	}
-
-	public void setSala_dueno(Boolean sala_dueno) {
-		this.sala_dueno = sala_dueno;
-	}
-
 	public Integer getIdproducto() {
 		return idproducto;
 	}
 
 	public void setIdproducto(Integer idproducto) {
 		this.idproducto = idproducto;
-	}
-
-	public Integer getId_proyeccion_venta() {
-		return id_proyeccion_venta;
-	}
-
-	public void setId_proyeccion_venta(Integer id_proyeccion_venta) {
-		this.id_proyeccion_venta = id_proyeccion_venta;
-	}
-
-	public Integer getId_ejecutivo() {
-		return id_ejecutivo;
-	}
-
-	public void setId_ejecutivo(Integer id_ejecutivo) {
-		this.id_ejecutivo = id_ejecutivo;
-	}
-
-	public double getMeta() {
-		return meta;
-	}
-
-	public void setMeta(double meta) {
-		this.meta = meta;
-	}
-
-	public Date getPeriodo() {
-		return periodo;
-	}
-
-	public void setPeriodo(Date periodo) {
-		this.periodo = periodo;
-	}
-
-	public Integer getId_ejecutivo_padre() {
-		return id_ejecutivo_padre;
-	}
-
-	public void setId_ejecutivo_padre(Integer id_ejecutivo_padre) {
-		this.id_ejecutivo_padre = id_ejecutivo_padre;
-	}
-
-	public Integer getIdpadre() {
-		return idpadre;
-	}
-
-	public void setIdpadre(Integer idpadre) {
-		this.idpadre = idpadre;
 	}
 
 	public String getProducto_principal() {
@@ -838,118 +362,6 @@ public class Usuario implements Serializable{
 		this.negocio_asignado = negocio_asignado;
 	}
 
-	public String getEstado_banco() {
-		return estado_banco;
-	}
-
-	public void setEstado_banco(String estado_banco) {
-		this.estado_banco = estado_banco;
-	}
-
-	public double getDireccion_lat() {
-		return direccion_lat;
-	}
-
-	public void setDireccion_lat(double direccion_lat) {
-		this.direccion_lat = direccion_lat;
-	}
-
-	public double getDireccion_long() {
-		return direccion_long;
-	}
-
-	public void setDireccion_long(double direccion_long) {
-		this.direccion_long = direccion_long;
-	}
-
-	public String getEstado_gps() {
-		return estado_gps;
-	}
-
-	public void setEstado_gps(String estado_gps) {
-		this.estado_gps = estado_gps;
-	}
-
-	public String getLat_ultimo() {
-		return lat_ultimo;
-	}
-
-	public void setLat_ultimo(String lat_ultimo) {
-		this.lat_ultimo = lat_ultimo;
-	}
-
-	public String getLong_ultimo() {
-		return long_ultimo;
-	}
-
-	public void setLong_ultimo(String long_ultimo) {
-		this.long_ultimo = long_ultimo;
-	}
-
-	public String getImei() {
-		return imei;
-	}
-
-	public void setImei(String imei) {
-		this.imei = imei;
-	}
-
-	public Date getUlt_fecha_ubicacion() {
-		return ult_fecha_ubicacion;
-	}
-
-	public void setUlt_fecha_ubicacion(Date ult_fecha_ubicacion) {
-		this.ult_fecha_ubicacion = ult_fecha_ubicacion;
-	}
-
-	public double getMax_metros_casa() {
-		return max_metros_casa;
-	}
-
-	public void setMax_metros_casa(double max_metros_casa) {
-		this.max_metros_casa = max_metros_casa;
-	}
-
-	public String getDesc_est_ubic() {
-		return desc_est_ubic;
-	}
-
-	public void setDesc_est_ubic(String desc_est_ubic) {
-		this.desc_est_ubic = desc_est_ubic;
-	}
-
-	public Integer getIdusuario_referente() {
-		return idusuario_referente;
-	}
-
-	public void setIdusuario_referente(Integer idusuario_referente) {
-		this.idusuario_referente = idusuario_referente;
-	}
-
-	public String getConcesionario() {
-		return concesionario;
-	}
-
-	public void setConcesionario(String concesionario) {
-		this.concesionario = concesionario;
-	}
-
-	public String getTerritorio() {
-		return territorio;
-	}
-
-	public void setTerritorio(String territorio) {
-		this.territorio = territorio;
-	}
-
-	public Integer getCantidad() {
-		return cantidad;
-	}
-
-	public void setCantidad(Integer cantidad) {
-		this.cantidad = cantidad;
-	}
-
 	public boolean isDotacion() {
 		return dotacion;
 	}
@@ -958,109 +370,12 @@ public class Usuario implements Serializable{
 		this.dotacion = dotacion;
 	}
 
-	public String getAntiguedad() {
-		return antiguedad;
+	public String getDesEmpresa() {
+		return desEmpresa;
 	}
 
-	public void setAntiguedad(String antiguedad) {
-		this.antiguedad = antiguedad;
+	public void setDesEmpresa(String desEmpresa) {
+		this.desEmpresa = desEmpresa;
 	}
-
-	public String getAnexo_telef() {
-		return anexo_telef;
-	}
-
-	public void setAnexo_telef(String anexo_telef) {
-		this.anexo_telef = anexo_telef;
-	}
-
-	public Integer getNro_llamadas() {
-		return nro_llamadas;
-	}
-
-	public void setNro_llamadas(Integer nro_llamadas) {
-		this.nro_llamadas = nro_llamadas;
-	}
-
-	public Integer getTiempo_llamada() {
-		return tiempo_llamada;
-	}
-
-	public void setTiempo_llamada(Integer tiempo_llamada) {
-		this.tiempo_llamada = tiempo_llamada;
-	}
-
-	public String getDesc_tiemp_llam() {
-		return desc_tiemp_llam;
-	}
-
-	public void setDesc_tiemp_llam(String desc_tiemp_llam) {
-		this.desc_tiemp_llam = desc_tiemp_llam;
-	}
-
-	public Integer getCant_answered() {
-		return cant_answered;
-	}
-
-	public void setCant_answered(Integer cant_answered) {
-		this.cant_answered = cant_answered;
-	}
-
-	public Integer getCant_noanswered() {
-		return cant_noanswered;
-	}
-
-	public void setCant_noanswered(Integer cant_noanswered) {
-		this.cant_noanswered = cant_noanswered;
-	}
-
-	public Integer getCant_busy() {
-		return cant_busy;
-	}
-
-	public void setCant_busy(Integer cant_busy) {
-		this.cant_busy = cant_busy;
-	}
-
-	public Integer getCant_failed() {
-		return cant_failed;
-	}
-
-	public void setCant_failed(Integer cant_failed) {
-		this.cant_failed = cant_failed;
-	}
-
-	public String getRuta_imagen() {
-		return ruta_imagen;
-	}
-
-	public void setRuta_imagen(String ruta_imagen) {
-		this.ruta_imagen = ruta_imagen;
-	}
-
-	public String getNombre_imagen() {
-		return nombre_imagen;
-	}
-
-	public void setNombre_imagen(String nombre_imagen) {
-		this.nombre_imagen = nombre_imagen;
-	}
-
-	public Integer getTipo_usuario_id() {
-		return tipo_usuario_id;
-	}
-
-	public void setTipo_usuario_id(Integer tipo_usuario_id) {
-		this.tipo_usuario_id = tipo_usuario_id;
-	}
-
-	public Integer getExpediente_id() {
-		return expediente_id;
-	}
-
-	public void setExpediente_id(Integer expediente_id) {
-		this.expediente_id = expediente_id;
-	}
-	
 
 }

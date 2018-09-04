@@ -12,16 +12,16 @@ public interface MenuPerfilMapper {
 
 	
 	//busca 
-	@Select("select * from t_opcion_menuxperfil mp where mp.cod_menu=#{p_codMenu} and mp.cod_perfil=#{p_cod_perfil}")
+	@Select("select * from victorian.t_opcion_menuxperfil mp where mp.cod_menu=#{p_codMenu} and mp.cod_perfil=#{p_cod_perfil}")
 	public MenuXPerfil buscarMenuPerfil(@Param("p_codMenu") Long idMenu,@Param("p_cod_perfil") Integer idPerfil)throws Exception;
 	
 	//insertar
-	@Insert("insert into t_opcion_menuxperfil values(#{p_codMenu},#{p_cod_perfil},#{p_ind_activo})")
+	@Insert("insert into victorian.t_opcion_menuxperfil values(#{p_codMenu},#{p_cod_perfil},#{p_ind_activo})")
 	public void crearMenuPerfil(@Param("p_codMenu") Long idMenu,@Param("p_cod_perfil") Integer idperfil,@Param("p_ind_activo") Boolean activo) throws Exception;
 	
 	
 	//eliminar
-	@Delete("delete from  t_opcion_menuxperfil where cod_menu=#{p_codMenu} and cod_perfil=#{p_cod_perfil}")
+	@Delete("delete from victorian.t_opcion_menuxperfil where cod_menu=#{p_codMenu} and cod_perfil=#{p_cod_perfil}")
 	@Options(flushCache=true)
 	public void eliminarPerfilUsuario(@Param("p_codMenu") Long idMenu,@Param("p_cod_perfil") Integer idperfil) throws Exception;
 	

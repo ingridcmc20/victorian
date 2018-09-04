@@ -14,20 +14,20 @@ import com.victorian.produccion.domain.EstadoCivil;
 public interface EstadoCivilMapper {
 	
 
-	@Select("select * from t_estado_civil e where e.id_estado_civil = #{p_id_estado_civil}")
+	@Select("select * from victorian.t_estado_civil e where e.id_estado_civil = #{p_id_estado_civil}")
 	public EstadoCivil findById(@Param("p_id_estado_civil") Integer codigoEstado) throws Exception;
 	
-	@Select("select * from t_estado_civil")
+	@Select("select * from victorian.t_estado_civil")
 	public List<EstadoCivil> findAll() throws Exception;
 		
-	@Insert("insert into t_estado_civil (descripcion) values (#{descripcion})")
+	@Insert("insert into victorian.t_estado_civil (descripcion) values (#{descripcion})")
 	public void crearEstadoCivil(EstadoCivil resultado) throws Exception;
 	
-	@Update("update t_estado_civil set descripcion = #{descripcion} where id_estado_civil= #{id_estado_civil}")
+	@Update("update victorian.t_estado_civil set descripcion = #{descripcion} where id_estado_civil= #{id_estado_civil}")
 	@Options(flushCache=true,useCache=true)
     public void actualizarEstadoCivil(EstadoCivil estadocivil) throws Exception;
 	
-	@Delete("delete from t_estado_civil  where id_estado_civil = #{id_estado_civil}")
+	@Delete("delete from victorian.t_estado_civil  where id_estado_civil = #{id_estado_civil}")
 	@Options(flushCache=true)
 	public void eliminarEstadoCivil(@Param("id_estado_civil") Integer id_estado_civil) throws Exception;	
 }

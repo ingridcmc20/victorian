@@ -13,14 +13,14 @@ import com.victorian.produccion.domain.Recurso;
 
 public interface AsignacionRecursoMapper {
 		
-	@Select("SELECT id_asignacion_recurso, id_pedido, id_cortador, id_confeccionista, id_empaquetador, id_maquina_corte, id_maquina_confeccion FROM t_asignacion_recurso where id_pedido = #{id_pedido}")
+	@Select("SELECT id_asignacion_recurso, id_pedido, id_cortador, id_confeccionista, id_empaquetador, id_maquina_corte, id_maquina_confeccion FROM victorian.t_asignacion_recurso where id_pedido = #{id_pedido}")
 	public AsignacionRecurso findByIdPedido(@Param("id_pedido") Integer id_pedido) throws Exception;
 	
-	@Insert("INSERT INTO t_asignacion_recurso(id_pedido, id_cortador, id_confeccionista, id_empaquetador, id_maquina_corte, id_maquina_confeccion) "
+	@Insert("INSERT INTO victorian.t_asignacion_recurso(id_pedido, id_cortador, id_confeccionista, id_empaquetador, id_maquina_corte, id_maquina_confeccion) "
 			+ "VALUES (#{id_pedido}, #{id_cortador}, #{id_confeccionista}, #{id_empaquetador}, #{id_maquina_corte}, #{id_maquina_confeccion})")
 	public void insert(AsignacionRecurso asignacionRecurso) throws Exception;
 	
-	@Update("UPDATE t_asignacion_recurso SET id_cortador=#{id_cortador}, id_confeccionista=#{id_confeccionista}, id_empaquetador=#{id_empaquetador}, "
+	@Update("UPDATE victorian.t_asignacion_recurso SET id_cortador=#{id_cortador}, id_confeccionista=#{id_confeccionista}, id_empaquetador=#{id_empaquetador}, "
 			+ "id_maquina_corte=#{id_maquina_corte}, id_maquina_confeccion=#{id_maquina_confeccion} where id_asignacion_recurso= #{id_asignacion_recurso}")
 	@Options(flushCache=true,useCache=true)
     public void update(AsignacionRecurso asignacionRecurso) throws Exception;

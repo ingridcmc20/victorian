@@ -48,7 +48,7 @@ public class ProveedorMB extends GenericBeans implements Serializable{
 	public void inicia()
 	{
 		this.proveedorSelec = new Proveedor();
-		this.listaProveedor = new ArrayList<>();
+		this.listaProveedor = new ArrayList();
 		this.proveedorService = new ProveedorService();
 		
 		this.editar = Boolean.FALSE;

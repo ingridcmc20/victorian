@@ -22,16 +22,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</resultMap>
 
 	<select id="listMenu" resultType="com.victorian.produccion.domain.Menu">
-		Select * from t_opcion_menu
+		Select * from victorian.t_opcion_menu
 	</select>
 
 	<delete id="deleteMenu" parameterType="com.victorian.produccion.domain.Menu">
-		Delete from t_opcion_menu
+		Delete from victorian.t_opcion_menu
 		where cod_menu=#{cod_menu}
 	</delete>
 
 	<insert id="insertMenu" parameterType="com.victorian.produccion.domain.Menu">
-		Insert into t_opcion_menu
+		Insert into victorian.t_opcion_menu
 		(cod_menu_padre,nombre,cod_sistema,descripcion,ind_activo,fecha_registro,fecha_modif,usuario_registro,usuario_modif,icono)
 		values
 		(#{menuPadre.cod_menu},#{nombre},#{cod_sistema},#{descripcion},1,now(),now(),#{usuario_registro},#{usuario_modif},#{icono})
@@ -39,22 +39,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<select id="findMenu" resultType="com.victorian.produccion.domain.Menu"
 		parameterType="int">
-		Select * from t_opcion_menu
+		Select * from victorian.t_opcion_menu
 		where cod_menu=#{id}
 	</select>
 	
 	<select id="findMenuxNombre" resultType="com.victorian.produccion.domain.Menu"
 		parameterType="String">
-		Select * from t_opcion_menu op
+		Select * from victorian.t_opcion_menu op
 		where op.nombre =#{nombreMenu}
 	</select>
 
 	<select id="findMenus" resultType="com.victorian.produccion.domain.Menu">
-		Select * from t_opcion_menu
+		Select * from victorian.t_opcion_menu
 	</select>
 
 	<update id="updateMenu" parameterType="com.victorian.produccion.domain.Menu">
-		update t_opcion_menu
+		update victorian.t_opcion_menu
 		set cod_sistema =#{cod_sistema},
 		cod_menu_padre =#{cod_menu_padre},
 		nombre =#{nombre},
@@ -70,20 +70,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<select id="listMenuxSistema" parameterType="com.victorian.produccion.domain.Perfil" resultMap="menuResult">
 		select distinct m.cod_menu,m.cod_sistema,m.cod_menu_padre,m.nombre,m.icono,m.action
-		from t_perfil p inner join t_opcion_menuxperfil o on p.cod_perfil=o.cod_perfil
-		inner join t_opcion_menu m on o.cod_menu=m.cod_menu 
-		inner join t_sistema s on s.cod_sistema=m.cod_sistema
+		from victorian.t_perfil p inner join victorian.t_opcion_menuxperfil o on p.cod_perfil=o.cod_perfil
+		inner join victorian.t_opcion_menu m on o.cod_menu=m.cod_menu 
+		inner join victorian.t_sistema s on s.cod_sistema=m.cod_sistema
 		where p.cod_perfil=#{cod_perfil}
 		order by  m.cod_menu asc;
 	</select>	
 	
 	<!-- Para obtener la opción de Menu a la que pertenece la accion al registrar en la tabla Log -->
 	<select id="opcionMenuByPrettyCod" resultType="int">
-		SELECT cod_menu FROM t_opcion_menu WHERE action =#{action}	
+		SELECT cod_menu FROM victorian.t_opcion_menu WHERE action =#{action}	
 	</select>
 	<select id="opcionMenuByPretty" resultType="com.victorian.produccion.domain.Menu"
 		parameterType="String">
-		SELECT * FROM t_opcion_menu WHERE action =#{action}	
+		SELECT * FROM victorian.t_opcion_menu WHERE action =#{action}	
 	</select>
 
 </mapper>	

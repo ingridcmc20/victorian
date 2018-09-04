@@ -7,7 +7,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<resultMap type="com.victorian.produccion.domain.Usuario"
 		id="usuarioResult">
-		<result column="idusuario" property="idusuario" />
+		<result column="id_usuario" property="id_usuario" />
 		<result column="nombre" property="nombre" />
 		<result column="nombre_completo" property="nombre_completo" />
 		<result column="apellido_paterno" property="apellido_paterno" />
@@ -17,21 +17,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="password" property="password" />
 		<result column="estado" property="estado" />
 		<result column="email" property="email" />
-		<result column="desEmpresa" property="desEmpresa" />
 		<result column="fecha_registro" property="fecha_registro" />
 		<result column="fecha_acceso" property="fecha_acceso" />
 		<result column="cod_perfil" property="cod_perfil" />
 		<result column="fecha_cambio_password" property="fecha_cambio_password" />
 		<result column="es_nuevo" property="es_nuevo" javaType="boolean" jdbcType="BOOLEAN"  />
-		<result column="desTipoPlanilla" property="desTipoPlanilla" />
-		<result column="desCargo" property="desCargo" />
 		<result column="imagen" property="imagen" /> 	
-		<result column="fecha_ingreso" property="fecha_ingreso" /> 
-		<result column="departamento" property="departamento" /> 
-		<result column="provincia" property="provincia" /> 
-		<result column="distrito" property="distrito" /> 
 		<result column="id_cargo" property="id_cargo" /> 
-		<result column="sid_ubigeo" property="sid_ubigeo" /> 
 		<result column="id_empresa" property="id_empresa" />
 		<result column="fecha_cese" property="fecha_cese" />
 		<result column="motivo_cese" property="motivo_cese" />		
@@ -40,51 +32,40 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="rpc" property="rpc" />
 		<result column="telefono" property="telefono" />
 		<result column="codigo_quality" property="codigo_quality" />
-		<result column="nom_supervisor" property="nom_supervisor" />		
 		<result column="dias_descanso" property="dias_descanso" />
 		<result column="dias_vacaciones" property="dias_vacaciones" />
-		<result column="sala" property="sala" />
-		<result column="sala_dueno" property="sala_dueno" />
 		<result column="idproducto" property="idproducto" />
 		<result column="producto_principal" property="producto_principal" />
 		<result column="otros_productos" property="otros_productos" />
 		<result column="negocio_asignado" property="negocio_asignado" />
-		
-		<result column="concesionario" property="concesionario" />
-		
-		<result column="ruta_imagen" property="ruta_imagen" />
-		
-		<result column="tipo_usuario_id" property="tipo_usuario_id" />
-		<result column="expediente_id" property="expediente_id" />
-		
 	</resultMap>
 
 	<select id="buscarPorLoginClave" parameterType="com.victorian.produccion.domain.Usuario"
 		resultMap="usuarioResult">
 		SELECT
-		idusuario,nombre,apellido_paterno,apellido_materno,dni,email,direccion,login,password,estado,fecha_registro,fecha_mod,fecha_acceso,es_nuevo,idproducto,
+		id_usuario,nombre,apellido_paterno,apellido_materno,dni,email,direccion,login,password,estado,fecha_registro,fecha_mod,fecha_acceso,es_nuevo,idproducto,
 		idusuario_referente, tipo_usuario_id, expediente_id
-		from t_usuario
+		from victorian.t_usuario
 		where login =#{login} And password=#{password}
 	</select>
 
 	<select id="buscarPorDNI" parameterType="String" resultMap="usuarioResult">
 		SELECT
-		idusuario,nombre,apellido_paterno,apellido_materno,dni,email,direccion,login,password,estado,fecha_registro,fecha_mod,es_nuevo
-		from t_usuario
+		id_usuario,nombre,apellido_paterno,apellido_materno,dni,email,direccion,login,password,estado,fecha_registro,fecha_mod,es_nuevo
+		from victorian.t_usuario
 		where dni =#{dni}
 	</select>
 
 	<select id="buscarPorId" parameterType="int" resultMap="usuarioResult">
 		SELECT
-		idusuario,nombre,apellido_paterno,apellido_materno,dni,email,direccion,login,password,estado,fecha_registro,fecha_mod,es_nuevo,
+		id_usuario,nombre,apellido_paterno,apellido_materno,dni,email,direccion,login,password,estado,fecha_registro,fecha_mod,es_nuevo,
 		id_cargo,imagen,id_empresa,concesionario, tipo_usuario_id, expediente_id, telefono
-		from t_usuario
-		where idusuario =#{idusuario}
+		from victorian.t_usuario
+		where id_usuario =#{id_usuario}
 	</select>
 
 	<insert id="insertUsuario" parameterType="com.victorian.produccion.domain.Usuario">
-		INSERT INTO t_usuario(dni,nombre, apellido_paterno,apellido_materno,email,login,password,
+		INSERT INTO victorian.t_usuario(dni,nombre, apellido_paterno,apellido_materno,email,login,password,
 		direccion,estado,es_nuevo,id_empresa,concesionario, dotacion,
 		tipo_usuario_id, expediente_id)
 		values
@@ -94,21 +75,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 
 	<select id="getlistaUsuario" resultMap="usuarioResult">
-		SELECT a.idusuario,a.dni, a.nombre, a.apellido_paterno, a.apellido_materno, a.email, a.direccion, a.fecha_registro, a.login,a.login,a.password,
+		SELECT a.id_usuario,a.dni, a.nombre, a.apellido_paterno, a.apellido_materno, a.email, a.direccion, a.fecha_registro, a.login,a.login,a.password,
 		a.fecha_acceso, a.estado, a.es_nuevo
 		FROM
-		t_usuario a
-		order by idusuario asc
+		victorian.t_usuario a
+		order by id_usuario asc
 	</select>
 	
 	<update id="actualizarEstado" parameterType="com.victorian.produccion.domain.Usuario">
-		UPDATE t_usuario
+		UPDATE victorian.t_usuario
 		SET estado = #{estado}
-		WHERE idusuario = #{idusuario}
+		WHERE id_usuario = #{id_usuario}
 	</update>
 
 	<update id="actualizar" parameterType="com.victorian.produccion.domain.Usuario">
-		update t_usuario
+		update victorian.t_usuario
 		SET dni =
 		#{dni},
 		nombre = #{nombre},
@@ -125,34 +106,34 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		id_empresa =  #{id_empresa},
 		tipo_usuario_id = #{tipo_usuario_id},
 		expediente_id = #{expediente_id}
-		WHERE idusuario = #{idusuario}
+		WHERE id_usuario = #{id_usuario}
 	</update>
 			
 	<update id="actualizarPassword" parameterType="com.victorian.produccion.domain.Usuario">
-		update t_usuario
+		update victorian.t_usuario
 		SET 
 		password = #{password},
 		fecha_cambio_password = #{fecha_cambio_password},
 		es_nuevo = #{es_nuevo}
-		WHERE idusuario = #{idusuario}
+		WHERE id_usuario = #{id_usuario}
 	</update>
 	
 	<update id="actualizarFechaAcceso" parameterType="com.victorian.produccion.domain.Usuario">
-		update t_usuario SET fecha_acceso = #{fecha_acceso}
-		WHERE idusuario = #{idusuario}
+		update victorian.t_usuario SET fecha_acceso = #{fecha_acceso}
+		WHERE id_usuario = #{id_usuario}
 	</update>
 		
 	<select id="buscarPorLogin" parameterType="String"
 		resultMap="usuarioResult">
 		SELECT
-		idusuario,nombre,apellido_paterno,apellido_materno,dni,email,direccion,login,password,estado,fecha_registro,fecha_mod,es_nuevo
-		from t_usuario
+		id_usuario,nombre,apellido_paterno,apellido_materno,dni,email,direccion,login,password,estado,fecha_registro,fecha_mod,es_nuevo
+		from victorian.t_usuario
 		where login =#{login} 
 	</select>
 	
 	<delete id="deleteUsuario" parameterType="int">
-		Delete from t_usuario
-		where idusuario=#{idusuario}
+		Delete from victorian.t_usuario
+		where id_usuario=#{id_usuario}
 	</delete>
 </mapper>
 
