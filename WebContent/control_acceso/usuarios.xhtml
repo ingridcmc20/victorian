@@ -70,17 +70,6 @@
 						<h:outputText value="#{u.login}" />
 					</p:column>
 					
-					<p:column headerText="Empresa"  filterBy="#{u.desEmpresa}" 
-						filterStyle="width:95%;"  filterMatchMode="contains" >
-						<h:outputText value="#{u.desEmpresa}" />
-					</p:column>
-					
-					
-					<p:column headerText="Proyecto"  filterBy="#{u.nombre_centro_atencion}" 
-						filterStyle="width:95%;"  filterMatchMode="contains" >
-						<h:outputText value="#{u.nombre_centro_atencion}" />
-					</p:column>
-					
 					<p:column style="width:12%" headerText="Fec. Ult. Acceso">
 						<h:outputText value="#{u.fecha_acceso}">
 							<f:convertDateTime pattern="dd/MM/yyyy hh:mm:ss aa" dateStyle="short" type="date" />
@@ -171,15 +160,6 @@
 							#{"Dirección: "}
 							<p:inputText value="#{usuarioMB.usuario.direccion}" id="direccion" maxlength="30" style="width:200px">
 							</p:inputText>
-
-							<p:outputLabel id="lblEmpresaTipoUsuario" value="Empresa: " rendered="#{usuarioMB.mostrarExpediente}"/>
-							<p:selectOneMenu id="cmbEmpresaTipoUsuario" rendered="#{usuarioMB.mostrarExpediente}" style="width:210px"
-								requiredMessage="Se necesita una Empresa" required="true"
-								value="#{usuarioMB.usuario.expediente_id}">
-								<f:selectItem itemLabel="Seleccionar" itemValue=""/>
-								<f:selectItems value="#{usuarioMB.listExpediente}" var="ex"
-									itemLabel="#{ex.nombre_completo}" itemValue="#{ex.expediente_id}" />
-							</p:selectOneMenu>
 						</h:panelGrid>
 						
 						<br/>

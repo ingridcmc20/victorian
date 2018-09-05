@@ -44,7 +44,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		resultMap="usuarioResult">
 		SELECT
 		id_usuario,nombre,apellido_paterno,apellido_materno,dni,email,direccion,login,password,estado,fecha_registro,fecha_mod,fecha_acceso,es_nuevo,idproducto,
-		idusuario_referente, tipo_usuario_id, expediente_id
+		idusuario_referente
 		from victorian.t_usuario
 		where login =#{login} And password=#{password}
 	</select>
@@ -59,19 +59,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="buscarPorId" parameterType="int" resultMap="usuarioResult">
 		SELECT
 		id_usuario,nombre,apellido_paterno,apellido_materno,dni,email,direccion,login,password,estado,fecha_registro,fecha_mod,es_nuevo,
-		id_cargo,imagen,id_empresa,concesionario, tipo_usuario_id, expediente_id, telefono
+		id_cargo,imagen,id_empresa, telefono
 		from victorian.t_usuario
 		where id_usuario =#{id_usuario}
 	</select>
 
 	<insert id="insertUsuario" parameterType="com.victorian.produccion.domain.Usuario">
 		INSERT INTO victorian.t_usuario(dni,nombre, apellido_paterno,apellido_materno,email,login,password,
-		direccion,estado,es_nuevo,id_empresa,concesionario, dotacion,
-		tipo_usuario_id, expediente_id)
+		direccion,estado,es_nuevo,id_empresa, dotacion)
 		values
 		(#{dni},#{nombre},#{apellido_paterno},#{apellido_materno},#{email},#{login},#{password},
-		#{direccion},#{estado},#{es_nuevo},#{id_empresa},#{concesionario}, #{dotacion},
-		#{tipo_usuario_id}, #{expediente_id})
+		#{direccion},#{estado},#{es_nuevo},#{id_empresa},#{dotacion})
 	</insert>
 
 	<select id="getlistaUsuario" resultMap="usuarioResult">
@@ -96,16 +94,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		apellido_paterno = #{apellido_paterno},
 		apellido_materno = #{apellido_materno},
 		email = #{email},
-		concesionario = #{concesionario},
 		direccion = #{direccion},
 		estado = #{estado},
 		fecha_acceso = #{fecha_acceso},
 		es_nuevo = #{es_nuevo},
 		password = #{password},
 		login = #{login},
-		id_empresa =  #{id_empresa},
-		tipo_usuario_id = #{tipo_usuario_id},
-		expediente_id = #{expediente_id}
+		id_empresa =  #{id_empresa}
 		WHERE id_usuario = #{id_usuario}
 	</update>
 			

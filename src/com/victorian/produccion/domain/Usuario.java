@@ -45,10 +45,10 @@ public class Usuario implements Serializable {
 	private String producto_principal;
 	private String otros_productos;
 	private String negocio_asignado;
-
 	private String nombre_completo;
 	private boolean dotacion;
 	private String desEmpresa;
+	private String nombre_centro_atencion;
 
 	public Usuario() {
 	}
@@ -376,6 +376,14 @@ public class Usuario implements Serializable {
 
 	public void setDesEmpresa(String desEmpresa) {
 		this.desEmpresa = desEmpresa;
+	}
+
+	public String getNombre_centro_atencion() {
+		return nombre_centro_atencion;
+	}
+
+	public void setNombre_centro_atencion(String nombre_centro_atencion) {
+		this.nombre_centro_atencion = nombre_centro_atencion;
 	}
 
 }

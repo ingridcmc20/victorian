@@ -16,7 +16,7 @@ public interface MenuPerfilMapper {
 	public MenuXPerfil buscarMenuPerfil(@Param("p_codMenu") Long idMenu,@Param("p_cod_perfil") Integer idPerfil)throws Exception;
 	
 	//insertar
-	@Insert("insert into victorian.t_opcion_menuxperfil values(#{p_codMenu},#{p_cod_perfil},#{p_ind_activo})")
+	@Insert("insert into victorian.t_opcion_menuxperfil values(#{p_cod_perfil},#{p_codMenu},#{p_ind_activo})")
 	public void crearMenuPerfil(@Param("p_codMenu") Long idMenu,@Param("p_cod_perfil") Integer idperfil,@Param("p_ind_activo") Boolean activo) throws Exception;
 	
 	
