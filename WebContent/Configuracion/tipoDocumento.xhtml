@@ -40,8 +40,8 @@
 					
 					<p:column style="width:15%; text.align: center" headerText="Estado">
 						<p:commandLink update="@form :sms" actionListener="#{tipoDocumentoMB.cambiarEstado(p)}" > 
-							<h:graphicImage value="#{p.estado?'/resources/img/icon-ok.png':'/resources/img/icon-block.png'}" 
-							title="#{p.estado?'Activo':'Bloqueado'}" />
+							<h:graphicImage value="#{p.activo?'/resources/img/icon-ok.png':'/resources/img/icon-block.png'}" 
+							title="#{p.activo?'Activo':'Bloqueado'}" />
 						</p:commandLink>
 					</p:column>
 					
@@ -78,7 +78,7 @@
 							<p:inputText style="width:200px" value="#{tipoDocumentoMB.documentoSelec.descripcion}" required="true" maxlength="50" requiredMessage="Se necesita una descripcion" />
 		
 							#{"Estado:"}
-							<p:selectOneMenu style="width:200px" value="#{tipoDocumentoMB.documentoSelec.estado}" required="true" requiredMessage="Seleccione un Estado">
+							<p:selectOneMenu style="width:200px" value="#{tipoDocumentoMB.documentoSelec.activo}" required="true" requiredMessage="Seleccione un Estado">
 								<f:selectItem itemLabel="Seleccione..." itemValue="" />
 								<f:selectItem itemLabel="ACTIVO" itemValue="TRUE" />
 								<f:selectItem itemLabel="DESACTIVO" itemValue="FALSE" />

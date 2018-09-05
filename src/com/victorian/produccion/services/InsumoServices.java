@@ -16,9 +16,9 @@ public class InsumoServices implements InsumoMapper{
 	}
 	
 	@Override
-	public Insumo findById(Integer idinsumo) {
+	public Insumo findById(Integer id_insumo) {
 		// TODO Auto-generated method stub
-		return insumoMapper.findById(idinsumo);
+		return insumoMapper.findById(id_insumo);
 	}
 
 }

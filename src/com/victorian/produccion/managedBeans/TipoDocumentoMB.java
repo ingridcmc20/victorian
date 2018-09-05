@@ -106,7 +106,7 @@ public class TipoDocumentoMB extends GenericBeans implements Serializable{
 	public void nuevoTipoDocumento(){
 		this.documentoSelec  = new TipoDocumento();
 		this.editar = Boolean.FALSE;
-		this.documentoSelec.setEstado(Boolean.TRUE);
+		this.documentoSelec.setActivo(Boolean.TRUE);
 	}
 	
 
@@ -123,7 +123,7 @@ public class TipoDocumentoMB extends GenericBeans implements Serializable{
 	public void confirmaEliminar()
 	{
 		try {
-			this.tipoDocumentoService.eliminarTipoDocumento(this.documentoSelec.getId_tipo_documento());
+			this.tipoDocumentoService.eliminarTipoDocumento(this.documentoSelec.getId_tipodocumento());
 			FacesUtils.showFacesMessage("Tipo Documento ha sido eliminado", 3);
 			this.listaTipoDocumento = this.tipoDocumentoService.findAll();
 			log.setAccion("DELETE");
@@ -141,11 +141,11 @@ public class TipoDocumentoMB extends GenericBeans implements Serializable{
 
 	public void cambiarEstado(TipoDocumento tipoDocumento){
 		   String estado = "";
-		   if(tipoDocumento.getEstado()){
-			   tipoDocumento.setEstado(Boolean.FALSE);
+		   if(tipoDocumento.getActivo()){
+			   tipoDocumento.setActivo(Boolean.FALSE);
 			   estado ="INACTIVO";
 		   }else{
-			   tipoDocumento.setEstado(Boolean.TRUE);
+			   tipoDocumento.setActivo(Boolean.TRUE);
 			   estado ="ACTIVO";
 		   }
 		   
@@ -154,7 +154,7 @@ public class TipoDocumentoMB extends GenericBeans implements Serializable{
 			   FacesUtils.showFacesMessage("Tipo Documento modificado correctamente",Constante.INFORMACION);
 			   this.listaTipoDocumento = this.tipoDocumentoService.findAll();
 			   log.setAccion("UPDATE");
-	           log.setDescripcion("El usuario "+this.login.getLoginUsuario()+" actualizó el estado a "+estado+" al tipo de documento: " + tipoDocumento.getEstado());
+	           log.setDescripcion("El usuario "+this.login.getLoginUsuario()+" actualizó el estado a "+estado+" al tipo de documento: " + tipoDocumento.getActivo());
 	           logmb.insertarLog(log);
 		   } catch (Exception e) {
 			   System.out.println("Error:"+e.getMessage());

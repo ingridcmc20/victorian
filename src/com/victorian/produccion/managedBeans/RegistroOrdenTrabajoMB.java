@@ -24,7 +24,6 @@ import com.victorian.produccion.domain.OrdenTrabajoDetalle;
 import com.victorian.produccion.domain.OrdenTrabajoMaquinaria;
 import com.victorian.produccion.domain.OrdenTrabajoOperario;
 import com.victorian.produccion.domain.Pedido;
-import com.victorian.produccion.domain.PlanPedido;
 import com.victorian.produccion.domain.PlanProduccion;
 import com.victorian.produccion.domain.Prioridad;
 import com.victorian.produccion.services.EtapaServices;
@@ -36,13 +35,16 @@ import com.victorian.produccion.services.OrdenTrabajoMaquinariaServices;
 import com.victorian.produccion.services.OrdenTrabajoOperarioServices;
 import com.victorian.produccion.services.OrdenTrabajoServices;
 import com.victorian.produccion.services.PedidoServices;
-import com.victorian.produccion.services.PlanPedidoServices;
 import com.victorian.produccion.services.PlanProduccionServices;
 import com.victorian.produccion.services.PrioridadServices;
 
 @ManagedBean(name = "registroOrdenTrabajoMB")
 @ViewScoped
 public class RegistroOrdenTrabajoMB extends GenericBeans implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private OperarioServices operarioServices;
 	private MaquinariaServices maquinariaServices;
 	private OrdenTrabajoServices ordenTrabajoServices;
@@ -52,7 +54,6 @@ public class RegistroOrdenTrabajoMB extends GenericBeans implements Serializable
 	private OrdenTrabajoDetalleServices ordenTrabajoDetalleServices;
 	private EtapaServices etapaServices;
 	private PlanProduccionServices planProduccionServices;
-	private PlanPedidoServices planPedidoServices;
 	private OrdenTrabajoOperarioServices ordenTrabajoOperarioServices;
 	private OrdenTrabajoMaquinariaServices ordenTrabajoMaquinariaServices;
 	
@@ -94,7 +95,6 @@ public class RegistroOrdenTrabajoMB extends GenericBeans implements Serializable
     		this.ordenTrabajoDetalleServices = new OrdenTrabajoDetalleServices();
     		this.etapaServices = new EtapaServices();
     		this.planProduccionServices = new PlanProduccionServices();
-    		this.planPedidoServices = new PlanPedidoServices();
     		this.ordenTrabajoOperarioServices = new OrdenTrabajoOperarioServices();
     		this.ordenTrabajoMaquinariaServices = new OrdenTrabajoMaquinariaServices();
     		
@@ -154,7 +154,7 @@ public class RegistroOrdenTrabajoMB extends GenericBeans implements Serializable
 				listFichasTecnicas = fichaTecnicaServices.findByProducto(pedidoSelected.getTipo_prenda());
 				
 				for(FichaTecnica ft: listFichasTecnicas){
-					subtotalproducto+=ft.getPreciototal();
+					subtotalproducto+=ft.getPrecio_total();
 				}
 				
 				subtotalpedido = subtotalproducto * this.pedidoSelected.getCantidad_prenda().intValue();
@@ -215,7 +215,7 @@ public class RegistroOrdenTrabajoMB extends GenericBeans implements Serializable
 				listFichasTecnicas = fichaTecnicaServices.findByProducto(pedidoSelected.getTipo_prenda());
 				
 				for(FichaTecnica ft: listFichasTecnicas){
-					subtotalproducto+=ft.getPreciototal();
+					subtotalproducto+=ft.getPrecio_total();
 				}
 				
 				subtotalpedido = subtotalproducto * this.pedidoSelected.getCantidad_prenda().intValue();
@@ -249,9 +249,9 @@ public class RegistroOrdenTrabajoMB extends GenericBeans implements Serializable
 			Date fechaActual = new Date();
 			
 			List<Etapa> lstEtapas = etapaServices.findAll();
-			PlanPedido planPedido = planPedidoServices.findByPedidoSinFicha(ordenTrabajoSelected.getId_pedido());
-			PlanProduccion planProduccion = planProduccionServices.findById(planPedido.getIdplan());
-			ordenTrabajoSelected.setFecha_entrega_orden(planProduccion.getFechafinplan());
+//			PlanPedido planPedido = planPedidoServices.findByPedidoSinFicha(ordenTrabajoSelected.getId_pedido());
+//			PlanProduccion planProduccion = planProduccionServices.findById(planPedido.getIdplan());
+//			ordenTrabajoSelected.setFecha_entrega_orden(planProduccion.getFechafinplan());
 			ordenTrabajoSelected.setFecha_registro(new java.sql.Date(fechaActual.getTime()));
 			ordenTrabajoSelected.setId_estado(Constante.OT_PENDIENTE);	
 			ordenTrabajoSelected.setId_etapa(Constante.OT_ETAPA_DISENIO);
@@ -269,25 +269,25 @@ public class RegistroOrdenTrabajoMB extends GenericBeans implements Serializable
 					OrdenTrabajoDetalle otd = new OrdenTrabajoDetalle();
 					otd.setId_orden_trabajo(ordenTrabajoSelected.getId_orden_trabajo());
 					otd.setId_etapa(etapa.getId_etapa());
-					otd.setId_plan_produccion(planPedido.getIdplan());
+//					otd.setId_plan_produccion(planPedido.getIdplan());
 					otd.setId_prioridad(ordenTrabajoSelected.getId_prioridad());
 					
 					switch(etapa.getId_etapa()){
 						case 1:
 							Calendar calFinDisenio = Calendar.getInstance();
-							calFinDisenio.setTime(planProduccion.getFechainicioplan());
+//							calFinDisenio.setTime(planProduccion.getFechainicioplan());
 							calFinDisenio.add(Calendar.DATE, 5);
 							
-							otd.setFecha_inicio(planProduccion.getFechainicioplan());
+//							otd.setFecha_inicio(planProduccion.getFechainicioplan());
 							otd.setFecha_fin(new java.sql.Date(calFinDisenio.getTime().getTime()));
 							break;
 						case 2:
 							Calendar calIniCorte = Calendar.getInstance();
-							calIniCorte.setTime(planProduccion.getFechainicioplan());
+//							calIniCorte.setTime(planProduccion.getFechainicioplan());
 							calIniCorte.add(Calendar.DATE, 6);
 							
 							Calendar calFinCorte = Calendar.getInstance();
-							calFinCorte.setTime(planProduccion.getFechainicioplan());
+//							calFinCorte.setTime(planProduccion.getFechainicioplan());
 							calFinCorte.add(Calendar.DATE, 12);
 							
 							otd.setFecha_inicio(new java.sql.Date(calIniCorte.getTime().getTime()));
@@ -295,11 +295,11 @@ public class RegistroOrdenTrabajoMB extends GenericBeans implements Serializable
 							break;
 						case 3:
 							Calendar calIniConfeccion = Calendar.getInstance();
-							calIniConfeccion.setTime(planProduccion.getFechainicioplan());
+//							calIniConfeccion.setTime(planProduccion.getFechainicioplan());
 							calIniConfeccion.add(Calendar.DATE, 13);
 							
 							Calendar calFinConfeccion = Calendar.getInstance();
-							calFinConfeccion.setTime(planProduccion.getFechainicioplan());
+//							calFinConfeccion.setTime(planProduccion.getFechainicioplan());
 							calFinConfeccion.add(Calendar.DATE, 19);
 							
 							otd.setFecha_inicio(new java.sql.Date(calIniConfeccion.getTime().getTime()));
@@ -308,11 +308,11 @@ public class RegistroOrdenTrabajoMB extends GenericBeans implements Serializable
 							break;
 						default:
 							Calendar calIniEmpaquetado = Calendar.getInstance();
-							calIniEmpaquetado.setTime(planProduccion.getFechainicioplan());
+//							calIniEmpaquetado.setTime(planProduccion.getFechainicioplan());
 							calIniEmpaquetado.add(Calendar.DATE, 20);
 							
 							otd.setFecha_inicio(new java.sql.Date(calIniEmpaquetado.getTime().getTime()));
-							otd.setFecha_fin(planProduccion.getFechafinplan());
+//							otd.setFecha_fin(planProduccion.getFechafinplan());
 					}
 					ordenTrabajoDetalleServices.insert(otd);
 				}

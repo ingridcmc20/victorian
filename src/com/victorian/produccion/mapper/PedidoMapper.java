@@ -25,7 +25,7 @@ public interface PedidoMapper {
 	@Select("SELECT idpedido, tipo_prenda,pr.descripcion as des_tipo_prenda, cantidad_prenda, modo_pago, fechapedido, "
 			+ "fechaentrega, estadopedido, e.descripcion as des_estado, p.idtipoconfeccion, tc.descripcion as des_tipoconfeccion,"
 			+ "c.nombre_cliente, m.descripcion as des_modo_pago, "
-			+ "(select count(idfichatecnica)>0 from victorian.t_fichatecnica where idproducto=tipo_prenda) bool_ficha_tecnica "
+			+ "(select count(id_fichatecnica)>0 from victorian.t_fichatecnica where idproducto=tipo_prenda) bool_ficha_tecnica "
 			+ "FROM victorian.t_pedido p inner join victorian.t_producto pr on pr.id_producto=p.tipo_prenda "
 			+ "inner join victorian.t_estado e on e.id_estado=p.estadopedido "
 			+ "inner join victorian.t_tipoconfeccion tc on tc.idtipoconfeccion=p.idtipoconfeccion "

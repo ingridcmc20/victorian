@@ -1,7 +1,6 @@
 package com.victorian.produccion.managedBeans;
 
 import java.io.Serializable;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -26,7 +25,6 @@ import com.victorian.produccion.services.AsignacionRecursoServices;
 import com.victorian.produccion.services.MaquinariaServices;
 import com.victorian.produccion.services.OperarioServices;
 import com.victorian.produccion.services.PedidoServices;
-import com.victorian.produccion.services.PlanPedidoServices;
 import com.victorian.produccion.services.PlanProduccionServices;
 import com.victorian.produccion.services.ProductoServices;
 import com.victorian.produccion.services.TipoConfeccionServices;
@@ -67,7 +65,6 @@ public class AprobarPlanProduccionMB extends GenericBeans implements Serializabl
 	private MaquinariaServices maquinariaServices;
 	private AsignacionRecursoServices asignacionRecursoServices;
 	private PlanProduccionServices planProduccionServices;
-	private PlanPedidoServices planPedidoServices;
 	
 	private Log log;
 	private LogMB logmb;
@@ -84,7 +81,6 @@ public class AprobarPlanProduccionMB extends GenericBeans implements Serializabl
 		this.maquinariaServices = new MaquinariaServices();
 		this.asignacionRecursoServices = new AsignacionRecursoServices();
 		this.planProduccionServices = new PlanProduccionServices();
-		this.planPedidoServices = new PlanPedidoServices();
 		
 		this.fecha_pedido=new Date();
 		this.fecha_entrega=new Date();

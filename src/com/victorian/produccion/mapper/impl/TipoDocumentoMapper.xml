@@ -6,9 +6,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.victorian.produccion.mapper.TipoDocumentoMapper">
 
 <resultMap id="estadoResult" type="com.victorian.produccion.domain.TipoDocumento">
-	<id column="id_tipo_documento" property="id_tipo_documento" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+	<id column="id_tipodocumento" property="id_tipodocumento" javaType="java.lang.Integer" jdbcType="INTEGER"/>
 	<result column="descripcion" property="descripcion" javaType="java.lang.String" jdbcType="VARCHAR"/>
-	<result column="estado" property="estado" javaType="java.lang.Boolean" jdbcType="BOOLEAN"/>
+	<result column="activo" property="activo" javaType="java.lang.Boolean" jdbcType="BOOLEAN"/>
 
 </resultMap>
 

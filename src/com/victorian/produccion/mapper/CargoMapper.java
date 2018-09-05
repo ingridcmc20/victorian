@@ -19,13 +19,13 @@ public interface CargoMapper {
 	@Select("select * from victorian.t_cargo order by descripcion asc")
 	public List<Cargo> findAll() throws Exception;
 	
-	@Select("select * from victorian.t_cargo where estado = 'TRUE' order by descripcion asc")
+	@Select("select * from victorian.t_cargo where activo = 'TRUE' order by descripcion asc")
 	public List<Cargo> listaCargosActivo() throws Exception;
 	
-	@Insert("insert into victorian.t_cargo (descripcion, estado) values (#{descripcion},#{estado})")
+	@Insert("insert into victorian.t_cargo (descripcion, activo) values (#{descripcion},#{activo})")
 	public void crearCargo(Cargo cargo) throws Exception;
 	
-	@Update("update victorian.t_cargo set descripcion = #{descripcion}, estado = #{estado} where id_cargo= #{id_cargo}")
+	@Update("update victorian.t_cargo set descripcion = #{descripcion}, activo = #{activo} where id_cargo= #{id_cargo}")
 	@Options(flushCache=true,useCache=true)
     public void actualizarCargo(Cargo cargo) throws Exception;
 	

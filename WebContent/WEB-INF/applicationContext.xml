@@ -192,10 +192,10 @@
 		<property name="sqlSessionFactory" ref="sqlSessionFactory"/>
 	</bean>
 	
-	<bean id="planPedidoMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-		<property name="mapperInterface" value="com.victorian.produccion.mapper.PlanPedidoMapper"/>
-		<property name="sqlSessionFactory" ref="sqlSessionFactory"/>
-	</bean>
+<!-- 	<bean id="planPedidoMapper" class="org.mybatis.spring.mapper.MapperFactoryBean"> -->
+<!-- 		<property name="mapperInterface" value="com.victorian.produccion.mapper.PlanPedidoMapper"/> -->
+<!-- 		<property name="sqlSessionFactory" ref="sqlSessionFactory"/> -->
+<!-- 	</bean> -->
 	
 	<bean id="planProduccionMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
 		<property name="mapperInterface" value="com.victorian.produccion.mapper.PlanProduccionMapper"/>

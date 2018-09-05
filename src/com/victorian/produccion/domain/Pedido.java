@@ -26,6 +26,11 @@ public class Pedido {
 	private Double subTotal;
 	private Double igv;
 	private Double total;
+	private Integer idplan;
+	private Integer id_fichatecnica;
+	private Date fechainicio;
+	private Date fechafin;
+	private Integer estado;
 
 	public Double getGastosGenerales() {
 		return gastosGenerales;

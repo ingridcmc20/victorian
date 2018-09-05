@@ -2,27 +2,33 @@ package com.victorian.produccion.domain;
 
 public class TipoDocumento {
 
-	private Integer id_tipo_documento;
+	private Integer id_tipodocumento;
 	private String descripcion;
-	private Boolean estado;
-	
-	public Integer getId_tipo_documento() {
-		return id_tipo_documento;
+	private Boolean activo;
+
+
+	public Integer getId_tipodocumento() {
+		return id_tipodocumento;
 	}
-	public void setId_tipo_documento(Integer id_tipo_documento) {
-		this.id_tipo_documento = id_tipo_documento;
+
+	public void setId_tipodocumento(Integer id_tipodocumento) {
+		this.id_tipodocumento = id_tipodocumento;
 	}
+
 	public String getDescripcion() {
 		return descripcion;
 	}
+
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
-	public Boolean getEstado() {
-		return estado;
+
+	public Boolean getActivo() {
+		return activo;
 	}
-	public void setEstado(Boolean estado) {
-		this.estado = estado;
+
+	public void setActivo(Boolean activo) {
+		this.activo = activo;
 	}
-	
+
 }
