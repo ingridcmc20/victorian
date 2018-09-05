@@ -28,9 +28,9 @@ public class FichaTecnicaServices implements FichaTecnicaMapper{
 	}
 
 	@Override
-	public void delete(Integer idfichatecnica) throws Exception {
+	public void delete(Integer id_fichatecnica) throws Exception {
 		// TODO Auto-generated method stub
-		fichaTecnicaMapper.delete(idfichatecnica);
+		fichaTecnicaMapper.delete(id_fichatecnica);
 	}
 
 }

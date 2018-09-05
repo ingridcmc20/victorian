@@ -10,7 +10,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 import org.primefaces.context.RequestContext;
-import org.primefaces.model.SelectableDataModel;
 
 import com.pe.victorian.produccion.commons.Constante;
 import com.pe.victorian.produccion.commons.FacesUtils;
@@ -18,11 +17,9 @@ import com.pe.victorian.produccion.commons.GenericBeans;
 import com.pe.victorian.produccion.listas.ListaPedidos;
 import com.victorian.produccion.domain.AsignacionRecurso;
 import com.victorian.produccion.domain.FichaTecnica;
-import com.victorian.produccion.domain.Log;
 import com.victorian.produccion.domain.Maquinaria;
 import com.victorian.produccion.domain.Operario;
 import com.victorian.produccion.domain.Pedido;
-import com.victorian.produccion.domain.PlanPedido;
 import com.victorian.produccion.domain.PlanProduccion;
 import com.victorian.produccion.domain.Producto;
 import com.victorian.produccion.domain.Recurso;
@@ -32,7 +29,6 @@ import com.victorian.produccion.services.FichaTecnicaServices;
 import com.victorian.produccion.services.MaquinariaServices;
 import com.victorian.produccion.services.OperarioServices;
 import com.victorian.produccion.services.PedidoServices;
-import com.victorian.produccion.services.PlanPedidoServices;
 import com.victorian.produccion.services.PlanProduccionServices;
 import com.victorian.produccion.services.ProductoServices;
 import com.victorian.produccion.services.TipoConfeccionServices;
@@ -40,6 +36,10 @@ import com.victorian.produccion.services.TipoConfeccionServices;
 @ManagedBean(name = "planProduccionMB")
 @ViewScoped
 public class PlanProduccionMB extends GenericBeans implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Pedido pedido;
 	private ListaPedidos<Pedido> listaPedidos;
 	private List<Pedido> listaPedidosSelected;
@@ -77,7 +77,6 @@ public class PlanProduccionMB extends GenericBeans implements Serializable {
 	private MaquinariaServices maquinariaServices;
 	private AsignacionRecursoServices asignacionRecursoServices;
 	private PlanProduccionServices planProduccionServices;
-	private PlanPedidoServices planPedidoServices;
 	private FichaTecnicaServices fichaTecnicaServices;
 	
 
@@ -90,8 +89,8 @@ public class PlanProduccionMB extends GenericBeans implements Serializable {
 	private Integer cantidad_maquina_cortadora;
 	private Integer cantidad_maquina_confeccionista;
 
-	private Log log;
-	private LogMB logmb;
+//	private Log log;
+//	private LogMB logmb;
 
 	@PostConstruct
 	public void inicia() {
@@ -104,7 +103,6 @@ public class PlanProduccionMB extends GenericBeans implements Serializable {
 		this.maquinariaServices = new MaquinariaServices();
 		this.asignacionRecursoServices = new AsignacionRecursoServices();
 		this.planProduccionServices = new PlanProduccionServices();
-		this.planPedidoServices = new PlanPedidoServices();
 		this.fichaTecnicaServices = new FichaTecnicaServices();
 
 		this.fecha_pedido = new Date();
@@ -143,8 +141,8 @@ public class PlanProduccionMB extends GenericBeans implements Serializable {
 			e.printStackTrace();
 		}
 
-		log = (Log) getSpringBean(Constante.SESSION_LOG);
-		logmb = new LogMB();
+//		log = (Log) getSpringBean(Constante.SESSION_LOG);
+//		logmb = new LogMB();
 	}
 
 	private List<Pedido> getPedidos() throws Exception {
@@ -253,7 +251,7 @@ public class PlanProduccionMB extends GenericBeans implements Serializable {
 						p.setEstadopedido(Constante.PENDIENTE_APROBACION);
 		
 						this.pedidoServices.actualizarPedido(p);
-		
+						/*
 						List<FichaTecnica> listFichaTecnica = fichaTecnicaServices.findByProducto(p.getTipo_prenda());
 						
 						for(FichaTecnica ft: listFichaTecnica){
@@ -263,10 +261,11 @@ public class PlanProduccionMB extends GenericBeans implements Serializable {
 							planPedido.setIdpedido(p.getIdpedido());
 							planPedido.setEstado(1);
 							planPedido.setIdplan(pp.getIdplan());
-							planPedido.setIdfichatecnica(ft.getIdfichatecnica());
+							planPedido.setIdfichatecnica(ft.getId_fichatecnica());
 		
 							this.planPedidoServices.insert(planPedido);					
 						}
+						*/
 					}
 					
 					FacesUtils.showFacesMessage("Pendiente de aprobación por parte del Jefe de Producción", 3);
@@ -297,7 +296,7 @@ public class PlanProduccionMB extends GenericBeans implements Serializable {
 			this.listFichasTecnicas = fichaTecnicaServices.findByProducto(p.getTipo_prenda());
 			
 			for(FichaTecnica ft: listFichasTecnicas){
-				subtotalproducto+=ft.getPreciototal();
+				subtotalproducto+=ft.getPrecio_total();
 			}
 			
 			subtotalpedido = subtotalproducto * this.pedidoSelec.getCantidad_prenda().intValue();

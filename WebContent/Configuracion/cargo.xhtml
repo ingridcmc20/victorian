@@ -43,8 +43,8 @@
 					<p:column style="width:8%; text-align: center" headerText="Estado">
 					
 						<p:commandLink update="@form :msgGeneral" actionListener="#{cargoMB.cambiarEstado(p)}"  > 
-							<h:graphicImage value="#{p.estado?'/resources/img/icon-ok.png':'/resources/img/icon-block.png'}" 
-							title="#{p.estado?'Activo':'Bloqueado'}" />
+							<h:graphicImage value="#{p.activo?'/resources/img/icon-ok.png':'/resources/img/icon-block.png'}" 
+							title="#{p.activo?'Activo':'Bloqueado'}" />
 						</p:commandLink>
 						
 					</p:column>
@@ -83,7 +83,7 @@
 							style="width:200px;" />
 							
 						#{"Estado:"}
-						<p:selectOneMenu style="width:200px" value="#{cargoMB.cargoSelec.estado}" required="true" requiredMessage="Seleccione un Cargo">
+						<p:selectOneMenu style="width:200px" value="#{cargoMB.cargoSelec.activo}" required="true" requiredMessage="Seleccione un Cargo">
 							<f:selectItem itemLabel="Seleccione..." itemValue="" />							
 							<f:selectItem itemLabel="ACTIVO" itemValue="TRUE" />
 							<f:selectItem itemLabel="DESACTIVO" itemValue="FALSE" />

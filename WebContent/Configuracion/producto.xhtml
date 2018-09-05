@@ -115,22 +115,18 @@
 							<p:column>
 								<p:outputLabel value="Producto:" style="font-weight: bold;"/>
 							</p:column>
-							<p:column colspan="5">
+							<p:column colspan="3">
 								<p:outputLabel value="#{productoMB.productoSelec.descripcion}"/>
 							</p:column>
 						</p:row>
 						<p:row>
 							<p:column><p:outputLabel value="Material:" style="font-weight: bold;"/></p:column>
 							<p:column>
-								<p:selectOneMenu id="cmbInsumo" value="#{productoMB.fichaTecnica.idinsumo}">
+								<p:selectOneMenu id="cmbInsumo" value="#{productoMB.fichaTecnica.id_insumo}">
 									<f:selectItem itemLabel="Seleccionar" itemValue=""/>
-									<f:selectItems value="#{productoMB.listInsumos}" var="of" itemLabel="#{of.descripcion}" itemValue="#{of.idinsumo}" />
+									<f:selectItems value="#{productoMB.listInsumos}" var="of" itemLabel="#{of.descripcion}" itemValue="#{of.id_insumo}" />
 									<p:ajax update="inputPrecio" listener="#{productoMB.obtenerPrecio}" event="change" />
 								</p:selectOneMenu>	
-							</p:column>
-							<p:column><p:outputLabel value="Descripción:" style="font-weight: bold;"/></p:column>
-							<p:column>
-								<p:inputText value="#{productoMB.fichaTecnica.nombreinsumo}"/>
 							</p:column>
 							<p:column>
 								<p:outputLabel value="Medida:" style="font-weight: bold;"/>
@@ -154,10 +150,7 @@
 								<p:outputLabel value="Precio:" style="font-weight: bold;"/>
 							</p:column>
 							<p:column>
-								<p:inputText id="inputPrecio" readonly="#{productoMB.fichaTecnica.preciounidad ne null}" value="#{productoMB.fichaTecnica.preciounidad}"/>
-							</p:column>
-							<p:column colspan="2">
-								
+								<p:inputText id="inputPrecio" readonly="#{productoMB.fichaTecnica.precio_unidad ne null}" value="#{productoMB.fichaTecnica.precio_unidad}"/>
 							</p:column>
 						</p:row>
 						<p:row>
@@ -175,11 +168,7 @@
 										#{nro+1}
 									</p:column>
 									
-									<p:column headerText="Insumo" filterBy="#{p.nom_insumo}"  filterStyle="width:95%;" filterMatchMode="contains">
-										<h:outputText value="#{p.nom_insumo}" />
-									</p:column>
-									
-									<p:column headerText="Descripcion" filterBy="#{p.nombreinsumo}"  filterStyle="width:95%;" filterMatchMode="contains">
+									<p:column headerText="Insumo" filterBy="#{p.nombreinsumo}"  filterStyle="width:95%;" filterMatchMode="contains">
 										<h:outputText value="#{p.nombreinsumo}" />
 									</p:column>
 									
@@ -192,11 +181,11 @@
 									</p:column>	
 									
 									<p:column headerText="Precio Unitario">
-										<h:outputText value="#{p.preciounidad}" />
+										<h:outputText value="#{p.precio_unidad}" />
 									</p:column>
 									
 									<p:column headerText="Precio Total">
-										<h:outputText value="#{p.preciototal}" />
+										<h:outputText value="#{p.precio_total}" />
 									</p:column>
 									<p:column headerText="Eliminar">
 										<p:commandButton actionListener="#{productoMB.retirarMaterial(p)}" title="Eliminar" icon="icon-delete" update="listaFichaTecnica"/>

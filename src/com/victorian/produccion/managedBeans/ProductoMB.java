@@ -16,8 +16,6 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
 import javax.faces.event.AjaxBehaviorEvent;
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletResponse;
 
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.ToggleEvent;
@@ -41,10 +39,14 @@ import com.victorian.produccion.services.ProductoServices;
 
 import net.sf.jasperreports.engine.JRParameter;
 
-@ManagedBean(name="productoMB")
+@ManagedBean(name = "productoMB")
 @ViewScoped
-public class ProductoMB extends GenericBeans implements Serializable{
+public class ProductoMB extends GenericBeans implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Producto producto;
 	private Formato formato;
 	private FichaTecnica fichaTecnica;
@@ -57,98 +59,98 @@ public class ProductoMB extends GenericBeans implements Serializable{
 	private List<FichaTecnica> listFichasTecnicas;
 	private Producto productoSelec;
 	private Integer id_producto;
-	private Boolean editar;	
+	private Boolean editar;
 	private boolean eliminar;
-	
+
 	private ProductoServices productoServices;
 	private MenuServices menuServices;
 	private InsumoServices insumoServices;
 	private FichaTecnicaServices fichaTecnicaServices;
 	private ProductoInsumoService productoInsumoService;
-	
+
 	private Log log;
 	private LogMB logmb;
-	@ManagedProperty(value= "#{loginMB}")
+	@ManagedProperty(value = "#{loginMB}")
 	private LoginMB login;
-	RequestContext context; 
+	RequestContext context;
 
-	
-	
-	public ProductoMB(){}
-	
+	public ProductoMB() {
+	}
+
 	@PostConstruct
-	public void inicia(){
+	public void inicia() {
 		this.productoServices = new ProductoServices();
 		this.menuServices = new MenuServices();
 		this.insumoServices = new InsumoServices();
 		this.fichaTecnicaServices = new FichaTecnicaServices();
 		this.productoInsumoService = new ProductoInsumoService();
-		
-		this.productoSelec = new Producto();		
+
+		this.productoSelec = new Producto();
 		this.editar = Boolean.FALSE;
-		this.listFormatos = new ArrayList();
-		this.listaProductosTotal=new ArrayList();
+		this.listFormatos = new ArrayList<Formato>();
+		this.listaProductosTotal = new ArrayList<Producto>();
 		this.fichaTecnica = new FichaTecnica();
-		
+
 		try {
 			listaProductos = this.productoServices.findAll();
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		
-		log = (Log)getSpringBean(Constante.SESSION_LOG);
+
+		log = (Log) getSpringBean(Constante.SESSION_LOG);
 		logmb = new LogMB();
 		try {
 			Menu codMenu = menuServices.opcionMenuByPretty("pretty:producto");
 			log.setCod_menu(codMenu.getCod_menu().intValue());
 			log.setIdusuario(this.login.getIdUsuario());
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();}		
-		
+			e.printStackTrace();
+		}
+
 	}
-	
-	public void retirarMaterial(FichaTecnica ft){
+
+	public void retirarMaterial(FichaTecnica ft) {
 		try {
 			ProductoInsumo productoInsumo = new ProductoInsumo();
-			productoInsumo.setIdproducto(ft.getIdproducto());
-			productoInsumo.setIdinsumo(ft.getIdinsumo());
-			
-			fichaTecnicaServices.delete(ft.getIdfichatecnica());
+			productoInsumo.setId_producto(ft.getId_producto());
+			productoInsumo.setId_insumo(ft.getId_insumo());
+
+			fichaTecnicaServices.delete(ft.getId_fichatecnica());
 			productoInsumoService.delete(productoInsumo);
-			
-			listFichasTecnicas = fichaTecnicaServices.findByProducto(this.fichaTecnica.getIdproducto());
+
+			listFichasTecnicas = fichaTecnicaServices.findByProducto(this.fichaTecnica.getId_producto());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
-	public void agregarMaterial(){
+
+	public void agregarMaterial() {
 		try {
 			ProductoInsumo productoInsumo = new ProductoInsumo();
-			productoInsumo.setIdproducto(this.fichaTecnica.getIdproducto());
-			productoInsumo.setIdinsumo(this.fichaTecnica.getIdinsumo());
-			
-			this.fichaTecnica.setPreciototal((this.fichaTecnica.getPreciounidad()!=null ? this.fichaTecnica.getPreciounidad():0) * 
-					(this.fichaTecnica.getCantidad()!=null?this.fichaTecnica.getCantidad():0));
-			
+			productoInsumo.setId_producto(this.fichaTecnica.getId_producto());
+			productoInsumo.setId_insumo(this.fichaTecnica.getId_insumo());
+
+			this.fichaTecnica.setPrecio_total(
+					(this.fichaTecnica.getPrecio_unidad() != null ? this.fichaTecnica.getPrecio_unidad() : 0)
+							* (this.fichaTecnica.getCantidad() != null ? this.fichaTecnica.getCantidad() : 0));
+
 			productoInsumoService.insert(productoInsumo);
 			fichaTecnicaServices.insert(this.fichaTecnica);
-						
-			listFichasTecnicas = fichaTecnicaServices.findByProducto(this.fichaTecnica.getIdproducto());
+
+			listFichasTecnicas = fichaTecnicaServices.findByProducto(this.fichaTecnica.getId_producto());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
-	public void abrirFichaTecnica(Producto p){
+
+	public void abrirFichaTecnica(Producto p) {
 		try {
 			this.fichaTecnica = new FichaTecnica();
 			this.productoSelec = p;
-			this.fichaTecnica.setIdproducto(p.getId_producto());
+			this.fichaTecnica.setId_producto(p.getId_producto());
 			this.listInsumos = insumoServices.findAll();
 			listFichasTecnicas = fichaTecnicaServices.findByProducto(p.getId_producto());
 		} catch (Exception e) {
@@ -156,200 +158,199 @@ public class ProductoMB extends GenericBeans implements Serializable{
 			e.printStackTrace();
 		}
 	}
-	
-	public void obtenerPrecio(AjaxBehaviorEvent event){
+
+	public void obtenerPrecio(AjaxBehaviorEvent event) {
 		System.out.println("obtenerPrecio");
-		Insumo insumoTempo = insumoServices.findById(fichaTecnica.getIdinsumo());
-		fichaTecnica.setPreciounidad(insumoTempo.getPrecio());
+		Insumo insumoTempo = insumoServices.findById(fichaTecnica.getId_insumo());
+		fichaTecnica.setPrecio_unidad(insumoTempo.getPrecio());
 	}
-	
-	public void guardarProducto(){
-		
-		Boolean valido=Boolean.TRUE;
-		RequestContext context = RequestContext.getCurrentInstance();  
-				
-   	    context.addCallbackParam("esValido", valido);
-		
+
+	public void guardarProducto() {
+
+		Boolean valido = Boolean.TRUE;
+		RequestContext context = RequestContext.getCurrentInstance();
+
+		context.addCallbackParam("esValido", valido);
+
 		try {
 			this.productoSelec.setId_negocio(this.productoSelec.getId_negocio());
 			this.productoSelec.setDescripcion(this.productoSelec.getDescripcion().trim().toUpperCase());
-			
-			if(this.editar) {		
+
+			if (this.editar) {
 				this.productoServices.actualizarProducto(this.productoSelec);
 				FacesUtils.showFacesMessage("Producto ha sido actualizado", 3);
 				log.setAccion("UPDATE");
-		        log.setDescripcion("El usuario "+this.login.getLoginUsuario()+" actualizó el producto: "+this.productoSelec.getDescripcion()+" del negocio "+this.productoSelec.getDes_negocio());
-		        logmb.insertarLog(log);	
-		        
-			}else{		
-				
+				log.setDescripcion("El usuario " + this.login.getLoginUsuario() + " actualizó el producto: "
+						+ this.productoSelec.getDescripcion() + " del negocio " + this.productoSelec.getDes_negocio());
+				logmb.insertarLog(log);
+
+			} else {
+
 				this.productoServices.crearProducto(this.productoSelec);
 				FacesUtils.showFacesMessage("Producto ha sido creado", 3);
 				log.setAccion("INSERT");
-		        log.setDescripcion("El usuario "+this.login.getLoginUsuario()+" registró el producto: " + this.productoSelec.getDescripcion()+" para el negocio "+this.productoSelec.getDes_negocio());
-		        logmb.insertarLog(log);
+				log.setDescripcion("El usuario " + this.login.getLoginUsuario() + " registró el producto: "
+						+ this.productoSelec.getDescripcion() + " para el negocio "
+						+ this.productoSelec.getDes_negocio());
+				logmb.insertarLog(log);
 			}
-			
+
 			this.productoSelec = new Producto();
-			this.editar = Boolean.FALSE;	
+			this.editar = Boolean.FALSE;
 			this.listaProductos = this.productoServices.findAll();
-			
+
 			context.update("msgGeneral");
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 	}
-	
-	public void cambiarEstado(Producto producto){
-		   String estado = "";
-		   if(producto.isEstado()){
-			   producto.setEstado(Boolean.FALSE);
-			   estado="INACTIVO";
-		   }else{
-			   producto.setEstado(Boolean.TRUE);
-			   estado="ACTIVO";
-		   }
-		   
-		   try {			 
-			   this.productoServices.actualizarProducto(producto);
-			   FacesUtils.showFacesMessage("Producto  modificado correctamente",Constante.INFORMACION);			  
-			   //this.listaProductos = this.productoServices.findAll();
-			   log.setAccion("UPDATE");
-	           log.setDescripcion("El usuario "+this.login.getLoginUsuario()+" actualizó el estado a : "+estado+" al producto " 
-	        		   				+ producto.getDescripcion() + " con el negocio "+ producto.getDes_negocio());
-	           logmb.insertarLog(log);			   
-		   } catch (Exception e) {
-			   System.out.println("Error:"+e.getMessage());
-			   e.printStackTrace();
-		   }   
+
+	public void cambiarEstado(Producto producto) {
+		String estado = "";
+		if (producto.isEstado()) {
+			producto.setEstado(Boolean.FALSE);
+			estado = "INACTIVO";
+		} else {
+			producto.setEstado(Boolean.TRUE);
+			estado = "ACTIVO";
+		}
+
+		try {
+			this.productoServices.actualizarProducto(producto);
+			FacesUtils.showFacesMessage("Producto  modificado correctamente", Constante.INFORMACION);
+			// this.listaProductos = this.productoServices.findAll();
+			log.setAccion("UPDATE");
+			log.setDescripcion("El usuario " + this.login.getLoginUsuario() + " actualizó el estado a : " + estado
+					+ " al producto " + producto.getDescripcion() + " con el negocio " + producto.getDes_negocio());
+			logmb.insertarLog(log);
+		} catch (Exception e) {
+			System.out.println("Error:" + e.getMessage());
+			e.printStackTrace();
+		}
 	}
-	
-	public void nuevoProducto(){
+
+	public void nuevoProducto() {
 		this.productoSelec = new Producto();
 		this.productoSelec.setEstado(Boolean.TRUE);
 		this.editar = Boolean.FALSE;
 	}
 
-	public void editarProducto(Producto pro){
-		//this.productoSelec = pro;
-		//System.out.println("aaa==>"+pro.getFormato().getIdformato());
+	public void editarProducto(Producto pro) {
+		// this.productoSelec = pro;
+		// System.out.println("aaa==>"+pro.getFormato().getIdformato());
 		setProductoSelec(pro);
-		if(productoSelec.getFormato()!=null)
+		if (productoSelec.getFormato() != null)
 			productoSelec.setIdformato(productoSelec.getFormato().getIdformato());
-		
-		//System.out.println("==>"+pro.getIdformato());
+
+		// System.out.println("==>"+pro.getIdformato());
 		this.editar = Boolean.TRUE;
 	}
-	
-	public void eliminarProducto(Producto pro){
+
+	public void eliminarProducto(Producto pro) {
 		this.productoSelec = pro;
-		//System.out.println("*******entro a eliminar ");
-		//System.out.println(" codigo producto"+this.productoSelec.getId_producto());
+		// System.out.println("*******entro a eliminar ");
+		// System.out.println(" codigo
+		// producto"+this.productoSelec.getId_producto());
 		try {
-			this.productoSelec=this.productoServices.findById(this.productoSelec.getId_producto());
+			this.productoSelec = this.productoServices.findById(this.productoSelec.getId_producto());
 		} catch (Exception e) {
-			
+
 			e.printStackTrace();
 		}
 	}
-	
-	
-	public void confirmaEliminar(){
-		
-		try{			
+
+	public void confirmaEliminar() {
+
+		try {
 
 			this.productoServices.eliminarProducto(this.productoSelec.getId_producto());
-			
-			FacesUtils.showFacesMessage("Producto ha sido eliminado", 3);
-			
-			//this.listaProductos = this.productoServices.findAll();
-			log.setAccion("DELETE");
-	        log.setDescripcion("El usuario "+this.login.getLoginUsuario()+" ha eliminado el producto : " + this.productoSelec.getDescripcion()
-	        					+" del negocio "+this.productoSelec.getDes_negocio());
-	        logmb.insertarLog(log);
-		
 
-		}catch(Exception e){
+			FacesUtils.showFacesMessage("Producto ha sido eliminado", 3);
+
+			// this.listaProductos = this.productoServices.findAll();
+			log.setAccion("DELETE");
+			log.setDescripcion("El usuario " + this.login.getLoginUsuario() + " ha eliminado el producto : "
+					+ this.productoSelec.getDescripcion() + " del negocio " + this.productoSelec.getDes_negocio());
+			logmb.insertarLog(log);
+
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
-	//lleva a la pagina subProducto
+
+	// lleva a la pagina subProducto
 	public String agregarSubProducto(Producto pro) {
 
-		String outcome=null;		
+		String outcome = null;
 		Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
 		flash.put("producto", pro);
-		outcome="pretty:addSubProducto";
+		outcome = "pretty:addSubProducto";
 
 		return outcome;
-			
-	}	
-	
-		
-	public void onRowToggle(ToggleEvent event){
-		
-		
-	}
-	
-	
-	public void imprimirXLS(){
-		String par_negocio="", par_producto = "";
-	//	List<Producto> listaRpt = new ArrayList<Producto>();
-		
-	
 
-		
-		
+	}
+
+	public void onRowToggle(ToggleEvent event) {
+
+	}
+
+	public void imprimirXLS() {
+		String par_negocio = "";
+
 		try {
-			ServletContext servletContext = (ServletContext) (FacesContext.getCurrentInstance().getExternalContext().getContext());
-		
+			/*ServletContext servletContext = (ServletContext) (FacesContext.getCurrentInstance().getExternalContext()
+					.getContext());*/
+
 			SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-			SimpleDateFormat formatofechahora = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
 			String fechaActual = formato.format(new Date());
-			
-			
-		//	listaRpt = this.productoServices.listaProductosPorNegocio(this.negocioId); 
-			
-			this.listaProductosTotal= this.productoServices.findAll(); 
-			Integer total = this.listaProductosTotal.size(); 
+
+
+			this.listaProductosTotal = this.productoServices.findAll();
+			Integer total = this.listaProductosTotal.size();
 			System.out.println("el tamaño de la lista es " + this.listaProductosTotal.size());
-			
-			
-			Map<String, Object> input =new  HashMap<String,Object>();
+
+			Map<String, Object> input = new HashMap<String, Object>();
 			input.put("P_TOTAL", total.toString());
-			input.put("P_NEGOCIO",par_negocio);
+			input.put("P_NEGOCIO", par_negocio);
 			input.put("P_FSISTEMA", fechaActual);
 			input.put(JRParameter.REPORT_LOCALE, new Locale("es"));
-			System.out.println(" JRParameter.REPORT_LOCALE es   "+ par_negocio);
-			//input.put(JRParameter.IS_IGNORE_PAGINATION, Boolean.TRUE); // no parte la pagina todo lo mete en un A4
-			
+			System.out.println(" JRParameter.REPORT_LOCALE es   " + par_negocio);
+			// input.put(JRParameter.IS_IGNORE_PAGINATION, Boolean.TRUE); // no
+			// parte la pagina todo lo mete en un A4
+
 			String path = ExportarArchivo.getPath("/resources/reports/jxrml/productoXLS.jasper");
-			HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
-			
+			/*HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext()
+					.getResponse();*/
+
 			log.setAccion("PRINT");
-	        log.setDescripcion("El usuario "+this.login.getLoginUsuario()+" ha empreso el archivo ConsultaProducto.xls ");
-	        logmb.insertarLog(log);
-			
+			log.setDescripcion(
+					"El usuario " + this.login.getLoginUsuario() + " ha empreso el archivo ConsultaProducto.xls ");
+			logmb.insertarLog(log);
+
 			byte[] bytes;
-				bytes = ExportarArchivo.exportXls(path, input, listaProductosTotal,false);
+			bytes = ExportarArchivo.exportXls(path, input, listaProductosTotal, false);
 			ExportarArchivo.executeExccel(bytes, "ConsultaProducto.xls");
 			FacesContext.getCurrentInstance().responseComplete();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}	
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
-	
 
-
-	
-	/*##################################################################################################*/
-	/*####################################------setters y getters----###################################*/
-	/*##################################################################################################*/
-	
+	/*
+	 * #########################################################################
+	 * #########################
+	 */
+	/*
+	 * ####################################------setters y
+	 * getters----###################################
+	 */
+	/*
+	 * #########################################################################
+	 * #########################
+	 */
 
 	public Producto getProducto() {
 		return producto;
@@ -478,6 +479,5 @@ public class ProductoMB extends GenericBeans implements Serializable{
 	public void setListFichasTecnicas(List<FichaTecnica> listFichasTecnicas) {
 		this.listFichasTecnicas = listFichasTecnicas;
 	}
-
 
 }

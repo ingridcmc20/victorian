@@ -38,9 +38,9 @@ public class TipoDocumentoService implements TipoDocumentoMapper{
 	}
 
 	@Override
-	public void eliminarTipoDocumento(Integer id_tipo_documento)
+	public void eliminarTipoDocumento(Integer id_tipodocumento)
 			throws Exception {
-		tipoDocumentoMapper.eliminarTipoDocumento(id_tipo_documento);
+		tipoDocumentoMapper.eliminarTipoDocumento(id_tipodocumento);
 		// TODO Auto-generated method stub
 		
 	}

@@ -1,16 +1,16 @@
 package com.victorian.produccion.domain;
 
 public class Insumo {
-	private Integer idinsumo;
+	private Integer id_insumo;
 	private String descripcion;
 	private Double precio;
 
-	public Integer getIdinsumo() {
-		return idinsumo;
+	public Integer getId_insumo() {
+		return id_insumo;
 	}
 
-	public void setIdinsumo(Integer idinsumo) {
-		this.idinsumo = idinsumo;
+	public void setId_insumo(Integer id_insumo) {
+		this.id_insumo = id_insumo;
 	}
 
 	public String getDescripcion() {
