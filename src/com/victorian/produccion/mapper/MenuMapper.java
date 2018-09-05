@@ -1,6 +1,6 @@
 package com.victorian.produccion.mapper; 
 
-import java.util.List; 
+import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -8,7 +8,6 @@ import org.apache.ibatis.annotations.Select;
 import com.victorian.produccion.domain.Menu;
 import com.victorian.produccion.domain.Perfil;
 import com.victorian.produccion.domain.Sistema;
-import com.victorian.produccion.domain.UsuarioPerfil;
 
 public interface MenuMapper{ 
 
@@ -26,7 +25,7 @@ public interface MenuMapper{
 	public List<Menu> listMenuxSistemaId(@Param("p_sistemaid") Long sistemaid) throws Exception;
 	
 	//busca todos los sistemas/modulos implicados 
-	@Select("select sis.cod_sistema, sis.nombre_sistema,sis.descripcion,sis.ind_activo from t_sistema sis where sis.cod_sistema in ( select distinct cod_sistema from victorian.t_opcion_menu  menu ) and sis.ind_activo=1")
+	@Select("select sis.cod_sistema, sis.nombre_sistema,sis.descripcion,sis.ind_activo from victorian.t_sistema sis where sis.cod_sistema in ( select distinct cod_sistema from victorian.t_opcion_menu  menu ) and sis.ind_activo=1")
 	public List<Sistema> listSistemas() throws Exception;
 	
 	public int opcionMenuByPrettyCod(String pretty) throws Exception;
