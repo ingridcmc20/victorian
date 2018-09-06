@@ -8,7 +8,7 @@ import com.victorian.produccion.domain.OrdenTrabajoOperario;
 public interface OrdenTrabajoOperarioMapper {
 	
 	@Insert("INSERT INTO victorian.t_orden_trabajo_operario(id_operario, id_orden_trabajo, id_prioridad, id_etapa) "
-			+ "VALUES (#{idoperario}, #{id_orden_trabajo}, #{id_prioridad}, #{id_etapa})")
+			+ "VALUES (#{id_operario}, #{id_orden_trabajo}, #{id_prioridad}, #{id_etapa})")
 	public void insert(OrdenTrabajoOperario ordenTrabajoOperario);
 	
 	@Delete("delete from victorian.t_orden_trabajo_operario where id_orden_trabajo=#{id_orden_trabajo}")

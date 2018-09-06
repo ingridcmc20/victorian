@@ -42,7 +42,8 @@ public class PlanProduccionMB extends GenericBeans implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Pedido pedido;
 	private ListaPedidos<Pedido> listaPedidos;
-	private List<Pedido> listaPedidosSelected;
+//	private List<Pedido> listaPedidosSelected;
+	private Pedido pedidoSelected;
 	private List<Producto> listaProducto;
 	private List<TipoConfeccion> listaTipoConfeccion;
 
@@ -53,7 +54,7 @@ public class PlanProduccionMB extends GenericBeans implements Serializable {
 
 	private List<Maquinaria> listaMaquinaCorte;
 	private List<Maquinaria> listaMaquinaConfeccion;
-	
+
 	private List<FichaTecnica> listFichasTecnicas;
 
 	private Integer id_cortador_seleccionado;
@@ -78,7 +79,6 @@ public class PlanProduccionMB extends GenericBeans implements Serializable {
 	private AsignacionRecursoServices asignacionRecursoServices;
 	private PlanProduccionServices planProduccionServices;
 	private FichaTecnicaServices fichaTecnicaServices;
-	
 
 	// Contadores
 	private Integer cantidad_personal_diseniadores;
@@ -89,8 +89,8 @@ public class PlanProduccionMB extends GenericBeans implements Serializable {
 	private Integer cantidad_maquina_cortadora;
 	private Integer cantidad_maquina_confeccionista;
 
-//	private Log log;
-//	private LogMB logmb;
+	// private Log log;
+	// private LogMB logmb;
 
 	@PostConstruct
 	public void inicia() {
@@ -113,10 +113,10 @@ public class PlanProduccionMB extends GenericBeans implements Serializable {
 			this.listaProducto = this.productoServices.findAll();
 			this.listaTipoConfeccion = this.tipoConfeccionServices.findAll();
 
-			this.listaDiseniador = this.operarioServices.findByEstado("DISEÑADOR");
-			this.listaCortador = this.operarioServices.findByEstado("CORTADOR");
-			this.listaConfeccionista = this.operarioServices.findByEstado("CONFECCIONISTA");
-			this.listaEmpaquetador = this.operarioServices.findByEstado("EMPAQUETADOR");
+			this.listaDiseniador = this.operarioServices.findByEstado(Constante.OP_DISENADOR);
+			this.listaCortador = this.operarioServices.findByEstado(Constante.OP_CORTADOR);
+			this.listaConfeccionista = this.operarioServices.findByEstado(Constante.OP_CONFECCIONISTA);
+			this.listaEmpaquetador = this.operarioServices.findByEstado(Constante.OP_EMPAQUETADOR);
 
 			this.listaMaquinaCorte = this.maquinariaServices.findByEstado("CORTE");
 			this.listaMaquinaConfeccion = this.maquinariaServices.findByEstado("CONFECCION");
@@ -141,8 +141,8 @@ public class PlanProduccionMB extends GenericBeans implements Serializable {
 			e.printStackTrace();
 		}
 
-//		log = (Log) getSpringBean(Constante.SESSION_LOG);
-//		logmb = new LogMB();
+		// log = (Log) getSpringBean(Constante.SESSION_LOG);
+		// logmb = new LogMB();
 	}
 
 	private List<Pedido> getPedidos() throws Exception {
@@ -150,11 +150,11 @@ public class PlanProduccionMB extends GenericBeans implements Serializable {
 	}
 
 	public void cargarRecursos(Pedido p) {
-		System.out.println("pedido: " + p.getIdpedido());
+		System.out.println("pedido: " + p.getId_pedido());
 		this.pedidoSelec = p;
 
 		try {
-			asignacionRecursoSelected = asignacionRecursoServices.findByIdPedido(p.getIdpedido());
+			asignacionRecursoSelected = asignacionRecursoServices.findByIdPedido(p.getId_pedido());
 
 			if (asignacionRecursoSelected != null) {
 				this.id_cortador_seleccionado = asignacionRecursoSelected.getId_cortador();
@@ -210,7 +210,7 @@ public class PlanProduccionMB extends GenericBeans implements Serializable {
 				ar.setId_empaquetador(this.id_empaquetador_seleccionado);
 				ar.setId_maquina_corte(this.id_maquina_corte_seleccionado);
 				ar.setId_maquina_confeccion(this.id_maquina_confeccion_seleccionado);
-				ar.setId_pedido(pedidoSelec.getIdpedido());
+				ar.setId_pedido(pedidoSelec.getId_pedido());
 				asignacionRecursoServices.insert(ar);
 			}
 
@@ -227,54 +227,36 @@ public class PlanProduccionMB extends GenericBeans implements Serializable {
 		context.addCallbackParam("esValido", valido);
 
 		try {
-			if(listaPedidosSelected.size()>0){
-				if(this.cantidad_maquina_confeccionista > 0 && this.cantidad_maquina_cortadora > 0 && 
-						this.cantidad_personal_confeccionistas > 0 && this.cantidad_personal_cortadores > 0 && 
-						this.cantidad_personal_diseniadores > 0 && this.cantidad_empaquetadores > 0){
+			if (pedidoSelected !=null) {
+				if (this.cantidad_maquina_confeccionista > 0 && this.cantidad_maquina_cortadora > 0
+						&& this.cantidad_personal_confeccionistas > 0 && this.cantidad_personal_cortadores > 0
+						&& this.cantidad_personal_diseniadores > 0 && this.cantidad_empaquetadores > 0) {
 					Date fechaActual = new Date();
 					Calendar calPP = Calendar.getInstance();
 					calPP.setTime(fechaActual);
 					calPP.add(Calendar.MONTH, 1);
-		
+
 					PlanProduccion pp = new PlanProduccion();
-					pp.setFechainicioplan(new java.sql.Date(fechaActual.getTime()));
-					pp.setFechafinplan(new java.sql.Date(calPP.getTime().getTime()));
-					pp.setEstado(Constante.PP_PENDIENTE_APROBACION);
+					pp.setFecha_inicioplan(new java.sql.Date(fechaActual.getTime()));
+					pp.setFecha_finplan(new java.sql.Date(calPP.getTime().getTime()));
+					pp.setId_estado(Constante.PP_PENDIENTE);
+					pp.setId_pedido(pedidoSelected.getId_pedido());
 					this.planProduccionServices.insert(pp);
-		
-					for (Pedido p : listaPedidosSelected) {
-						Calendar cal = Calendar.getInstance();
-						cal.setTime(p.getFechapedido());
-						cal.add(Calendar.MONTH, 1);
-		
-						p.setFechaentrega(new java.sql.Date(cal.getTime().getTime()));
-						p.setEstadopedido(Constante.PENDIENTE_APROBACION);
-		
-						this.pedidoServices.actualizarPedido(p);
-						/*
-						List<FichaTecnica> listFichaTecnica = fichaTecnicaServices.findByProducto(p.getTipo_prenda());
-						
-						for(FichaTecnica ft: listFichaTecnica){
-							PlanPedido planPedido = new PlanPedido();
-							planPedido.setFechainicio(p.getFechapedido());
-							planPedido.setFechafin(p.getFechaentrega());
-							planPedido.setIdpedido(p.getIdpedido());
-							planPedido.setEstado(1);
-							planPedido.setIdplan(pp.getIdplan());
-							planPedido.setIdfichatecnica(ft.getId_fichatecnica());
-		
-							this.planPedidoServices.insert(planPedido);					
-						}
-						*/
-					}
-					
+
+					Calendar cal = Calendar.getInstance();
+					cal.setTime(pedidoSelected.getFechapedido());
+					cal.add(Calendar.MONTH, 1);
+
+					pedidoSelected.setFecha_entrega(new java.sql.Date(cal.getTime().getTime()));
+					pedidoSelected.setId_estado(Constante.REGISTRADO);
+
+					this.pedidoServices.actualizarPedido(pedidoSelected);
+
 					FacesUtils.showFacesMessage("Pendiente de aprobación por parte del Jefe de Producción", 3);
+				} else {
+					FacesUtils.showFacesMessage("No hay recursos disponibles para generar el plan", 1);
 				}
-				else{
-					FacesUtils.showFacesMessage("No hay recursos disponibles para generar el plan", 1);	
-				}
-			}
-			else{
+			} else {
 				FacesUtils.showFacesMessage("Se debe seleccionar por lo menos un pedido para generar el plan", 1);
 			}
 			this.listaPedidos = new ListaPedidos<Pedido>(getPedidos());
@@ -286,27 +268,27 @@ public class PlanProduccionMB extends GenericBeans implements Serializable {
 		}
 
 	}
-	
-	public void calcularFichaTecnica(Pedido p){
+
+	public void calcularFichaTecnica(Pedido p) {
 		try {
-			RequestContext context = RequestContext.getCurrentInstance();  
-			double subtotalproducto=0;
-			double subtotalpedido=0;
+			RequestContext context = RequestContext.getCurrentInstance();
+			double subtotalproducto = 0;
+			double subtotalpedido = 0;
 			this.pedidoSelec = p;
 			this.listFichasTecnicas = fichaTecnicaServices.findByProducto(p.getTipo_prenda());
-			
-			for(FichaTecnica ft: listFichasTecnicas){
-				subtotalproducto+=ft.getPrecio_total();
+
+			for (FichaTecnica ft : listFichasTecnicas) {
+				subtotalproducto += ft.getPrecio_total();
 			}
-			
+
 			subtotalpedido = subtotalproducto * this.pedidoSelec.getCantidad_prenda().intValue();
-			
+
 			this.pedidoSelec.setSubTotalProducto(new Double(subtotalproducto));
 			this.pedidoSelec.setSubTotalPedido(new Double(subtotalpedido));
-			
+
 			context.update("dlgDetFichaTecnica");
 			context.execute("PF('dlgFichaTecnica').show();");
-			
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -524,14 +506,6 @@ public class PlanProduccionMB extends GenericBeans implements Serializable {
 		this.cantidad_maquina_confeccionista = cantidad_maquina_confeccionista;
 	}
 
-	public List<Pedido> getListaPedidosSelected() {
-		return listaPedidosSelected;
-	}
-
-	public void setListaPedidosSelected(List<Pedido> listaPedidosSelected) {
-		this.listaPedidosSelected = listaPedidosSelected;
-	}
-
 	public List<FichaTecnica> getListFichasTecnicas() {
 		return listFichasTecnicas;
 	}
@@ -554,5 +528,13 @@ public class PlanProduccionMB extends GenericBeans implements Serializable {
 
 	public void setCantidad_personal_diseniadores(Integer cantidad_personal_diseniadores) {
 		this.cantidad_personal_diseniadores = cantidad_personal_diseniadores;
+	}
+
+	public Pedido getPedidoSelected() {
+		return pedidoSelected;
+	}
+
+	public void setPedidoSelected(Pedido pedidoSelected) {
+		this.pedidoSelected = pedidoSelected;
 	}
 }

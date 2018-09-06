@@ -11,20 +11,24 @@ import javax.faces.bean.ViewScoped;
 
 import org.primefaces.context.RequestContext;
 
+import com.pe.victorian.produccion.commons.Constante;
+import com.pe.victorian.produccion.commons.FacesUtils;
+import com.pe.victorian.produccion.commons.GenericBeans;
 import com.victorian.produccion.domain.Log;
 import com.victorian.produccion.domain.Menu;
 import com.victorian.produccion.domain.Proveedor;
 import com.victorian.produccion.services.MenuServices;
 import com.victorian.produccion.services.ProveedorService;
-import com.pe.victorian.produccion.commons.Constante;
-import com.pe.victorian.produccion.commons.FacesUtils;
-import com.pe.victorian.produccion.commons.GenericBeans;
 
 @ManagedBean(name="proveedorMB")
 @ViewScoped
 
 public class ProveedorMB extends GenericBeans implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Proveedor proveedor;
 	private List<Proveedor> listaProveedor;
 	private Boolean editar;
@@ -48,7 +52,7 @@ public class ProveedorMB extends GenericBeans implements Serializable{
 	public void inicia()
 	{
 		this.proveedorSelec = new Proveedor();
-		this.listaProveedor = new ArrayList();
+		this.listaProveedor = new ArrayList<Proveedor>();
 		this.proveedorService = new ProveedorService();
 		
 		this.editar = Boolean.FALSE;

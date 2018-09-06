@@ -1,7 +1,6 @@
 package com.victorian.produccion.managedBeans;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -11,19 +10,23 @@ import javax.faces.bean.ViewScoped;
 
 import org.primefaces.context.RequestContext;
 
+import com.pe.victorian.produccion.commons.Constante;
+import com.pe.victorian.produccion.commons.FacesUtils;
+import com.pe.victorian.produccion.commons.GenericBeans;
 import com.victorian.produccion.domain.EstadoCivil;
 import com.victorian.produccion.domain.Log;
 import com.victorian.produccion.domain.Menu;
 import com.victorian.produccion.services.EstadoCivilService;
 import com.victorian.produccion.services.MenuServices;
-import com.pe.victorian.produccion.commons.Constante;
-import com.pe.victorian.produccion.commons.FacesUtils;
-import com.pe.victorian.produccion.commons.GenericBeans;
 
 @ManagedBean(name="estadoCivilMB")
 @ViewScoped
 public class EstadoCivilMB extends GenericBeans implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private EstadoCivil estadoCivil;
 	private List<EstadoCivil> listaEstadoCivil;
 	private Boolean editar;

@@ -16,9 +16,9 @@ public class MaquinariaServices implements MaquinariaMapper {
 	}
 
 	@Override
-	public List<Maquinaria> findById(Integer idmaquinaria) throws Exception {
+	public List<Maquinaria> findById(Integer id_maquinaria) throws Exception {
 		// TODO Auto-generated method stub
-		return maquinariaMapper.findById(idmaquinaria);
+		return maquinariaMapper.findById(id_maquinaria);
 	}
 
 	@Override
@@ -28,9 +28,9 @@ public class MaquinariaServices implements MaquinariaMapper {
 	}
 
 	@Override
-	public List<Maquinaria> findByEstadoDisponible(String tipo_operario) throws Exception {
+	public List<Maquinaria> findByEstadoDisponible(String id_tipooperario) throws Exception {
 		// TODO Auto-generated method stub
-		return maquinariaMapper.findByEstadoDisponible(tipo_operario);
+		return maquinariaMapper.findByEstadoDisponible(id_tipooperario);
 	}
 
 }

@@ -14,7 +14,6 @@ import com.pe.victorian.produccion.commons.Constante;
 import com.pe.victorian.produccion.commons.FacesUtils;
 import com.pe.victorian.produccion.commons.GenericBeans;
 import com.victorian.produccion.domain.AsignacionRecurso;
-import com.victorian.produccion.domain.Log;
 import com.victorian.produccion.domain.Maquinaria;
 import com.victorian.produccion.domain.Operario;
 import com.victorian.produccion.domain.Pedido;
@@ -32,42 +31,44 @@ import com.victorian.produccion.services.TipoConfeccionServices;
 @ManagedBean(name = "aprobarPlanProduccionMB")
 @ViewScoped
 public class AprobarPlanProduccionMB extends GenericBeans implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private PlanProduccion pedido;
 	private List<PlanProduccion> listaPedidos;
 	private List<Producto> listaProducto;
 	private List<TipoConfeccion> listaTipoConfeccion;
-	
+
 	private List<Operario> listaCortador;
 	private List<Operario> listaConfeccionista;
 	private List<Operario> listaEmpaquetador;
-	
+
 	private List<Maquinaria> listaMaquinaCorte;
 	private List<Maquinaria> listaMaquinaConfeccion;
-	
+
 	private Integer id_cortador_seleccionado;
 	private Integer id_confeccionista_seleccionado;
 	private Integer id_empaquetador_seleccionado;
-	
+
 	private Integer id_maquina_corte_seleccionado;
 	private Integer id_maquina_confeccion_seleccionado;
-		
+
 	private PlanProduccion pedidoSelec;
 	private Boolean editar;
 	private Date fecha_pedido;
 	private Date fecha_entrega;
-	
+
 	private AsignacionRecurso asignacionRecursoSelected;
-	
+
 	private PedidoServices pedidoServices;
 	private ProductoServices productoServices;
 	private TipoConfeccionServices tipoConfeccionServices;
 	private OperarioServices operarioServices;
 	private MaquinariaServices maquinariaServices;
-	private AsignacionRecursoServices asignacionRecursoServices;
 	private PlanProduccionServices planProduccionServices;
-	
-	private Log log;
-	private LogMB logmb;
+	private AsignacionRecursoServices asignacionRecursoServices;
+
 	RequestContext context;
 
 	@PostConstruct
@@ -79,119 +80,110 @@ public class AprobarPlanProduccionMB extends GenericBeans implements Serializabl
 		this.tipoConfeccionServices = new TipoConfeccionServices();
 		this.operarioServices = new OperarioServices();
 		this.maquinariaServices = new MaquinariaServices();
-		this.asignacionRecursoServices = new AsignacionRecursoServices();
 		this.planProduccionServices = new PlanProduccionServices();
-		
-		this.fecha_pedido=new Date();
-		this.fecha_entrega=new Date();
+		this.asignacionRecursoServices = new AsignacionRecursoServices();
+
+		this.fecha_pedido = new Date();
+		this.fecha_entrega = new Date();
 
 		try {
-			this.listaPedidos = this.planProduccionServices.findByEstado(Constante.PP_PENDIENTE_APROBACION);
+			this.listaPedidos = this.planProduccionServices.findByEstado(Constante.PP_PENDIENTE);
 			this.listaProducto = this.productoServices.findAll();
 			this.listaTipoConfeccion = this.tipoConfeccionServices.findAll();
-			
-			this.listaCortador = this.operarioServices.findByEstado("CORTADOR");
-			this.listaConfeccionista = this.operarioServices.findByEstado("CONFECCIONISTA");
-			this.listaEmpaquetador = this.operarioServices.findByEstado("EMPAQUETADOR");
-			
+
+			this.listaCortador = this.operarioServices.findByEstado(Constante.OP_CORTADOR);
+			this.listaConfeccionista = this.operarioServices.findByEstado(Constante.OP_CONFECCIONISTA);
+			this.listaEmpaquetador = this.operarioServices.findByEstado(Constante.OP_EMPAQUETADOR);
+
 			this.listaMaquinaCorte = this.maquinariaServices.findByEstado("CORTE");
 			this.listaMaquinaConfeccion = this.maquinariaServices.findByEstado("CONFECCION");
-						
+
 			this.id_cortador_seleccionado = -1;
 			this.id_confeccionista_seleccionado = -1;
 			this.id_empaquetador_seleccionado = -1;
-			
+
 			this.id_maquina_corte_seleccionado = -1;
 			this.id_maquina_confeccion_seleccionado = -1;
-			
+
 			this.asignacionRecursoSelected = null;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-		log = (Log) getSpringBean(Constante.SESSION_LOG);
-		logmb = new LogMB();
 	}
-	
-	
-	public void cargarRecursos(PlanProduccion p){
-/*
-		System.out.println("pedido: " + p.getIdpedido());
+
+	public void cargarRecursos(PlanProduccion p) {
+
+		System.out.println("pedido: " + p.getId_pedido());
 		this.pedidoSelec = p;
-		
+
 		try {
-			asignacionRecursoSelected = asignacionRecursoServices.findByIdPedido(p.getIdpedido());
-			
-			if(asignacionRecursoSelected!=null){
+			asignacionRecursoSelected = asignacionRecursoServices.findByIdPedido(p.getId_pedido());
+
+			if (asignacionRecursoSelected != null) {
 				this.id_cortador_seleccionado = asignacionRecursoSelected.getId_cortador();
 				this.id_confeccionista_seleccionado = asignacionRecursoSelected.getId_confeccionista();
 				this.id_empaquetador_seleccionado = asignacionRecursoSelected.getId_empaquetador();
 				this.id_maquina_corte_seleccionado = asignacionRecursoSelected.getId_maquina_corte();
 				this.id_maquina_confeccion_seleccionado = asignacionRecursoSelected.getId_maquina_confeccion();
-			}
-			else{
+			} else {
 				this.id_cortador_seleccionado = -1;
 				this.id_confeccionista_seleccionado = -1;
 				this.id_empaquetador_seleccionado = -1;
 				this.id_maquina_corte_seleccionado = -1;
 				this.id_maquina_confeccion_seleccionado = -1;
 			}
-			
+
 			System.out.println("id_cortador_seleccionado: " + this.id_cortador_seleccionado);
 			System.out.println("id_confeccionista_seleccionado: " + this.id_confeccionista_seleccionado);
 			System.out.println("id_empaquetador_seleccionado: " + this.id_empaquetador_seleccionado);
 			System.out.println("id_maquina_corte_seleccionado: " + this.id_maquina_corte_seleccionado);
 			System.out.println("id_maquina_confeccion_seleccionado: " + this.id_maquina_confeccion_seleccionado);
-			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
+		} catch (Exception e) { // TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-*/
+
 	}
 
-	public void asignarRecursos(){
-/*
+	public void asignarRecursos() {
 		try {
 			Boolean valido = Boolean.TRUE;
 			RequestContext context = RequestContext.getCurrentInstance();
 			context.addCallbackParam("esValido", valido);
-			
+
 			System.out.println("id_cortador_seleccionado: " + this.id_cortador_seleccionado);
 			System.out.println("id_confeccionista_seleccionado: " + this.id_confeccionista_seleccionado);
 			System.out.println("id_empaquetador_seleccionado: " + this.id_empaquetador_seleccionado);
-			
+
 			System.out.println("id_maquina_corte_seleccionado: " + this.id_maquina_corte_seleccionado);
 			System.out.println("id_maquina_confeccion_seleccionado: " + this.id_maquina_confeccion_seleccionado);
-			
-			if(asignacionRecursoSelected != null){
+
+			if (asignacionRecursoSelected != null) {
 				asignacionRecursoSelected.setId_cortador(this.id_cortador_seleccionado);
 				asignacionRecursoSelected.setId_confeccionista(this.id_confeccionista_seleccionado);
 				asignacionRecursoSelected.setId_empaquetador(this.id_empaquetador_seleccionado);
 				asignacionRecursoSelected.setId_maquina_corte(this.id_maquina_corte_seleccionado);
 				asignacionRecursoSelected.setId_maquina_confeccion(this.id_maquina_confeccion_seleccionado);
-				
+
 				asignacionRecursoServices.update(asignacionRecursoSelected);
-			}
-			else{
+			} else {
 				AsignacionRecurso ar = new AsignacionRecurso();
 				ar.setId_cortador(this.id_cortador_seleccionado);
 				ar.setId_confeccionista(this.id_confeccionista_seleccionado);
 				ar.setId_empaquetador(this.id_empaquetador_seleccionado);
 				ar.setId_maquina_corte(this.id_maquina_corte_seleccionado);
 				ar.setId_maquina_confeccion(this.id_maquina_confeccion_seleccionado);
-				ar.setId_pedido(pedidoSelec.getIdpedido());
+				ar.setId_pedido(pedidoSelec.getId_pedido());
 				asignacionRecursoServices.insert(ar);
 			}
-			
-			this.listaPedidos = this.pedidoServices.findByEstado(Constante.ACEPTADO);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
+
+			this.listaPedidos = this.planProduccionServices.findByEstado(Constante.PP_APROBADO);
+		} catch (Exception e) { // TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-*/
+
 	}
-	
+
 	public void guardarPedido(PlanProduccion p) {
 		List<Pedido> lstPedidos;
 		Boolean valido = Boolean.TRUE;
@@ -199,19 +191,19 @@ public class AprobarPlanProduccionMB extends GenericBeans implements Serializabl
 		context.addCallbackParam("esValido", valido);
 
 		try {
-			lstPedidos = this.pedidoServices.findByPlanProduccion(p.getIdplan());
-			
-			for(Pedido pedido: lstPedidos){
-				pedido.setEstadopedido(Constante.APROBADO);
-				this.pedidoServices.actualizarPedido(pedido);	
+			lstPedidos = this.pedidoServices.findByPlanProduccion(p.getId_planproduccion());
+
+			for (Pedido pedido : lstPedidos) {
+				pedido.setId_estado(Constante.ACEPTADO);
+				this.pedidoServices.actualizarPedido(pedido);
 			}
-			
-			p.setEstado(Constante.PP_APROBADO);
+
+			p.setId_estado(Constante.PP_APROBADO);
 			this.planProduccionServices.update(p);
-			
+
 			FacesUtils.showFacesMessage("Se aprobo correctamente el plan de producción.", 3);
-			 
-			this.listaPedidos = this.planProduccionServices.findByEstado(Constante.PP_PENDIENTE_APROBACION);
+
+			this.listaPedidos = this.planProduccionServices.findByEstado(Constante.PP_PENDIENTE);
 
 			context.update("msgGeneral");
 

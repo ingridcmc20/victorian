@@ -1,8 +1,5 @@
 package src.com.victorian.produccion.utils;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class VGenericChild2 {
 	
 	private String val01;

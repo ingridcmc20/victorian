@@ -16,15 +16,17 @@ import com.pe.victorian.produccion.commons.GenericBeans;
 import com.victorian.produccion.domain.Merma;
 import com.victorian.produccion.domain.Operario;
 import com.victorian.produccion.domain.OrdenTrabajo;
-import com.victorian.produccion.domain.Pedido;
 import com.victorian.produccion.services.MermaServices;
 import com.victorian.produccion.services.OperarioServices;
 import com.victorian.produccion.services.OrdenTrabajoServices;
-import com.victorian.produccion.services.PedidoServices;
 
 @ManagedBean(name = "dashboardMB")
 @ViewScoped
 public class DashboardMB extends GenericBeans implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private List<OrdenTrabajo> listaOrdenTrabajo;
 	private List<Operario> listaOperarios;
 	private Date fecha_pedido;
@@ -55,6 +57,7 @@ public class DashboardMB extends GenericBeans implements Serializable {
 		}
 	}
 	
+	@SuppressWarnings("serial")
 	private void createMeterGaugeModels() {
 		List<Number> intervals = new ArrayList<Number>(){{            
             add(10);

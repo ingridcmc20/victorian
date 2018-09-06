@@ -10,20 +10,23 @@ import javax.faces.bean.SessionScoped;
 
 import org.primefaces.context.RequestContext;
 
-import com.victorian.produccion.domain.Log;
-import com.victorian.produccion.domain.Menu;
-import com.victorian.produccion.domain.Parametro;
-import com.victorian.produccion.domain.Usuario;
-import com.victorian.produccion.services.MenuServices;
-import com.victorian.produccion.services.ParametroServices;
 import com.pe.victorian.produccion.commons.Constante;
 import com.pe.victorian.produccion.commons.FacesUtils;
 import com.pe.victorian.produccion.commons.GenericBeans;
+import com.victorian.produccion.domain.Log;
+import com.victorian.produccion.domain.Menu;
+import com.victorian.produccion.domain.Parametro;
+import com.victorian.produccion.services.MenuServices;
+import com.victorian.produccion.services.ParametroServices;
 
 @ManagedBean
 @SessionScoped
 public class ParametroMB extends GenericBeans implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private ParametroServices parametroServices;
 	private MenuServices menuServices;
 	private Parametro parametro;

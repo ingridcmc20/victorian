@@ -16,7 +16,7 @@ public class PlanProduccionServices implements PlanProduccionMapper {
 	}
 
 	@Override
-	public List<PlanProduccion> findByEstado(String estado) {
+	public List<PlanProduccion> findByEstado(Integer estado) {
 		// TODO Auto-generated method stub
 		return planProduccionMapper.findByEstado(estado);
 	}

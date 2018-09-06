@@ -32,7 +32,7 @@ public class OperarioConverter implements Converter{
 	@Override
 	public String getAsString(FacesContext fc, UIComponent uic, Object object) {
 		if (object != null) {
-			 return String.valueOf(((Operario) object).getIdoperario());
+			 return String.valueOf(((Operario) object).getId_operario());
 		} else {
 			return null;
 		}

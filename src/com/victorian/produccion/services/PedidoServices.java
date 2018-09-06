@@ -34,9 +34,9 @@ public class PedidoServices implements PedidoMapper{
 	}
 
 	@Override
-	public List<Pedido> findByEstado(Integer estadopedido) throws Exception {
+	public List<Pedido> findByEstado(Integer id_estado) throws Exception {
 		// TODO Auto-generated method stub
-		return pedidoMapper.findByEstado(estadopedido);
+		return pedidoMapper.findByEstado(id_estado);
 	}
 
 	@Override
@@ -46,15 +46,15 @@ public class PedidoServices implements PedidoMapper{
 	}
 
 	@Override
-	public Pedido findById(Integer idpedido) throws Exception {
+	public Pedido findById(Integer id_pedido) throws Exception {
 		// TODO Auto-generated method stub
-		return pedidoMapper.findById(idpedido);
+		return pedidoMapper.findById(id_pedido);
 	}
 
 	@Override
-	public Pedido findByIdAndByEstado(Integer idpedido, Integer estadopedido) throws Exception {
+	public Pedido findByIdAndByEstado(Integer id_pedido, Integer id_estado) throws Exception {
 		// TODO Auto-generated method stub
-		return pedidoMapper.findByIdAndByEstado(idpedido, estadopedido);
+		return pedidoMapper.findByIdAndByEstado(id_pedido, id_estado);
 	}
 
 }

@@ -17,9 +17,9 @@ public interface PlanProduccionMapper {
 	@Options(flushCache=true,useCache=true)
 	public void update(PlanProduccion p);
 	
-	@Select("SELECT idplan, fechainicioplan, fechafinplan, cantidad_operarios, maquinaria, estado FROM victorian.t_plan_produccion where estado=#{estado}")
-	public List<PlanProduccion> findByEstado(@Param("estado") String estado);
+	@Select("SELECT id_planproduccion, fecha_inicioplan, fecha_finplan, cantidad_operarios, cantidad_maquinaria, id_estado FROM victorian.t_plan_produccion where id_estado=#{id_estado}")
+	public List<PlanProduccion> findByEstado(@Param("id_estado") Integer estado);
 	
-	@Select("SELECT idplan, fechainicioplan, fechafinplan, cantidad_operarios, maquinaria, estado FROM victorian.t_plan_produccion where idplan=#{idplan}")
-	public PlanProduccion findById(@Param("idplan") Integer idplan);
+	@Select("SELECT id_planproduccion, fecha_inicioplan, fecha_finplan, cantidad_operarios, cantidad_maquinaria, id_estado FROM victorian.t_plan_produccion where id_planproduccion=#{id_planproduccion}")
+	public PlanProduccion findById(@Param("id_planproduccion") Integer id_planproduccion);
 }

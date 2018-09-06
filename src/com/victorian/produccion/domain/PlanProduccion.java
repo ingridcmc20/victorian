@@ -3,43 +3,37 @@ package com.victorian.produccion.domain;
 import java.sql.Date;
 
 public class PlanProduccion {
-	private Integer idplan;
-	private Date fechainicioplan;
-	private Date fechafinplan;
+	private Integer id_planproduccion;
+	private Date fecha_inicioplan;
+	private Date fecha_finplan;
 	private Integer cantidad_operarios;
-	private Integer maquinaria;
-	private String estado;
+	private Integer cantidad_maquinaria;
+	private Integer id_pedido;
+	private Date fecha_registro;
+	private Integer id_estado;
 
-	public String getEstado() {
-		return estado;
+	public Integer getId_planproduccion() {
+		return id_planproduccion;
 	}
 
-	public void setEstado(String estado) {
-		this.estado = estado;
+	public void setId_planproduccion(Integer id_planproduccion) {
+		this.id_planproduccion = id_planproduccion;
 	}
 
-	public Integer getIdplan() {
-		return idplan;
+	public Date getFecha_inicioplan() {
+		return fecha_inicioplan;
 	}
 
-	public void setIdplan(Integer idplan) {
-		this.idplan = idplan;
+	public void setFecha_inicioplan(Date fecha_inicioplan) {
+		this.fecha_inicioplan = fecha_inicioplan;
 	}
 
-	public Date getFechainicioplan() {
-		return fechainicioplan;
+	public Date getFecha_finplan() {
+		return fecha_finplan;
 	}
 
-	public void setFechainicioplan(Date fechainicioplan) {
-		this.fechainicioplan = fechainicioplan;
-	}
-
-	public Date getFechafinplan() {
-		return fechafinplan;
-	}
-
-	public void setFechafinplan(Date fechafinplan) {
-		this.fechafinplan = fechafinplan;
+	public void setFecha_finplan(Date fecha_finplan) {
+		this.fecha_finplan = fecha_finplan;
 	}
 
 	public Integer getCantidad_operarios() {
@@ -50,12 +44,36 @@ public class PlanProduccion {
 		this.cantidad_operarios = cantidad_operarios;
 	}
 
-	public Integer getMaquinaria() {
-		return maquinaria;
+	public Integer getCantidad_maquinaria() {
+		return cantidad_maquinaria;
 	}
 
-	public void setMaquinaria(Integer maquinaria) {
-		this.maquinaria = maquinaria;
+	public void setCantidad_maquinaria(Integer cantidad_maquinaria) {
+		this.cantidad_maquinaria = cantidad_maquinaria;
+	}
+
+	public Integer getId_pedido() {
+		return id_pedido;
+	}
+
+	public void setId_pedido(Integer id_pedido) {
+		this.id_pedido = id_pedido;
+	}
+
+	public Date getFecha_registro() {
+		return fecha_registro;
+	}
+
+	public void setFecha_registro(Date fecha_registro) {
+		this.fecha_registro = fecha_registro;
+	}
+
+	public Integer getId_estado() {
+		return id_estado;
+	}
+
+	public void setId_estado(Integer id_estado) {
+		this.id_estado = id_estado;
 	}
 
 }

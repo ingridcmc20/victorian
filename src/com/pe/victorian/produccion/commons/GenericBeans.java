@@ -2,7 +2,6 @@ package com.pe.victorian.produccion.commons;
 
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.util.ClassUtils;
 import org.springframework.web.context.WebApplicationContext;
@@ -21,7 +20,7 @@ public class GenericBeans {
 	/**
 	 * Metodo donde se obtiene un objeto segun el nombre de la clase <br/>
 	 */
-	public Object getSpringBean(Class nameObj) {
+	public Object getSpringBean(@SuppressWarnings("rawtypes") Class nameObj) {
 		return getSpringBean(ClassUtils.getShortName(nameObj));
 	}
 

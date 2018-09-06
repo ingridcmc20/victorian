@@ -19,7 +19,7 @@ public class ListaPedidos<T extends Pedido> extends ListDataModel<T> implements 
 		List<T> list = (List<T>) getWrappedData();
 
 		for (T ejb : list) {
-			if (ejb.getIdpedido() == (new Integer(rowKey))) {
+			if (ejb.getId_pedido() == (new Integer(rowKey))) {
 				return ejb;
 			}
 		}
@@ -29,7 +29,7 @@ public class ListaPedidos<T extends Pedido> extends ListDataModel<T> implements 
 	@Override
 	public Object getRowKey(T item) {
 		// TODO Auto-generated method stub
-		return item.getIdpedido();
+		return item.getId_pedido();
 	}
 
 }

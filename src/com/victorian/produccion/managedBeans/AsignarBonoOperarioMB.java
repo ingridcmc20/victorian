@@ -14,6 +14,10 @@ import com.victorian.produccion.services.OperarioServices;
 @ManagedBean(name = "asignarBonoOperarioMB")
 @ViewScoped
 public class AsignarBonoOperarioMB extends GenericBeans implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private List<Operario> listaOperarios;
 	private OperarioServices operarioServices;
 	

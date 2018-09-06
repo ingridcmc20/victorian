@@ -1,12 +1,12 @@
 package com.victorian.produccion.domain;
 
 public class Maquinaria {
-	private Integer idmaquinaria;
+	private Integer id_maquinaria;
 	private String descripcion;
 	private String modelo;
 	private String serie;
-	private String estado;
 	private String tipo;
+	private boolean activo;
 
 	public String getTipo() {
 		return tipo;
@@ -16,12 +16,12 @@ public class Maquinaria {
 		this.tipo = tipo;
 	}
 
-	public Integer getIdmaquinaria() {
-		return idmaquinaria;
+	public Integer getId_maquinaria() {
+		return id_maquinaria;
 	}
 
-	public void setIdmaquinaria(Integer idmaquinaria) {
-		this.idmaquinaria = idmaquinaria;
+	public void setId_maquinaria(Integer id_maquinaria) {
+		this.id_maquinaria = id_maquinaria;
 	}
 
 	public String getDescripcion() {
@@ -48,12 +48,11 @@ public class Maquinaria {
 		this.serie = serie;
 	}
 
-	public String getEstado() {
-		return estado;
+	public boolean isActivo() {
+		return activo;
 	}
 
-	public void setEstado(String estado) {
-		this.estado = estado;
+	public void setActivo(boolean activo) {
+		this.activo = activo;
 	}
-
 }

@@ -13,7 +13,6 @@ import org.primefaces.context.RequestContext;
 import com.pe.victorian.produccion.commons.Constante;
 import com.pe.victorian.produccion.commons.FacesUtils;
 import com.pe.victorian.produccion.commons.GenericBeans;
-import com.victorian.produccion.domain.Log;
 import com.victorian.produccion.domain.Pedido;
 import com.victorian.produccion.domain.Producto;
 import com.victorian.produccion.domain.TipoConfeccion;
@@ -24,6 +23,10 @@ import com.victorian.produccion.services.TipoConfeccionServices;
 @ManagedBean(name = "pedidoMB")
 @ViewScoped
 public class PedidoMB extends GenericBeans implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Pedido pedido;
 	private List<Pedido> listaPedidos;
 	private List<Producto> listaProducto;
@@ -37,8 +40,6 @@ public class PedidoMB extends GenericBeans implements Serializable {
 	private ProductoServices productoServices;
 	private TipoConfeccionServices tipoConfeccionServices;
 
-	private Log log;
-	private LogMB logmb;
 	RequestContext context;
 
 	@PostConstruct
@@ -48,8 +49,8 @@ public class PedidoMB extends GenericBeans implements Serializable {
 		this.pedidoServices = new PedidoServices();
 		this.productoServices = new ProductoServices();
 		this.tipoConfeccionServices = new TipoConfeccionServices();
-		this.fecha_pedido=new Date();
-		this.fecha_entrega=new Date();
+		this.fecha_pedido = new Date();
+		this.fecha_entrega = new Date();
 
 		try {
 			this.listaPedidos = this.pedidoServices.findAll();
@@ -58,9 +59,6 @@ public class PedidoMB extends GenericBeans implements Serializable {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-		log = (Log) getSpringBean(Constante.SESSION_LOG);
-		logmb = new LogMB();
 	}
 
 	public void guardarPedido() {
@@ -70,17 +68,17 @@ public class PedidoMB extends GenericBeans implements Serializable {
 
 		try {
 
-			 this.pedidoSelec.setFechapedido(new java.sql.Date(fecha_pedido.getTime()));
-			 this.pedidoSelec.setFechaentrega(new java.sql.Date(fecha_entrega.getTime()));
-			 this.pedidoSelec.setEstadopedido(Constante.PENDIENTE_APROBACION);
-			
-			 if (this.editar) {
-				 this.pedidoServices.actualizarPedido(this.pedidoSelec);
-				 FacesUtils.showFacesMessage("Pedido ha sido actualizado", 3);
-			 } else {
-				 this.pedidoServices.crearPedido(this.pedidoSelec);
-				 FacesUtils.showFacesMessage("Pedido ha sido creado", 3);
-			 }
+			this.pedidoSelec.setFechapedido(new java.sql.Date(fecha_pedido.getTime()));
+			this.pedidoSelec.setFecha_entrega(new java.sql.Date(fecha_entrega.getTime()));
+			this.pedidoSelec.setId_estado(Constante.REGISTRADO);
+
+			if (this.editar) {
+				this.pedidoServices.actualizarPedido(this.pedidoSelec);
+				FacesUtils.showFacesMessage("Pedido ha sido actualizado", 3);
+			} else {
+				this.pedidoServices.crearPedido(this.pedidoSelec);
+				FacesUtils.showFacesMessage("Pedido ha sido creado", 3);
+			}
 
 			this.pedidoSelec = new Pedido();
 			this.editar = Boolean.FALSE;

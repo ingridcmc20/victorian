@@ -1,16 +1,16 @@
 package com.victorian.produccion.domain;
 
 public class OrdenTrabajoMaquinaria {
-	private Integer idmaquinaria;
+	private Integer id_maquinaria;
 	private Integer id_orden_trabajo;
 	private Integer id_prioridad;
 
-	public Integer getIdmaquinaria() {
-		return idmaquinaria;
+	public Integer getId_maquinaria() {
+		return id_maquinaria;
 	}
 
-	public void setIdmaquinaria(Integer idmaquinaria) {
-		this.idmaquinaria = idmaquinaria;
+	public void setId_maquinaria(Integer id_maquinaria) {
+		this.id_maquinaria = id_maquinaria;
 	}
 
 	public Integer getId_orden_trabajo() {

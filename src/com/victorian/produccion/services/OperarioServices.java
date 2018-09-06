@@ -10,9 +10,9 @@ public class OperarioServices implements OperarioMapper{
 	OperarioMapper operarioMapper = (OperarioMapper)ServiceFinder.findBean("operarioMapper");
 	
 	@Override
-	public List<Operario> findByEstado(String tipo_operario) throws Exception {
+	public List<Operario> findByEstado(Integer id_tipooperario) throws Exception {
 		// TODO Auto-generated method stub
-		return operarioMapper.findByEstado(tipo_operario);
+		return operarioMapper.findByEstado(id_tipooperario);
 	}
 
 	@Override
@@ -22,9 +22,9 @@ public class OperarioServices implements OperarioMapper{
 	}
 
 	@Override
-	public List<String> findByTipoAndByIdOrden(String tipo_operario, Integer id_orden_trabajo) throws Exception {
+	public List<String> findByTipoAndByIdOrden(String id_tipooperario, Integer id_orden_trabajo) throws Exception {
 		// TODO Auto-generated method stub
-		return operarioMapper.findByTipoAndByIdOrden(tipo_operario, id_orden_trabajo);
+		return operarioMapper.findByTipoAndByIdOrden(id_tipooperario, id_orden_trabajo);
 	}
 
 	@Override
@@ -34,9 +34,9 @@ public class OperarioServices implements OperarioMapper{
 	}
 
 	@Override
-	public List<Operario> findByEstadoDisponible(String tipo_operario) throws Exception {
+	public List<Operario> findByEstadoDisponible(Integer id_tipooperario) throws Exception {
 		// TODO Auto-generated method stub
-		return operarioMapper.findByEstadoDisponible(tipo_operario);
+		return operarioMapper.findByEstadoDisponible(id_tipooperario);
 	}
 
 	@Override

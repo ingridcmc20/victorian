@@ -2,24 +2,23 @@ package com.victorian.produccion.managedBeans;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.ListResourceBundle;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
-import com.victorian.produccion.domain.Log;
-import com.victorian.produccion.domain.Ubigeo;
-import com.victorian.produccion.services.MenuServices;
-import com.victorian.produccion.services.UbigeoService;
-import com.pe.victorian.produccion.commons.Constante;
-import com.pe.victorian.produccion.commons.FacesUtils;
 import com.pe.victorian.produccion.commons.GenericBeans;
+import com.victorian.produccion.domain.Ubigeo;
+import com.victorian.produccion.services.UbigeoService;
 
 @ManagedBean(name="ubigeoMB")
 @ViewScoped
 public class UbigeoMB extends GenericBeans implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private List<Ubigeo> listUbigeo;
 	private List<Ubigeo> listUbigeofilter;
 	

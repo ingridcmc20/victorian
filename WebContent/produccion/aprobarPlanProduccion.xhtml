@@ -34,13 +34,13 @@
 						#{nro+1}
 					</p:column>
 					<p:column headerText="Nro. Plan">
-						<h:outputText value="#{p.idplan}" />
+						<h:outputText value="#{p.id_planproduccion}" />
 					</p:column>
 					<p:column headerText="Fecha inicio">
-						<h:outputText value="#{p.fechainicioplan}" />
+						<h:outputText value="#{p.fecha_inicioplan}" />
 					</p:column>			
 					<p:column headerText="Fecha fin">
-						<h:outputText value="#{p.fechafinplan}" />
+						<h:outputText value="#{p.fecha_finplan}" />
 					</p:column>
 					<p:column headerText="Estado">
 						<h:outputText value="#{p.estado}" />
@@ -79,32 +79,32 @@
 					<p:selectOneMenu id="cmbCortador" value="#{aprobarPlanProduccionMB.id_cortador_seleccionado}"
 						>
 						<f:selectItem itemLabel="Seleccionar" itemValue=""/>
-						<f:selectItems value="#{aprobarPlanProduccionMB.listaCortador}" var="of" itemLabel="#{of.nombre_operario}" itemValue="#{of.idoperario}" />
+						<f:selectItems value="#{aprobarPlanProduccionMB.listaCortador}" var="of" itemLabel="#{of.nombre_operario}" itemValue="#{of.id_operario}" />
 					</p:selectOneMenu>	
 
 					<p:outputLabel value="Confeccionista: "/>
 					<p:selectOneMenu id="cmbConfeccionista" value="#{aprobarPlanProduccionMB.id_confeccionista_seleccionado}"
 						>
 						<f:selectItem itemLabel="Seleccionar" itemValue=""/>
-						<f:selectItems value="#{aprobarPlanProduccionMB.listaConfeccionista}" var="of" itemLabel="#{of.nombre_operario}" itemValue="#{of.idoperario}" />
+						<f:selectItems value="#{aprobarPlanProduccionMB.listaConfeccionista}" var="of" itemLabel="#{of.nombre_operario}" itemValue="#{of.id_operario}" />
 					</p:selectOneMenu>
 					
 					<p:outputLabel value="Empaquetador: "/>
 					<p:selectOneMenu id="cmbEmpaquetador" value="#{aprobarPlanProduccionMB.id_empaquetador_seleccionado}">
 						<f:selectItem itemLabel="Seleccionar" itemValue=""/>
-						<f:selectItems value="#{aprobarPlanProduccionMB.listaEmpaquetador}" var="of" itemLabel="#{of.nombre_operario}" itemValue="#{of.idoperario}" />
+						<f:selectItems value="#{aprobarPlanProduccionMB.listaEmpaquetador}" var="of" itemLabel="#{of.nombre_operario}" itemValue="#{of.id_operario}" />
 					</p:selectOneMenu>
 					
 					<p:outputLabel value="Maquina corte: "/>
 					<p:selectOneMenu id="cmbMaquinaCorte" value="#{aprobarPlanProduccionMB.id_maquina_corte_seleccionado}">
 						<f:selectItem itemLabel="Seleccionar" itemValue=""/>
-						<f:selectItems value="#{aprobarPlanProduccionMB.listaMaquinaCorte}" var="of" itemLabel="#{of.descripcion}" itemValue="#{of.idmaquinaria}" />
+						<f:selectItems value="#{aprobarPlanProduccionMB.listaMaquinaCorte}" var="of" itemLabel="#{of.descripcion}" itemValue="#{of.id_maquinaria}" />
 					</p:selectOneMenu>
 										
 					<p:outputLabel value="Maquina confeccion: "/>
 					<p:selectOneMenu id="cmbMaquinaConfeccion" value="#{aprobarPlanProduccionMB.id_maquina_confeccion_seleccionado}">
 						<f:selectItem itemLabel="Seleccionar" itemValue=""/>
-						<f:selectItems value="#{aprobarPlanProduccionMB.listaMaquinaConfeccion}" var="of" itemLabel="#{of.descripcion}" itemValue="#{of.idmaquinaria}" />
+						<f:selectItems value="#{aprobarPlanProduccionMB.listaMaquinaConfeccion}" var="of" itemLabel="#{of.descripcion}" itemValue="#{of.id_maquinaria}" />
 					</p:selectOneMenu>	
 					
 					<p:commandButton value="Guardar" actionListener="#{aprobarPlanProduccionMB.asignarRecursos()}"

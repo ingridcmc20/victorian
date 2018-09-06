@@ -27,6 +27,10 @@ import com.victorian.produccion.services.OrdenTrabajoServices;
 @ManagedBean(name = "actualizarOrdenTrabajoPorPerfilMB")
 @ViewScoped
 public class ActualizarOrdenTrabajoPorPerfilMB extends GenericBeans implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private List<OrdenTrabajo> listaOrdenTrabajo;
 	private List<Merma> listaMerma;
 	private OrdenTrabajoServices ordenTrabajoServices;
