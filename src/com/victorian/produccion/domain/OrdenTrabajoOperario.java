@@ -1,10 +1,18 @@
 package com.victorian.produccion.domain;
 
 public class OrdenTrabajoOperario {
-	private Integer idoperario;
+	private Integer id_operario;
 	private Integer id_orden_trabajo;
 	private Integer id_prioridad;
 	private Integer id_etapa;
+
+	public Integer getId_operario() {
+		return id_operario;
+	}
+
+	public void setId_operario(Integer id_operario) {
+		this.id_operario = id_operario;
+	}
 
 	public Integer getId_etapa() {
 		return id_etapa;
@@ -12,14 +20,6 @@ public class OrdenTrabajoOperario {
 
 	public void setId_etapa(Integer id_etapa) {
 		this.id_etapa = id_etapa;
-	}
-
-	public Integer getIdoperario() {
-		return idoperario;
-	}
-
-	public void setIdoperario(Integer idoperario) {
-		this.idoperario = idoperario;
 	}
 
 	public Integer getId_orden_trabajo() {

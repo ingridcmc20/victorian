@@ -32,7 +32,7 @@ public class MaquinariaConverter implements Converter {
 	@Override
 	public String getAsString(FacesContext fc, UIComponent uic, Object object) {
 		if (object != null) {
-			 return String.valueOf(((Maquinaria) object).getIdmaquinaria());
+			 return String.valueOf(((Maquinaria) object).getId_maquinaria());
 		} else {
 			return null;
 		}

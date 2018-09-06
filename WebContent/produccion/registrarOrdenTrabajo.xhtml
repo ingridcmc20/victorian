@@ -205,7 +205,7 @@
 							<p:panel id="pnlPDiseno" header="Diseño">
 								<p:selectManyMenu id="lmmPDiseno" value="#{registroOrdenTrabajoMB.lstPDisenoSelected}" filter="true" 
 									filterMatchMode="contains" showCheckbox="true" style="width:100%;" scrollHeight="100">
-            						<f:selectItems value="#{registroOrdenTrabajoMB.lstPDiseno}" var="usuario" itemLabel="#{usuario.nombre_operario}" itemValue="#{usuario.idoperario}" />
+            						<f:selectItems value="#{registroOrdenTrabajoMB.lstPDiseno}" var="usuario" itemLabel="#{usuario.nombre_operario}" itemValue="#{usuario.id_operario}" />
 						        </p:selectManyMenu>
 							</p:panel>
 						</p:column>
@@ -213,7 +213,7 @@
 							<p:panel id="pnlPCorte" header="Corte">
 								<p:selectManyMenu id="lmmPCorte" value="#{registroOrdenTrabajoMB.lstPCorteSelected}" filter="true" 
 									filterMatchMode="contains" showCheckbox="true" style="width:100%;" scrollHeight="100">
-						            <f:selectItems value="#{registroOrdenTrabajoMB.lstPCorte}" var="usuario" itemLabel="#{usuario.nombre_operario}" itemValue="#{usuario.idoperario}" />
+						            <f:selectItems value="#{registroOrdenTrabajoMB.lstPCorte}" var="usuario" itemLabel="#{usuario.nombre_operario}" itemValue="#{usuario.id_operario}" />
 						        </p:selectManyMenu>
 							</p:panel>
 						</p:column>
@@ -223,7 +223,7 @@
 							<p:panel id="pnlPConfeccion" header="Confección">
 								<p:selectManyMenu id="lmmPConfeccion" value="#{registroOrdenTrabajoMB.lstPConfeccionSelected}"
 									filter="true" filterMatchMode="contains" showCheckbox="true" style="width:100%;" scrollHeight="100">
-						            <f:selectItems value="#{registroOrdenTrabajoMB.lstPConfeccion}" var="usuario" itemLabel="#{usuario.nombre_operario}" itemValue="#{usuario.idoperario}" />
+						            <f:selectItems value="#{registroOrdenTrabajoMB.lstPConfeccion}" var="usuario" itemLabel="#{usuario.nombre_operario}" itemValue="#{usuario.id_operario}" />
 						        </p:selectManyMenu>
 							</p:panel>
 						</p:column>
@@ -231,7 +231,7 @@
 							<p:panel id="pnlPEmpaquetado" header="Empaquetado">
 								<p:selectManyMenu id="lmmPEmpaquetado" value="#{registroOrdenTrabajoMB.lstPEmpaquetadoSelected}" 
 									filter="true" filterMatchMode="contains" showCheckbox="true" style="width:100%;" scrollHeight="100">
-						            <f:selectItems value="#{registroOrdenTrabajoMB.lstPEmpaquetado}" var="usuario" itemLabel="#{usuario.nombre_operario}" itemValue="#{usuario.idoperario}" />
+						            <f:selectItems value="#{registroOrdenTrabajoMB.lstPEmpaquetado}" var="usuario" itemLabel="#{usuario.nombre_operario}" itemValue="#{usuario.id_operario}" />
 						        </p:selectManyMenu>
 							</p:panel>
 						</p:column>
@@ -256,7 +256,7 @@
 							<p:panel id="pnlMCorte" header="Corte">
 								<p:selectManyMenu id="lmmMCorte" value="#{registroOrdenTrabajoMB.lstMCorteSelected}" filter="true" 
 									filterMatchMode="contains" showCheckbox="true" style="width:100%;" scrollHeight="100">
-						            <f:selectItems value="#{registroOrdenTrabajoMB.lstMCorte}" var="maquinaria" itemLabel="#{maquinaria.descripcion}" itemValue="#{maquinaria.idmaquinaria}" />
+						            <f:selectItems value="#{registroOrdenTrabajoMB.lstMCorte}" var="maquinaria" itemLabel="#{maquinaria.descripcion}" itemValue="#{maquinaria.id_maquinaria}" />
 						        </p:selectManyMenu>
 							</p:panel>
 						</p:column>
@@ -264,7 +264,7 @@
 							<p:panel id="pnlMConfeccion" header="Confección">
 								<p:selectManyMenu id="lmmMConfeccion" value="#{registroOrdenTrabajoMB.lstMConfeccionSelected}" filter="true" 
 									filterMatchMode="contains" showCheckbox="true" style="width:100%;" scrollHeight="100">
-						            <f:selectItems value="#{registroOrdenTrabajoMB.lstMConfeccion}" var="maquinaria" itemLabel="#{maquinaria.descripcion}" itemValue="#{maquinaria.idmaquinaria}" />
+						            <f:selectItems value="#{registroOrdenTrabajoMB.lstMConfeccion}" var="maquinaria" itemLabel="#{maquinaria.descripcion}" itemValue="#{maquinaria.id_maquinaria}" />
 						        </p:selectManyMenu>
 							</p:panel>
 						</p:column>

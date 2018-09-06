@@ -11,13 +11,13 @@ public class Constante {
 	
 	/**ESTADOS**/
 	/**PEDIDOS**/
-	public static final Integer PENDIENTE_APROBACION = 1;
-	public static final Integer APROBADO = 2;
-	public static final Integer ACEPTADO = 3;
-	public static final Integer PROGRAMADO = 9;
+	public static final Integer REGISTRADO = 1;
+	public static final Integer ACEPTADO = 2;
+	public static final Integer EN_PROCESO = 3;
+	public static final Integer FINALIZADO = 4;
 	
-	public static final String PP_PENDIENTE_APROBACION = "PENDIENTE DE APROBACION";
-	public static final String PP_APROBADO = "APROBADO";
+	public static final Integer PP_PENDIENTE = 5;
+	public static final Integer PP_APROBADO = 6;
 	
 	public static final Integer OT_PENDIENTE = 4;
 	public static final Integer OT_EN_CURSO = 5;
@@ -35,9 +35,12 @@ public class Constante {
 	public static final Integer PERFIL_USUARIO_CONFECCIONISTA = 44;
 	public static final Integer PERFIL_USUARIO_EMPAQUETADOR = 45;
 	
-	public static final String TO_CORTADOR = "CORTADOR";
-	public static final String TO_CONFECCIONISTA = "CONFECCIONISTA";
-	
 	// Menu oculto
 	public static final Integer MENU_LOGIN = 230;
+	
+	// Perfiles
+	public static final Integer OP_DISENADOR = 1;
+	public static final Integer OP_CORTADOR = 2;
+	public static final Integer OP_CONFECCIONISTA = 3;
+	public static final Integer OP_EMPAQUETADOR = 4;
 }

@@ -37,9 +37,9 @@
 						<p:column><p:outputLabel value="#{planProduccionMB.cantidad_empaquetadores}"/></p:column>
 					</p:row>
 					<p:row>
-						<p:column><p:outputLabel value="MAQUINAS CORTADORASS: " style="font-weight: bold;"/></p:column>
+						<p:column><p:outputLabel value="MAQUINAS CORTADORAS: " style="font-weight: bold;"/></p:column>
 						<p:column><p:outputLabel value="#{planProduccionMB.cantidad_maquina_cortadora}"/></p:column>
-						<p:column><p:outputLabel value="MAQUINAS CONFECCIONS: " style="font-weight: bold;"/></p:column>
+						<p:column><p:outputLabel value="MAQUINAS CONFECCION: " style="font-weight: bold;"/></p:column>
 						<p:column><p:outputLabel value="#{planProduccionMB.cantidad_maquina_confeccionista}"/></p:column>
 						<p:column></p:column>
 						<p:column></p:column>
@@ -48,8 +48,8 @@
 					</p:row>					
 				</p:panelGrid>
 				<p:dataTable id="dataTable" var="p" value="#{planProduccionMB.listaPedidos}"
-					rowKey="#{p.idpedido}"  
-					selection="#{planProduccionMB.listaPedidosSelected}"
+					rowKey="#{p.id_pedido}"  
+					selection="#{planProduccionMB.pedidoSelected}"
 					widgetVar="dtPedido" 
 					emptyMessage="NO EXISTEN PEDIDOS EN ESTADO ACEPTADO." rowIndexVar="nro" 
 					scrollRows="10" scrollable="true" scrollHeight="250"
@@ -57,12 +57,12 @@
 					 disabledSelection="#{!p.bool_ficha_tecnica}">
 										 
 					<f:facet name="header">Lista Pedidos</f:facet>
-					<p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+					<p:column selectionMode="single" style="width:16px;text-align:center"/>
 					<p:column headerText="#" style="width:6%" >
 						#{nro+1}
 					</p:column>
 					<p:column headerText="Nro. Pedido">
-						<h:outputText value="#{p.idpedido}" />
+						<h:outputText value="#{p.id_pedido}" />
 					</p:column>
 					<p:column headerText="Cliente">
 						<h:outputText value="#{p.nombre_cliente}" />
@@ -74,7 +74,7 @@
 						<h:outputText value="#{p.des_tipoconfeccion}" />
 					</p:column>
 					<p:column headerText="Fecha Entrega">
-						<h:outputText value="#{p.fechaentrega}" />
+						<h:outputText value="#{p.fecha_entrega}" />
 					</p:column>
 					<p:column headerText="Estado">
 						<h:outputText value="#{p.des_estado}" />
@@ -97,7 +97,7 @@
 				<p:panelGrid>
 					<p:row>
 						<p:column style="width: 20%;"><h:outputText value="Nro. Pedido:" /></p:column>
-						<p:column><h:outputText value="#{planProduccionMB.pedidoSelec.idpedido}" /></p:column>
+						<p:column><h:outputText value="#{planProduccionMB.pedidoSelec.id_pedido}" /></p:column>
 						<p:column style="width: 20%;"><h:outputText value="Producto:" /></p:column>
 						<p:column><h:outputText value="#{planProduccionMB.pedidoSelec.des_tipo_prenda}" /></p:column>
 					</p:row>
@@ -116,10 +116,6 @@
 								</p:column>
 								
 								<p:column headerText="Insumo">
-									<h:outputText value="#{p.nom_insumo}" />
-								</p:column>
-								
-								<p:column headerText="Descripcion">
 									<h:outputText value="#{p.nombreinsumo}" />
 								</p:column>
 								

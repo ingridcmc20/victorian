@@ -26,11 +26,12 @@ public interface AsignacionRecursoMapper {
     public void update(AsignacionRecurso asignacionRecurso) throws Exception;
 	
 	@Select("select * from ( "+
-			"SELECT 'PERSONAL ' || tipo_operario as tipo_recurso, COUNT(idoperario) AS cantidad FROM t_operario where estado=1 and idoperario not in "+ 
-			"(select oto.id_operario from t_orden_trabajo ot inner join t_orden_trabajo_operario oto on oto.id_orden_trabajo=ot.id_orden_trabajo where id_estado<>6) "+ 
-			"group by tipo_operario "+
-			"union SELECT 'MAQUINA ' || tipo as tipo_recurso, count(idmaquinaria) AS cantidad "+ 
-			"FROM t_maquinaria where estado='ACTIVA' AND idmaquinaria not in (select oto.id_maquinaria from t_orden_trabajo ot inner join t_orden_trabajo_maquinaria oto on oto.id_orden_trabajo=ot.id_orden_trabajo where id_estado<>6) "+ 
+			"SELECT 'PERSONAL ' || top.descripcion as tipo_recurso, count(o.id_operario) AS cantidad "+ 
+			"FROM victorian.t_operario o inner join victorian.t_tipooperario top on o.id_tipooperario=top.id_tipooperario " +
+			"where o.disponible=1 and o.activo=true "+ 
+			"group by top.descripcion "+
+			"union SELECT 'MAQUINA ' || tipo as tipo_recurso, count(id_maquinaria) AS cantidad "+ 
+			"FROM victorian.t_maquinaria where disponible=1 AND activo=true "+ 
 			"group by tipo) as a "+ 
 			"order by a.tipo_recurso")
 	public List<Recurso> listarRecursosDisponibles() throws Exception;

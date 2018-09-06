@@ -2,15 +2,10 @@ package com.victorian.produccion.services;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
-
-import com.victorian.produccion.domain.Perfil;
-import com.victorian.produccion.domain.Usuario;
-import com.victorian.produccion.domain.UsuarioPerfil;
-import com.victorian.produccion.mapper.UsuarioMapper;
-import com.victorian.produccion.mapper.UsuarioPerfilMapper;
 import com.pe.victorian.produccion.commons.ServiceFinder;
+import com.victorian.produccion.domain.Perfil;
+import com.victorian.produccion.domain.UsuarioPerfil;
+import com.victorian.produccion.mapper.UsuarioPerfilMapper;
 
 public class UsuarioPerfilServices implements UsuarioPerfilMapper{
 

@@ -21,10 +21,10 @@ public interface OrdenTrabajoMapper {
 				"tc.descripcion as des_tipo_confeccion, ot.fecha_entrega_orden, ot.fecha_entrega_pedido,"+ 
 				"ot.id_prioridad, ot.id_pedido, ot.id_estado, pri.descripcion as des_prioridad,"+
 				"ot.id_etapa, e.descripcion as des_etapa, otd.fecha_fin, otd.fecha_inicio "+
-				"FROM victorian.t_orden_trabajo ot inner join victorian.t_pedido p on p.idpedido=ot.id_pedido "+
+				"FROM victorian.t_orden_trabajo ot inner join victorian.t_pedido p on p.id_pedido=ot.id_pedido "+
 				"inner join victorian.t_cliente cl on cl.idcliente=p.idcliente "+
 				"inner join victorian.t_producto pr on pr.id_producto=p.tipo_prenda "+
-				"inner join victorian.t_tipoconfeccion tc on tc.idtipoconfeccion=p.idtipoconfeccion "+
+				"inner join victorian.t_tipo_confeccion tc on tc.id_tipoconfeccion=p.id_tipoconfeccion "+
 				"inner join victorian.t_prioridad pri on pri.id_prioridad=ot.id_prioridad "+
 				"inner join victorian.t_etapa e on e.id_etapa=ot.id_etapa "+
 				"inner join victorian.t_estado es on es.id_estado=ot.id_estado "+

@@ -1,15 +1,15 @@
 package com.victorian.produccion.domain;
 
 public class TipoConfeccion {
-	private Integer idtipoconfeccion;
+	private Integer id_tipoconfeccion;
 	private String descripcion;
 
-	public Integer getIdtipoconfeccion() {
-		return idtipoconfeccion;
+	public Integer getId_tipoconfeccion() {
+		return id_tipoconfeccion;
 	}
 
-	public void setIdtipoconfeccion(Integer idtipoconfeccion) {
-		this.idtipoconfeccion = idtipoconfeccion;
+	public void setId_tipoconfeccion(Integer id_tipoconfeccion) {
+		this.id_tipoconfeccion = id_tipoconfeccion;
 	}
 
 	public String getDescripcion() {
