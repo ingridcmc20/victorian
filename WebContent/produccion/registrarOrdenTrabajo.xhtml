@@ -35,7 +35,7 @@
 					#{nro+1}
 				</p:column>
 				<p:column headerText="Nro. Orden">
-					<h:outputText value="#{p.id_orden_trabajo}" />
+					<h:outputText value="#{p.id_ordentrabajo}" />
 				</p:column>
 				<p:column headerText="F. Registro">
 					<h:outputText value="#{p.fecha_registro}" />
@@ -50,13 +50,13 @@
 					<h:outputText value="#{p.des_tipo_confeccion}" />
 				</p:column>
 				<p:column headerText="F. Entrega orden">
-					<h:outputText value="#{p.fecha_entrega_orden}" />
+					<h:outputText value="#{p.fecha_entrega}" />
 				</p:column>
 				<p:column headerText="F. Entrega pedido">
 					<h:outputText value="#{p.fecha_entrega_pedido}" />
 				</p:column>
 				<p:column headerText="Prioridad" width="50">
-					<h:outputText value="#{p.des_prioridad}" />
+					<h:outputText value="#{p.prioridad}" />
 				</p:column>
 				<p:column headerText="Personal" width="50">
 					<p:commandButton icon="icon-user" actionListener="#{registroOrdenTrabajoMB.obtenerPersonal(p)}" update=":dlgDetPersonal" oncomplete="PF('dlgPersonal').show();" />
@@ -144,10 +144,7 @@
 					<p:row>
 						<p:column><p:outputLabel value="Prioridad"/></p:column>
 						<p:column>
-							<p:selectOneMenu value="#{registroOrdenTrabajoMB.ordenTrabajoSelected.id_prioridad}" required="true" requiredMessage="Seleccione una prioridad">
-								<f:selectItem itemLabel="Seleccione..." itemValue="" />							
-								<f:selectItems value="#{registroOrdenTrabajoMB.listPrioridad}" var="ex" itemLabel="#{ex.descripcion}" itemValue="#{ex.id_prioridad}" />
-							</p:selectOneMenu>
+							<p:inputText value="#{registroOrdenTrabajoMB.ordenTrabajoSelected.prioridad}" required="true" requiredMessage="Seleccione una prioridad"/>
 						</p:column>
 					</p:row>
 					<p:row>
@@ -180,6 +177,12 @@
 											<p:outputLabel value="#{registroOrdenTrabajoMB.pedidoSelected.des_estado}"/>
 										</p:column>
 									</p:row>
+									<p:row>
+										<p:column><p:outputLabel value="Plan Produccion:"/></p:column>
+										<p:column colspan="3">
+											<p:outputLabel value="#{registroOrdenTrabajoMB.pedidoSelected.id_planproduccion}"/>
+										</p:column>
+									</p:row>
 								</p:panelGrid>
 							</p:panel>						
 						</p:column>
@@ -198,7 +201,7 @@
 				<p:panelGrid style="width:100%; vertical-align: top;">
 					<p:row>
 						<p:column style="width:10%;"><p:outputLabel value="Nro. Orden de trabajo"/></p:column>
-						<p:column colspan="3"><p:outputLabel id="nroPedido" value="#{registroOrdenTrabajoMB.ordenTrabajoSelected.id_orden_trabajo}"/></p:column>						
+						<p:column colspan="3"><p:outputLabel id="nroPedido" value="#{registroOrdenTrabajoMB.ordenTrabajoSelected.id_ordentrabajo}"/></p:column>						
 					</p:row>
 					<p:row>
 						<p:column colspan="2" style="width:40%; vertical-align: top;">
@@ -249,7 +252,7 @@
 				<p:panelGrid style="width:100%; vertical-align: top;">
 					<p:row>
 						<p:column style="width:10%;"><p:outputLabel value="Nro. Orden de trabajo"/></p:column>
-						<p:column colspan="3"><p:outputLabel id="nroPedido" value="#{registroOrdenTrabajoMB.ordenTrabajoSelected.id_orden_trabajo}"/></p:column>						
+						<p:column colspan="3"><p:outputLabel id="nroPedido" value="#{registroOrdenTrabajoMB.ordenTrabajoSelected.id_ordentrabajo}"/></p:column>						
 					</p:row>
 					<p:row>
 						<p:column colspan="2" style="width:40%;">

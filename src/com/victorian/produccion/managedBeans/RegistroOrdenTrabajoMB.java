@@ -24,7 +24,6 @@ import com.victorian.produccion.domain.OrdenTrabajoDetalle;
 import com.victorian.produccion.domain.OrdenTrabajoMaquinaria;
 import com.victorian.produccion.domain.OrdenTrabajoOperario;
 import com.victorian.produccion.domain.Pedido;
-import com.victorian.produccion.domain.Prioridad;
 import com.victorian.produccion.services.EtapaServices;
 import com.victorian.produccion.services.FichaTecnicaServices;
 import com.victorian.produccion.services.MaquinariaServices;
@@ -34,7 +33,6 @@ import com.victorian.produccion.services.OrdenTrabajoMaquinariaServices;
 import com.victorian.produccion.services.OrdenTrabajoOperarioServices;
 import com.victorian.produccion.services.OrdenTrabajoServices;
 import com.victorian.produccion.services.PedidoServices;
-import com.victorian.produccion.services.PrioridadServices;
 
 @ManagedBean(name = "registroOrdenTrabajoMB")
 @ViewScoped
@@ -46,7 +44,6 @@ public class RegistroOrdenTrabajoMB extends GenericBeans implements Serializable
 	private OperarioServices operarioServices;
 	private MaquinariaServices maquinariaServices;
 	private OrdenTrabajoServices ordenTrabajoServices;
-	private PrioridadServices prioridadServices;
 	private PedidoServices pedidoServices;
 	private FichaTecnicaServices fichaTecnicaServices;
 	private OrdenTrabajoDetalleServices ordenTrabajoDetalleServices;
@@ -57,8 +54,6 @@ public class RegistroOrdenTrabajoMB extends GenericBeans implements Serializable
 	private List<OrdenTrabajo> lstOrdenTrabajo;
 	private OrdenTrabajo ordenTrabajoSelected;
 	private Pedido pedidoSelected;
-
-	private List<Prioridad> listPrioridad;
 
 	// Listas de recursos
 	private List<Operario> lstPDiseno;
@@ -86,7 +81,6 @@ public class RegistroOrdenTrabajoMB extends GenericBeans implements Serializable
 			this.operarioServices = new OperarioServices();
 			this.maquinariaServices = new MaquinariaServices();
 			this.ordenTrabajoServices = new OrdenTrabajoServices();
-			this.prioridadServices = new PrioridadServices();
 			this.pedidoServices = new PedidoServices();
 			this.fichaTecnicaServices = new FichaTecnicaServices();
 			this.ordenTrabajoDetalleServices = new OrdenTrabajoDetalleServices();
@@ -99,7 +93,6 @@ public class RegistroOrdenTrabajoMB extends GenericBeans implements Serializable
 
 			// Iniciar listas
 			this.lstOrdenTrabajo = this.ordenTrabajoServices.findAll();
-			this.listPrioridad = this.prioridadServices.findAll();
 
 			// Recursos
 			this.lstPDiseno = this.operarioServices.findByEstadoDisponible(Constante.OP_DISENADOR);
@@ -142,7 +135,8 @@ public class RegistroOrdenTrabajoMB extends GenericBeans implements Serializable
 			List<FichaTecnica> listFichasTecnicas;
 			this.ordenTrabajoSelected = ot;
 			this.pedidoSelected = this.pedidoServices.findByIdAndByEstado(this.ordenTrabajoSelected.getId_pedido(),
-					Constante.ACEPTADO);
+					Constante.EN_PROCESO);
+			
 			if (pedidoSelected != null) {
 				ordenTrabajoSelected.setNombre_cliente(pedidoSelected.getNombre_cliente());
 				ordenTrabajoSelected.setDes_tipo_prenda(pedidoSelected.getDes_tipo_prenda());
@@ -256,21 +250,22 @@ public class RegistroOrdenTrabajoMB extends GenericBeans implements Serializable
 			ordenTrabajoSelected.setFecha_registro(new java.sql.Date(fechaActual.getTime()));
 			ordenTrabajoSelected.setId_estado(Constante.OT_PENDIENTE);
 			ordenTrabajoSelected.setId_etapa(Constante.OT_ETAPA_DISENIO);
+			ordenTrabajoSelected.setId_planproduccion(pedidoSelected.getId_planproduccion());
 
-			if (ordenTrabajoSelected.getId_orden_trabajo() != null) {
+			if (ordenTrabajoSelected.getId_ordentrabajo() != null) {
 				ordenTrabajoServices.update(ordenTrabajoSelected);
 			} else {
 				ordenTrabajoServices.insert(ordenTrabajoSelected);
 
-				pedidoSelected.setId_estado(Constante.FINALIZADO);
+				pedidoSelected.setId_estado(Constante.EN_PROCESO);
 				pedidoServices.actualizarPedido(pedidoSelected);
 
 				for (Etapa etapa : lstEtapas) {
 					OrdenTrabajoDetalle otd = new OrdenTrabajoDetalle();
-					otd.setId_orden_trabajo(ordenTrabajoSelected.getId_orden_trabajo());
+					otd.setId_ordentrabajo(ordenTrabajoSelected.getId_ordentrabajo());
 					otd.setId_etapa(etapa.getId_etapa());
+					otd.setId_estado(Constante.OT_PENDIENTE);
 					// otd.setId_plan_produccion(planPedido.getIdplan());
-					otd.setId_prioridad(ordenTrabajoSelected.getId_prioridad());
 
 					switch (etapa.getId_etapa()) {
 					case 1:
@@ -333,12 +328,12 @@ public class RegistroOrdenTrabajoMB extends GenericBeans implements Serializable
 			this.lstPConfeccion = this.operarioServices.findByEstadoDisponible(Constante.OP_CONFECCIONISTA);
 			this.lstPEmpaquetado = this.operarioServices.findByEstadoDisponible(Constante.OP_EMPAQUETADOR);
 
-			this.lstPDisenoSelected = this.operarioServices.findByTipoAndByIdOrden("DISEÑO", ot.getId_orden_trabajo());
-			this.lstPCorteSelected = this.operarioServices.findByTipoAndByIdOrden("CORTE", ot.getId_orden_trabajo());
-			this.lstPConfeccionSelected = this.operarioServices.findByTipoAndByIdOrden("CONFECCION",
-					ot.getId_orden_trabajo());
-			this.lstPEmpaquetadoSelected = this.operarioServices.findByTipoAndByIdOrden("EMPAQUETADO",
-					ot.getId_orden_trabajo());
+			this.lstPDisenoSelected = this.operarioServices.findByTipoAndByIdOrden(Constante.OP_DISENADOR, ot.getId_ordentrabajo());
+			this.lstPCorteSelected = this.operarioServices.findByTipoAndByIdOrden(Constante.OP_CORTADOR, ot.getId_ordentrabajo());
+			this.lstPConfeccionSelected = this.operarioServices.findByTipoAndByIdOrden(Constante.OP_CONFECCIONISTA,
+					ot.getId_ordentrabajo());
+			this.lstPEmpaquetadoSelected = this.operarioServices.findByTipoAndByIdOrden(Constante.OP_EMPAQUETADOR,
+					ot.getId_ordentrabajo());
 
 			System.out.println("lstPDisenoSelected: " + lstPDisenoSelected.size());
 			System.out.println("lstPCorteSelected: " + lstPCorteSelected.size());
@@ -362,10 +357,9 @@ public class RegistroOrdenTrabajoMB extends GenericBeans implements Serializable
 
 			// this.lstMDisenoSelected =
 			// this.maquinariaServices.findByEstadoAndByIdOrden("DISEÑO");
-			this.lstMCorteSelected = this.maquinariaServices.findByEstadoAndByIdOrden("CORTE",
-					ot.getId_orden_trabajo());
+			this.lstMCorteSelected = this.maquinariaServices.findByEstadoAndByIdOrden("CORTE", ot.getId_ordentrabajo());
 			this.lstMConfeccionSelected = this.maquinariaServices.findByEstadoAndByIdOrden("CONFECCION",
-					ot.getId_orden_trabajo());
+					ot.getId_ordentrabajo());
 			// this.lstMEmpaquetado =
 			// this.maquinariaServices.findByEstadoAndByIdOrden("EMPAQUETADO");
 		} catch (Exception e) {
@@ -382,45 +376,93 @@ public class RegistroOrdenTrabajoMB extends GenericBeans implements Serializable
 			System.out.println("lstPConfeccionSelected: " + lstPConfeccionSelected.size());
 			System.out.println("lstPEmpaquetadoSelected: " + lstPEmpaquetadoSelected.size());
 
-			ordenTrabajoOperarioServices.delete(this.ordenTrabajoSelected.getId_orden_trabajo());
+			ordenTrabajoOperarioServices.delete(this.ordenTrabajoSelected.getId_ordentrabajo());
 
 			for (String o : lstPDisenoSelected) {
+				Operario operario = operarioServices.findById(new Integer(o));
 				OrdenTrabajoOperario oto = new OrdenTrabajoOperario();
-				oto.setId_orden_trabajo(this.ordenTrabajoSelected.getId_orden_trabajo());
-				oto.setId_prioridad(this.ordenTrabajoSelected.getId_prioridad());
+				oto.setId_ordentrabajo(this.ordenTrabajoSelected.getId_ordentrabajo());
 				oto.setId_operario(new Integer(o));
 				oto.setId_etapa(Constante.OT_ETAPA_DISENIO);
+				
+				if(operario.getPuntaje_acumulado()<5){
+					oto.setId_nivel(Constante.NIVEL_1);	
+				}else if(operario.getPuntaje_acumulado()<10){
+					oto.setId_nivel(Constante.NIVEL_2);
+				}else if(operario.getPuntaje_acumulado()<15){
+					oto.setId_nivel(Constante.NIVEL_3);
+				}else if(operario.getPuntaje_acumulado()<20){
+					oto.setId_nivel(Constante.NIVEL_4);
+				}else{
+					oto.setId_nivel(Constante.NIVEL_5);
+				}
 
 				ordenTrabajoOperarioServices.insert(oto);
 			}
 
 			for (String o : lstPCorteSelected) {
+				Operario operario = operarioServices.findById(new Integer(o));
 				OrdenTrabajoOperario oto = new OrdenTrabajoOperario();
-				oto.setId_orden_trabajo(this.ordenTrabajoSelected.getId_orden_trabajo());
-				oto.setId_prioridad(this.ordenTrabajoSelected.getId_prioridad());
+				oto.setId_ordentrabajo(this.ordenTrabajoSelected.getId_ordentrabajo());
 				oto.setId_operario(new Integer(o));
 				oto.setId_etapa(Constante.OT_ETAPA_CORTE);
 
+				if(operario.getPuntaje_acumulado()<5){
+					oto.setId_nivel(Constante.NIVEL_1);	
+				}else if(operario.getPuntaje_acumulado()<10){
+					oto.setId_nivel(Constante.NIVEL_2);
+				}else if(operario.getPuntaje_acumulado()<15){
+					oto.setId_nivel(Constante.NIVEL_3);
+				}else if(operario.getPuntaje_acumulado()<20){
+					oto.setId_nivel(Constante.NIVEL_4);
+				}else{
+					oto.setId_nivel(Constante.NIVEL_5);
+				}
+				
 				ordenTrabajoOperarioServices.insert(oto);
 			}
 
 			for (String o : lstPConfeccionSelected) {
+				Operario operario = operarioServices.findById(new Integer(o));
 				OrdenTrabajoOperario oto = new OrdenTrabajoOperario();
-				oto.setId_orden_trabajo(this.ordenTrabajoSelected.getId_orden_trabajo());
-				oto.setId_prioridad(this.ordenTrabajoSelected.getId_prioridad());
+				oto.setId_ordentrabajo(this.ordenTrabajoSelected.getId_ordentrabajo());
 				oto.setId_operario(new Integer(o));
 				oto.setId_etapa(Constante.OT_ETAPA_CONFECCION);
 
+				if(operario.getPuntaje_acumulado()<5){
+					oto.setId_nivel(Constante.NIVEL_1);	
+				}else if(operario.getPuntaje_acumulado()<10){
+					oto.setId_nivel(Constante.NIVEL_2);
+				}else if(operario.getPuntaje_acumulado()<15){
+					oto.setId_nivel(Constante.NIVEL_3);
+				}else if(operario.getPuntaje_acumulado()<20){
+					oto.setId_nivel(Constante.NIVEL_4);
+				}else{
+					oto.setId_nivel(Constante.NIVEL_5);
+				}
+				
 				ordenTrabajoOperarioServices.insert(oto);
 			}
 
 			for (String o : lstPEmpaquetadoSelected) {
+				Operario operario = operarioServices.findById(new Integer(o));
 				OrdenTrabajoOperario oto = new OrdenTrabajoOperario();
-				oto.setId_orden_trabajo(this.ordenTrabajoSelected.getId_orden_trabajo());
-				oto.setId_prioridad(this.ordenTrabajoSelected.getId_prioridad());
+				oto.setId_ordentrabajo(this.ordenTrabajoSelected.getId_ordentrabajo());
 				oto.setId_operario(new Integer(o));
 				oto.setId_etapa(Constante.OT_ETAPA_EMPAQUETADO);
 
+				if(operario.getPuntaje_acumulado()<5){
+					oto.setId_nivel(Constante.NIVEL_1);	
+				}else if(operario.getPuntaje_acumulado()<10){
+					oto.setId_nivel(Constante.NIVEL_2);
+				}else if(operario.getPuntaje_acumulado()<15){
+					oto.setId_nivel(Constante.NIVEL_3);
+				}else if(operario.getPuntaje_acumulado()<20){
+					oto.setId_nivel(Constante.NIVEL_4);
+				}else{
+					oto.setId_nivel(Constante.NIVEL_5);
+				}
+				
 				ordenTrabajoOperarioServices.insert(oto);
 			}
 
@@ -439,22 +481,22 @@ public class RegistroOrdenTrabajoMB extends GenericBeans implements Serializable
 			System.out.println("lstMCorteSelected: " + lstMCorteSelected.size());
 			System.out.println("lstMConfeccionSelected: " + lstMConfeccionSelected.size());
 
-			ordenTrabajoMaquinariaServices.delete(this.ordenTrabajoSelected.getId_orden_trabajo());
+			ordenTrabajoMaquinariaServices.delete(this.ordenTrabajoSelected.getId_ordentrabajo());
 
 			for (String o : lstMCorteSelected) {
 				OrdenTrabajoMaquinaria oto = new OrdenTrabajoMaquinaria();
-				oto.setId_orden_trabajo(this.ordenTrabajoSelected.getId_orden_trabajo());
-				oto.setId_prioridad(this.ordenTrabajoSelected.getId_prioridad());
+				oto.setId_ordentrabajo(this.ordenTrabajoSelected.getId_ordentrabajo());
 				oto.setId_maquinaria(new Integer(o));
+				oto.setId_etapa(Constante.OT_ETAPA_CORTE);
 
 				ordenTrabajoMaquinariaServices.insert(oto);
 			}
 
 			for (String o : lstMConfeccionSelected) {
 				OrdenTrabajoMaquinaria oto = new OrdenTrabajoMaquinaria();
-				oto.setId_orden_trabajo(this.ordenTrabajoSelected.getId_orden_trabajo());
-				oto.setId_prioridad(this.ordenTrabajoSelected.getId_prioridad());
+				oto.setId_ordentrabajo(this.ordenTrabajoSelected.getId_ordentrabajo());
 				oto.setId_maquinaria(new Integer(o));
+				oto.setId_etapa(Constante.OT_ETAPA_CONFECCION);
 
 				ordenTrabajoMaquinariaServices.insert(oto);
 			}
@@ -605,14 +647,6 @@ public class RegistroOrdenTrabajoMB extends GenericBeans implements Serializable
 
 	public void setOrdenTrabajoSelected(OrdenTrabajo ordenTrabajoSelected) {
 		this.ordenTrabajoSelected = ordenTrabajoSelected;
-	}
-
-	public List<Prioridad> getListPrioridad() {
-		return listPrioridad;
-	}
-
-	public void setListPrioridad(List<Prioridad> listPrioridad) {
-		this.listPrioridad = listPrioridad;
 	}
 
 }

@@ -7,10 +7,10 @@ import com.victorian.produccion.domain.OrdenTrabajoOperario;
 
 public interface OrdenTrabajoOperarioMapper {
 	
-	@Insert("INSERT INTO victorian.t_orden_trabajo_operario(id_operario, id_orden_trabajo, id_prioridad, id_etapa) "
-			+ "VALUES (#{id_operario}, #{id_orden_trabajo}, #{id_prioridad}, #{id_etapa})")
+	@Insert("INSERT INTO victorian.t_ordentrabajo_operario(id_operario, id_ordentrabajo, id_etapa, id_nivel, puntaje_obtenido) "
+			+ "VALUES (#{id_operario}, #{id_ordentrabajo}, #{id_etapa}, #{id_nivel}, #{puntaje_obtenido})")
 	public void insert(OrdenTrabajoOperario ordenTrabajoOperario);
 	
-	@Delete("delete from victorian.t_orden_trabajo_operario where id_orden_trabajo=#{id_orden_trabajo}")
-	public void delete(Integer id_orden_trabajo);
+	@Delete("delete from victorian.t_ordentrabajo_operario where id_ordentrabajo=#{id_ordentrabajo}")
+	public void delete(Integer id_ordentrabajo);
 }

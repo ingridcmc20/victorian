@@ -22,9 +22,9 @@ public class MermaServices implements MermaMapper {
 	}
 
 	@Override
-	public List<Merma> findByOrdenTrabajo(Integer id_orden_trabajo) {
+	public List<Merma> findByOrdenTrabajo(Integer id_ordentrabajo) {
 		// TODO Auto-generated method stub
-		return mermaMapper.findByOrdenTrabajo(id_orden_trabajo);
+		return mermaMapper.findByOrdenTrabajo(id_ordentrabajo);
 	}
 
 }

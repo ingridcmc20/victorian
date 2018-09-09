@@ -2,7 +2,7 @@ package com.victorian.produccion.domain;
 
 public class Merma {
 	private Integer id_merma;
-	private Integer id_orden_trabajo;
+	private Integer id_ordentrabajo;
 	private String descripcion;
 	private Integer id_estado;
 
@@ -12,14 +12,6 @@ public class Merma {
 
 	public void setId_merma(Integer id_merma) {
 		this.id_merma = id_merma;
-	}
-
-	public Integer getId_orden_trabajo() {
-		return id_orden_trabajo;
-	}
-
-	public void setId_orden_trabajo(Integer id_orden_trabajo) {
-		this.id_orden_trabajo = id_orden_trabajo;
 	}
 
 	public String getDescripcion() {
@@ -36,5 +28,13 @@ public class Merma {
 
 	public void setId_estado(Integer id_estado) {
 		this.id_estado = id_estado;
+	}
+
+	public Integer getId_ordentrabajo() {
+		return id_ordentrabajo;
+	}
+
+	public void setId_ordentrabajo(Integer id_ordentrabajo) {
+		this.id_ordentrabajo = id_ordentrabajo;
 	}
 }

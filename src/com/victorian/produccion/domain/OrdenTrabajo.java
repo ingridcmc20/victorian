@@ -3,24 +3,24 @@ package com.victorian.produccion.domain;
 import java.sql.Date;
 
 public class OrdenTrabajo {
-	private Integer id_orden_trabajo;
-	private Integer id_prioridad;
+	private Integer id_ordentrabajo;
 	private Integer id_pedido;
 	private Date fecha_registro;
-	private Date fecha_entrega_orden;
+	private Date fecha_entrega;
 	private Date fecha_entrega_pedido;
 	private Integer id_estado;
 	private Integer id_etapa;
-	
+
 	// Columnas adicionales
 	private String nombre_cliente;
-	private String des_tipo_prenda; 
+	private String des_tipo_prenda;
 	private String des_tipo_confeccion;
-	private String des_prioridad;
+	private Integer prioridad;
 	private String des_etapa;
 	private Date fecha_inicio;
 	private Date fecha_fin;
-	
+	private Integer id_planproduccion;
+
 	public Date getFecha_inicio() {
 		return fecha_inicio;
 	}
@@ -53,14 +53,6 @@ public class OrdenTrabajo {
 		this.des_etapa = des_etapa;
 	}
 
-	public String getDes_prioridad() {
-		return des_prioridad;
-	}
-
-	public void setDes_prioridad(String des_prioridad) {
-		this.des_prioridad = des_prioridad;
-	}
-
 	public String getNombre_cliente() {
 		return nombre_cliente;
 	}
@@ -85,22 +77,6 @@ public class OrdenTrabajo {
 		this.des_tipo_confeccion = des_tipo_confeccion;
 	}
 
-	public Integer getId_orden_trabajo() {
-		return id_orden_trabajo;
-	}
-
-	public void setId_orden_trabajo(Integer id_orden_trabajo) {
-		this.id_orden_trabajo = id_orden_trabajo;
-	}
-
-	public Integer getId_prioridad() {
-		return id_prioridad;
-	}
-
-	public void setId_prioridad(Integer id_prioridad) {
-		this.id_prioridad = id_prioridad;
-	}
-
 	public Integer getId_pedido() {
 		return id_pedido;
 	}
@@ -117,14 +93,6 @@ public class OrdenTrabajo {
 		this.fecha_registro = fecha_registro;
 	}
 
-	public Date getFecha_entrega_orden() {
-		return fecha_entrega_orden;
-	}
-
-	public void setFecha_entrega_orden(Date fecha_entrega_orden) {
-		this.fecha_entrega_orden = fecha_entrega_orden;
-	}
-
 	public Date getFecha_entrega_pedido() {
 		return fecha_entrega_pedido;
 	}
@@ -139,5 +107,37 @@ public class OrdenTrabajo {
 
 	public void setId_estado(Integer id_estado) {
 		this.id_estado = id_estado;
+	}
+
+	public Integer getPrioridad() {
+		return prioridad;
+	}
+
+	public void setPrioridad(Integer prioridad) {
+		this.prioridad = prioridad;
+	}
+
+	public Integer getId_ordentrabajo() {
+		return id_ordentrabajo;
+	}
+
+	public void setId_ordentrabajo(Integer id_ordentrabajo) {
+		this.id_ordentrabajo = id_ordentrabajo;
+	}
+
+	public Date getFecha_entrega() {
+		return fecha_entrega;
+	}
+
+	public void setFecha_entrega(Date fecha_entrega) {
+		this.fecha_entrega = fecha_entrega;
+	}
+
+	public Integer getId_planproduccion() {
+		return id_planproduccion;
+	}
+
+	public void setId_planproduccion(Integer id_planproduccion) {
+		this.id_planproduccion = id_planproduccion;
 	}
 }
