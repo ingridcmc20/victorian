@@ -22,9 +22,9 @@ public class OperarioServices implements OperarioMapper{
 	}
 
 	@Override
-	public List<String> findByTipoAndByIdOrden(String id_tipooperario, Integer id_orden_trabajo) throws Exception {
+	public List<String> findByTipoAndByIdOrden(Integer id_tipooperario, Integer id_ordentrabajo) throws Exception {
 		// TODO Auto-generated method stub
-		return operarioMapper.findByTipoAndByIdOrden(id_tipooperario, id_orden_trabajo);
+		return operarioMapper.findByTipoAndByIdOrden(id_tipooperario, id_ordentrabajo);
 	}
 
 	@Override

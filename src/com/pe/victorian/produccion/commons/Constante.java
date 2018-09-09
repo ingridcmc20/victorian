@@ -19,9 +19,9 @@ public class Constante {
 	public static final Integer PP_PENDIENTE = 5;
 	public static final Integer PP_APROBADO = 6;
 	
-	public static final Integer OT_PENDIENTE = 4;
-	public static final Integer OT_EN_CURSO = 5;
-	public static final Integer OT_TERMINADO = 6;
+	public static final Integer OT_PENDIENTE = 7;
+	public static final Integer OT_EN_CURSO = 8;
+	public static final Integer OT_TERMINADO = 9;
 	
 	public static final Integer OT_ETAPA_DISENIO = 1;
 	public static final Integer OT_ETAPA_CORTE = 2;
@@ -43,4 +43,11 @@ public class Constante {
 	public static final Integer OP_CORTADOR = 2;
 	public static final Integer OP_CONFECCIONISTA = 3;
 	public static final Integer OP_EMPAQUETADOR = 4;
+	
+	// Niveles
+	public static final Integer NIVEL_1 = 1;
+	public static final Integer NIVEL_2 = 2;
+	public static final Integer NIVEL_3 = 3;
+	public static final Integer NIVEL_4 = 4;
+	public static final Integer NIVEL_5 = 5;
 }

@@ -30,6 +30,7 @@ public class Pedido {
 	private Date fechainicio;
 	private Date fechafin;
 	private Integer estado;
+	private Integer id_planproduccion;
 
 	public Integer getId_pedido() {
 		return id_pedido;
@@ -238,4 +239,13 @@ public class Pedido {
 	public void setEstado(Integer estado) {
 		this.estado = estado;
 	}
+
+	public Integer getId_planproduccion() {
+		return id_planproduccion;
+	}
+
+	public void setId_planproduccion(Integer id_planproduccion) {
+		this.id_planproduccion = id_planproduccion;
+	}
+
 }

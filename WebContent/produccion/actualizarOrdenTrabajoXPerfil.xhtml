@@ -36,7 +36,7 @@
 					#{nro+1}
 				</p:column>
 				<p:column headerText="Nro. Orden">
-					<h:outputText value="#{p.id_orden_trabajo}"/>
+					<h:outputText value="#{p.id_ordentrabajo}"/>
 				</p:column>
 				<p:column headerText="Cliente" width="200">
 					<h:outputText value="#{p.nombre_cliente}" />
@@ -78,7 +78,7 @@
 				<p:panelGrid style="width:100%; vertical-align: top;">
 					<p:row>
 						<p:column><p:outputLabel value="Nro. Orden de trabajo"/></p:column>
-						<p:column><p:outputLabel  value="#{actualizarOrdenTrabajoPorPerfilMB.ordenTrabajoSelected.id_orden_trabajo}"/></p:column>
+						<p:column><p:outputLabel  value="#{actualizarOrdenTrabajoPorPerfilMB.ordenTrabajoSelected.id_ordentrabajo}"/></p:column>
 					</p:row>
 					<p:row>
 						<p:column><p:outputLabel value="Merma"/></p:column>
@@ -123,7 +123,7 @@
 				<p:panelGrid style="width:100%; vertical-align: top;">
 					<p:row>
 						<p:column><p:outputLabel value="Nro. Orden de trabajo"/></p:column>
-						<p:column><p:outputLabel  value="#{actualizarOrdenTrabajoPorPerfilMB.ordenTrabajoSelected.id_orden_trabajo}"/></p:column>
+						<p:column><p:outputLabel  value="#{actualizarOrdenTrabajoPorPerfilMB.ordenTrabajoSelected.id_ordentrabajo}"/></p:column>
 					</p:row>
 				</p:panelGrid>
 				<p:commandButton value="Terminar" icon="icon-validate" actionListener="#{actualizarOrdenTrabajoPorPerfilMB.actualizarRegistro()}" />

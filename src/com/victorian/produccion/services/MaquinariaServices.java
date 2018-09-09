@@ -22,9 +22,9 @@ public class MaquinariaServices implements MaquinariaMapper {
 	}
 
 	@Override
-	public List<String> findByEstadoAndByIdOrden(String tipo, Integer id_orden_trabajo) throws Exception {
+	public List<String> findByEstadoAndByIdOrden(String tipo, Integer id_ordentrabajo) throws Exception {
 		// TODO Auto-generated method stub
-		return maquinariaMapper.findByEstadoAndByIdOrden(tipo, id_orden_trabajo);
+		return maquinariaMapper.findByEstadoAndByIdOrden(tipo, id_ordentrabajo);
 	}
 
 	@Override

@@ -14,9 +14,9 @@ public class OrdenTrabajoDetalleServices implements OrdenTrabajoDetalleMapper {
 	}
 
 	@Override
-	public OrdenTrabajoDetalle findByIdOrdenByEstapa(Integer id_orden_trabajo, Integer id_etapa) {
+	public OrdenTrabajoDetalle findByIdOrdenByEstapa(Integer id_ordentrabajo, Integer id_etapa) {
 		// TODO Auto-generated method stub
-		return ordenTrabajoDetalleMapper.findByIdOrdenByEstapa(id_orden_trabajo, id_etapa);
+		return ordenTrabajoDetalleMapper.findByIdOrdenByEstapa(id_ordentrabajo, id_etapa);
 	}
 
 	@Override

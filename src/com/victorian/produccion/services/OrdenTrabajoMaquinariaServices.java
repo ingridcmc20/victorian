@@ -14,9 +14,9 @@ public class OrdenTrabajoMaquinariaServices implements OrdenTrabajoMaquinariaMap
 	}
 
 	@Override
-	public void delete(Integer id_orden_trabajo) {
+	public void delete(Integer id_ordentrabajo) {
 		// TODO Auto-generated method stub
-		ordenTrabajoMaquinariaMapper.delete(id_orden_trabajo);
+		ordenTrabajoMaquinariaMapper.delete(id_ordentrabajo);
 	}
 
 }

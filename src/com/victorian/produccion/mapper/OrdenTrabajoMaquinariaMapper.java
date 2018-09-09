@@ -6,10 +6,10 @@ import org.apache.ibatis.annotations.Insert;
 import com.victorian.produccion.domain.OrdenTrabajoMaquinaria;
 
 public interface OrdenTrabajoMaquinariaMapper {
-	@Insert("INSERT INTO victorian.t_orden_trabajo_maquinaria(id_maquinaria, id_orden_trabajo, id_prioridad) "
-			+ "VALUES (#{id_maquinaria}, #{id_orden_trabajo}, #{id_prioridad})")
+	@Insert("INSERT INTO victorian.t_ordentrabajo_maquinaria(id_maquinaria, id_ordentrabajo, id_etapa) "
+			+ "VALUES (#{id_maquinaria}, #{id_ordentrabajo}, #{id_etapa})")
 	public void insert(OrdenTrabajoMaquinaria ordenTrabajoMaquinaria);
 	
-	@Delete("delete from victorian.t_orden_trabajo_maquinaria where id_orden_trabajo=#{id_orden_trabajo}")
-	public void delete(Integer id_orden_trabajo);
+	@Delete("delete from victorian.t_ordentrabajo_maquinaria where id_ordentrabajo=#{id_ordentrabajo}")
+	public void delete(Integer id_ordentrabajo);
 }

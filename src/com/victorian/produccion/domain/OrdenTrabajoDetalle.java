@@ -3,20 +3,28 @@ package com.victorian.produccion.domain;
 import java.sql.Date;
 
 public class OrdenTrabajoDetalle {
-	private Integer id_orden_trabajo;
+	private Integer id_ordentrabajo;
 	private Integer id_etapa;
 	private Integer id_plan_produccion;
 	private Date fecha_fin;
 	private Date fecha_inicio;
-	private Date fecha_real_termino;
-	private Integer id_prioridad;
+	private Date fecha_real_fin;
+	private Integer id_estado;
 
-	public Integer getId_orden_trabajo() {
-		return id_orden_trabajo;
+	public Date getFecha_real_fin() {
+		return fecha_real_fin;
 	}
 
-	public void setId_orden_trabajo(Integer id_orden_trabajo) {
-		this.id_orden_trabajo = id_orden_trabajo;
+	public void setFecha_real_fin(Date fecha_real_fin) {
+		this.fecha_real_fin = fecha_real_fin;
+	}
+
+	public Integer getId_estado() {
+		return id_estado;
+	}
+
+	public void setId_estado(Integer id_estado) {
+		this.id_estado = id_estado;
 	}
 
 	public Integer getId_etapa() {
@@ -51,19 +59,11 @@ public class OrdenTrabajoDetalle {
 		this.fecha_inicio = fecha_inicio;
 	}
 
-	public Date getFecha_real_termino() {
-		return fecha_real_termino;
+	public Integer getId_ordentrabajo() {
+		return id_ordentrabajo;
 	}
 
-	public void setFecha_real_termino(Date fecha_real_termino) {
-		this.fecha_real_termino = fecha_real_termino;
-	}
-
-	public Integer getId_prioridad() {
-		return id_prioridad;
-	}
-
-	public void setId_prioridad(Integer id_prioridad) {
-		this.id_prioridad = id_prioridad;
+	public void setId_ordentrabajo(Integer id_ordentrabajo) {
+		this.id_ordentrabajo = id_ordentrabajo;
 	}
 }

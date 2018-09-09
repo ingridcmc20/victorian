@@ -113,7 +113,7 @@ public class ActualizarOrdenTrabajoPorPerfilMB extends GenericBeans implements S
 	public void obtenerMermas(OrdenTrabajo ot){
 		try {
 			ordenTrabajoSelected = ot;
-			listaMerma = mermaServices.findByOrdenTrabajo(ordenTrabajoSelected.getId_orden_trabajo());
+			listaMerma = mermaServices.findByOrdenTrabajo(ordenTrabajoSelected.getId_ordentrabajo());
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -124,10 +124,10 @@ public class ActualizarOrdenTrabajoPorPerfilMB extends GenericBeans implements S
 	public void registrarMerma(){
 		RequestContext context = RequestContext.getCurrentInstance();
 		mermaSelected.setId_estado(8);
-		mermaSelected.setId_orden_trabajo(ordenTrabajoSelected.getId_orden_trabajo());
+		mermaSelected.setId_ordentrabajo(ordenTrabajoSelected.getId_ordentrabajo());
 		mermaServices.insert(mermaSelected);
 		mermaSelected = new Merma();
-		listaMerma = mermaServices.findByOrdenTrabajo(ordenTrabajoSelected.getId_orden_trabajo());
+		listaMerma = mermaServices.findByOrdenTrabajo(ordenTrabajoSelected.getId_ordentrabajo());
 //		context.update("merma");
 //		context.update("dtbMermas");
 //		context.update("msgMermas");
@@ -153,8 +153,8 @@ public class ActualizarOrdenTrabajoPorPerfilMB extends GenericBeans implements S
 		int estado = -1;
 		
 		
-		OrdenTrabajoDetalle otd = ordenTrabajoDetalleServices.findByIdOrdenByEstapa(ordenTrabajoSelected.getId_orden_trabajo(), ordenTrabajoSelected.getId_etapa());
-		otd.setFecha_real_termino(new java.sql.Date((fechaActual).getTime()));
+		OrdenTrabajoDetalle otd = ordenTrabajoDetalleServices.findByIdOrdenByEstapa(ordenTrabajoSelected.getId_ordentrabajo(), ordenTrabajoSelected.getId_etapa());
+		otd.setFecha_real_fin(new java.sql.Date((fechaActual).getTime()));
 		
 		if (this.login.getPerfilUsuario().getCod_perfil().intValue() == (Constante.PERFIL_USUARIO_DISENIADOR.intValue())) {
 			etapa = Constante.OT_ETAPA_CORTE;
@@ -181,7 +181,7 @@ public class ActualizarOrdenTrabajoPorPerfilMB extends GenericBeans implements S
 			
 			if(gamification){
 				// Se valida si el operario termino su tarea a tiempo
-				if(otd.getFecha_fin().getTime()>=otd.getFecha_real_termino().getTime()){
+				if(otd.getFecha_fin().getTime()>=otd.getFecha_real_fin().getTime()){
 					logro = true;
 					System.out.println("Lo logro");
 					operario.setPuntaje_obtenido((operario.getPuntaje_obtenido()!=null?operario.getPuntaje_obtenido():0)+1);	
