@@ -11,6 +11,7 @@ public class PlanProduccion {
 	private Integer id_pedido;
 	private Date fecha_registro;
 	private Integer id_estado;
+	private String des_estado;
 
 	public Integer getId_planproduccion() {
 		return id_planproduccion;
@@ -76,4 +77,11 @@ public class PlanProduccion {
 		this.id_estado = id_estado;
 	}
 
+	public String getDes_estado() {
+		return des_estado;
+	}
+
+	public void setDes_estado(String des_estado) {
+		this.des_estado = des_estado;
+	}
 }
