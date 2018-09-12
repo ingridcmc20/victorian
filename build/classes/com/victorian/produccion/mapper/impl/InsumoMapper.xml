@@ -6,7 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.victorian.produccion.mapper.InsumoMapper">
 
 	<resultMap id="insumoResult" type="com.victorian.produccion.domain.Insumo">
-		<id column="idinsumo" property="idinsumo" />
+		<id column="id_insumo" property="id_insumo" />
 		<result column="descripcion" property="descripcion" />
 		<result column="precio" property="precio" />
 	</resultMap>

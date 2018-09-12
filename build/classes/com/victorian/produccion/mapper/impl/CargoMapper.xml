@@ -8,7 +8,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <resultMap id="cargoResult" type="com.victorian.produccion.domain.Cargo">
 	<id column="id_cargo" property="id_cargo" javaType="java.lang.Integer" jdbcType="INTEGER"/>
 	<result column="descripcion" property="descripcion" javaType="java.lang.String" jdbcType="VARCHAR"/>
-	<result column="estado" property="estado" javaType="java.lang.Boolean" jdbcType="BOOLEAN"/>
+	<result column="activo" property="activo" javaType="java.lang.Boolean" jdbcType="BOOLEAN"/>
 
 </resultMap>
 

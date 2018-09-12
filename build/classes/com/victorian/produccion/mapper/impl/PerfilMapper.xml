@@ -20,18 +20,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</resultMap>
 
 	<select id="listPerfil" resultType="com.victorian.produccion.domain.Perfil" >
-		Select * from t_perfil
+		Select * from victorian.t_perfil
 	</select>
 
 	<delete id="deletePerfil" parameterType="int">
-		DELETE FROM t_perfil
+		DELETE FROM victorian.t_perfil
 		WHERE cod_perfil = #{cod_perfil}
 	</delete>
 
 
 	<insert id="insertPerfil" parameterType="com.victorian.produccion.domain.Perfil">
 		INSERT INTO
-		t_perfil(nombre,descripcion,proceso)
+		victorian.t_perfil(nombre,descripcion,proceso)
 		values
 		(#{nombre},#{descripcion},#{proceso})
 	</insert>
@@ -41,7 +41,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<update id="updatePerfil" parameterType="com.victorian.produccion.domain.Perfil">
-		update t_perfil
+		update victorian.t_perfil
 		SET
 		nombre = #{nombre},
 		descripcion = #{descripcion},
@@ -54,23 +54,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		parameterType="int">
 		SELECT cod_perfil,nombre,descripcion,ind_activo,
 		fecha_registro,fecha_modif, usuario_registro,usuario_modif
-		from t_perfil
+		from victorian.t_perfil
 		where cod_perfil =#{cod_perfil}
 	</select>
 
 	<insert id="insertUsuarioPerfil" parameterType="com.victorian.produccion.domain.Perfil">
 		Insert into
-		t_usuarioxperfil(idusuario,cod_perfil,ind_activo,fecha_iniciovig,fecha_finvig,fecha_registro,fecha_modif,usuario_registro,usuario_modif)
+		victorian.t_usuarioxperfil(id_usuario,cod_perfil,ind_activo,fecha_iniciovig,fecha_finvig,fecha_registro,fecha_modif,usuario_registro,usuario_modif)
 		values
-		(#{idusuario},#{cod_perfil},true,now(),now(),now(),now(),#{usuario_registro},#{usuario_modif})
+		(#{id_usuario},#{cod_perfil},true,now(),now(),now(),now(),#{usuario_registro},#{usuario_modif})
 	</insert>
 	
 	<select id="listarPerfilesxUsuario" resultMap="perfilResult"
 		parameterType="com.victorian.produccion.domain.Usuario">			
 		select p.cod_perfil,p.nombre,p.descripcion, p.proceso
-		from t_perfil p inner join t_usuarioxperfil up
+		from victorian.t_perfil p inner join victorian.t_usuarioxperfil up
 		on up.cod_perfil=p.cod_perfil
-		where up.idusuario=#{idusuario}		
+		where up.id_usuario=#{id_usuario}		
 	</select>
 	
 </mapper>	

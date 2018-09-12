@@ -8,7 +8,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <resultMap id="usuarioPerfilResult" type="com.victorian.produccion.domain.UsuarioPerfil">
 	
-	<id column="idusuario" property="idusuario" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+	<id column="id_usuario" property="id_usuario" javaType="java.lang.Integer" jdbcType="INTEGER"/>
 	<id column="codigoPerfil" property="cod_perfil" javaType="java.lang.Integer" jdbcType="INTEGER"/>
 	<result column="nombre" property="nombre" javaType="java.lang.String" jdbcType="VARCHAR"/>
 	<result column="descripcion" property="descripcion" javaType="java.lang.String" jdbcType="VARCHAR"/>
@@ -23,21 +23,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	
 	<select id="listarPerfilesPorUsuario" resultMap="usuarioPerfilResult" parameterType="int">			
-		select u.idusuario,p.cod_perfil,p.nombre,p.descripcion,up.ind_activo,up.fecha_iniciovig,
+		select u.id_usuario,p.cod_perfil,p.nombre,p.descripcion,up.ind_activo,up.fecha_iniciovig,
 		up.fecha_finvig,up.fecha_registro,up.fecha_modif,up.usuario_registro,up.usuario_modif
-		from t_perfil p 
-		join t_usuarioxperfil up
+		from victorian.t_perfil p 
+		join victorian.t_usuarioxperfil up
 		on up.cod_perfil=p.cod_perfil
-		join t_usuario u
-		on up.idusuario=u.idusuario
-		where u.idusuario=#{idusuario}		
+		join victorian.t_usuario u
+		on up.id_usuario=u.id_usuario
+		where u.id_usuario=#{id_usuario}		
 	</select>
 	
 	<insert id="insertUsuarioPeril" parameterType="com.victorian.produccion.domain.UsuarioPerfil">
-		INSERT INTO t_usuarioxperfil(idusuario,cod_perfil,ind_activo,fecha_iniciovig,fecha_finvig,
+		INSERT INTO victorian.t_usuarioxperfil(id_usuario,cod_perfil,ind_activo,fecha_iniciovig,fecha_finvig,
 		fecha_registro,fecha_modif,usuario_registro,usuario_modif)
 		values
-		(#{idusuario},#{cod_perfil},#{ind_activo},#{fecha_iniciovig},#{fecha_finvig},
+		(#{id_usuario},#{cod_perfil},#{ind_activo},#{fecha_iniciovig},#{fecha_finvig},
 		#{fecha_registro},#{fecha_modif},#{usuario_registro},#{usuario_modif})
 	</insert>
 	
