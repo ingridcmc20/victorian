@@ -55,8 +55,8 @@ public interface PedidoMapper {
     public void actualizarPedido(Pedido pedido) throws Exception;
 	
 	@Select("SELECT distinct p.id_pedido, p.tipo_prenda, p.cantidad_prenda, p.id_modo_pago, p.fecha_registro as fechapedido, p.fecha_entrega, p.id_estado, p.id_tipoconfeccion, p.id_cliente "
-			+ "FROM victorian.t_pedido p inner join victorian.t_plan_pedido pp on pp.id_pedido=p.id_pedido where idplan=#{idplan}")
-	public List<Pedido> findByPlanProduccion(@Param("idplan") Integer idplan) throws Exception;
+			+ "FROM victorian.t_pedido p inner join victorian.t_plan_produccion pp on pp.id_pedido=p.id_pedido where pp.id_planproduccion=#{id_planproduccion}")
+	public List<Pedido> findByPlanProduccion(@Param("id_planproduccion") Integer idplan) throws Exception;
 	
 	@Select("SELECT id_pedido, tipo_prenda,pr.descripcion as des_tipo_prenda, cantidad_prenda, p.id_modo_pago modo_pago, fecha_registro as fechapedido, "
 			+ "fecha_entrega, p.id_estado, e.descripcion as des_estado, p.id_tipoconfeccion, tc.descripcion as des_tipoconfeccion,"

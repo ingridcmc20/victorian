@@ -33,11 +33,11 @@ public interface OperarioMapper {
 	public List<String> findByTipoAndByIdOrden(@Param("id_tipooperario") Integer id_tipooperario,
 			@Param("id_ordentrabajo") Integer id_ordentrabajo) throws Exception;
 
-	@Select("SELECT o.id_operario, u.apellido_paterno || ' ' || u.apellido_materno || ', ' || u.nombre as nombre_operario, o.id_tipooperario, o.id_nivel "
+	@Select("SELECT o.id_operario, u.apellido_paterno || ' ' || u.apellido_materno || ', ' || u.nombre as nombre_operario, o.id_tipooperario, oto.id_nivel "
 			+ "FROM victorian.t_operario o inner join victorian.t_usuario u on u.id_usuario=o.id_operario inner join victorian.t_ordentrabajo_operario oto on oto.id_operario=o.id_operario "
 			+ "inner join victorian.t_orden_trabajo_detalle otd on otd.id_ordentrabajo=oto.id_ordentrabajo and otd.id_etapa=oto.id_etapa "
-			+ "where id_tipooperario in (2,3) and extract(year from fecha_subida_nivel) = extract(year from current_date) "
-			+ "and extract(month from fecha_subida_nivel) = extract(month from current_date) ")
+			+ "where id_tipooperario in (2,3) and extract(year from fecha_nivel) = extract(year from current_date) "
+			+ "and extract(month from fecha_nivel) = extract(month from current_date) ")
 	public List<Operario> findCortadorYConfeccion() throws Exception;
 
 	@Update("UPDATE victorian.t_operario SET puntaje_obtenido=#{puntaje_obtenido}, puntaje_acumulado=#{puntaje_acumulado}, id_nivel=#{id_nivel}, fecha_subida_nivel=#{fecha_subida_nivel} WHERE id_operario=#{id_operario}")
