@@ -6,14 +6,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.victorian.produccion.mapper.FichaTecnicaMapper">
 
 	<resultMap id="fichaTecnicaResult" type="com.victorian.produccion.domain.FichaTecnica">
-		<id column="idfichatecnica" property="idfichatecnica" />
-		<result column="nombreinsumo" property="nombreinsumo" />
+		<id column="id_fichatecnica" property="id_fichatecnica" />
 		<result column="unidad" property="unidad" />
 		<result column="cantidad" property="cantidad" />
-		<result column="preciounidad" property="preciounidad" />
-		<result column="preciototal" property="preciototal" />
-		<result column="idproducto" property="idproducto" />
-		<result column="idinsumo" property="idinsumo" />
+		<result column="precio_unidad" property="precio_unidad" />
+		<result column="precio_total" property="precio_total" />
+		<result column="id_producto" property="id_producto" />
+		<result column="id_insumo" property="idinsumo" />
 	</resultMap>
 
 

@@ -17,18 +17,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<select id="listSistema" resultType="com.victorian.produccion.domain.Sistema">
 		Select * from
-		public.t_sistema order by nombre_sistema asc
+		victorian.t_sistema order by nombre_sistema asc
 	</select>
 
 
 	<delete id="deleteSistema" parameterType="Long">
-		DELETE FROM t_sistema
+		DELETE FROM victorian.t_sistema
 		WHERE cod_sistema = #{cod_sistema}
 	</delete>
 
 	<insert id="insertSistema" parameterType="com.victorian.produccion.domain.Sistema">
 	   INSERT INTO
-        t_sistema(nombre_sistema,descripcion,ind_activo)
+        victorian.t_sistema(nombre_sistema,descripcion,ind_activo)
         values
         (#{nombre_sistema},#{descripcion},#{ind_activo})
 	</insert>
@@ -41,12 +41,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		parameterType="int">
 		SELECT cod_sistema,nombre_sistema,descripcion,
 		ind_activo,fecha_registro,fecha_modif, usuario_registro,usuario_modif
-		from t_sistema
+		from victorian.t_sistema
 		where cod_sistema =#{cod_sistema}
 	</select>
 
 	<update id="updateSistema" parameterType="com.victorian.produccion.domain.Sistema">
-		update t_sistema
+		update victorian.t_sistema
 		SET
 		nombre_sistema = #{nombre_sistema},
 		descripcion = #{descripcion},
@@ -57,9 +57,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<select id="listSistemaxPerfil" parameterType="com.victorian.produccion.domain.Perfil" resultMap="sistemaResult">
 		select distinct s.cod_sistema,s.nombre_sistema
-		from t_perfil p inner join t_opcion_menuxperfil o on p.cod_perfil=o.cod_perfil
-		inner join t_opcion_menu m on o.cod_menu=m.cod_menu 
-		inner join t_sistema s on s.cod_sistema=m.cod_sistema
+		from victorian.t_perfil p inner join victorian.t_opcion_menuxperfil o on p.cod_perfil=o.cod_perfil
+		inner join victorian.t_opcion_menu m on o.cod_menu=m.cod_menu 
+		inner join victorian.t_sistema s on s.cod_sistema=m.cod_sistema
 		where p.cod_perfil=#{cod_perfil}
 		order by  s.cod_sistema asc;
 	</select>

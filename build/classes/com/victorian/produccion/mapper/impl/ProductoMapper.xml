@@ -17,10 +17,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</resultMap>
 
 	<select id="selectFormato" parameterType="int" resultType="com.victorian.produccion.domain.Formato">
-		SELECT * FROM t_formato WHERE idformato=#{idformato}
+		SELECT * FROM victorian.t_formato WHERE idformato=#{idformato}
 	</select>
 
 	<select id="listaProductosxFormato"  resultMap="productoResult" >
-		Select * from t_producto where  idformato= #{idformato}  
+		Select * from victorian.t_producto where  idformato= #{idformato}  
 	</select>
 </mapper>	
