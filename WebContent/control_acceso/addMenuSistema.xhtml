@@ -34,7 +34,6 @@ xmlns:fn="http://java.sun.com/jsp/jstl/functions"
     		<p:contextMenu for="trMenuModulo" rendered="#{not menuModuloMB.padre}">
   				<p:menuitem value="Agregar menu"  oncomplete="PF('nuevoMenuDialog').show();" icon="ui-icon-search" />    
        			<p:menuitem value="Eliminar menu"  oncomplete="PF('dlgEliminar').show();" icon="ui-icon-search" />  
-        		<p:menuitem value="Modificar menu"  actionListener="#{menuModuloMB.editarMenu()}" update=":detPerfilDialog"  oncomplete="PF('nuevoMenuDialog').show();" icon="ui-icon-close"/>  
     		</p:contextMenu> 
     		
     
