@@ -172,7 +172,7 @@ public class PerfilMB extends GenericBeans {
 		//relistando
 		try {
 			this.listaPerfil = this.perfilServices.listPerfil();
-			context.update("msgGeneral");
+//			context.update("msgGeneral");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
