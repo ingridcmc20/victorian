@@ -105,11 +105,11 @@ public class MenuModuloMB extends GenericBeans implements Serializable{
 			}else{//es nuevo menu
 				this.menu.setCod_sistema(this.sistema.getCod_sistema());
 				try {
-					this.menuServices.insertMenu(this.menu);
-					log.setAccion("INSERT");
-			        log.setDescripcion ("El usuario "+this.login.getLoginUsuario()+" ha creado el menu "+this.menu.getDescripcion());
-			        logmb.insertarLog(log);
-					FacesUtils.showFacesMessage("Menu agregado correctamente",Constante.INFORMACION);
+//					this.menuServices.insertMenu(this.menu);
+//					log.setAccion("INSERT");
+//			        log.setDescripcion ("El usuario "+this.login.getLoginUsuario()+" ha creado el menu "+this.menu.getDescripcion());
+//			        logmb.insertarLog(log);
+//					FacesUtils.showFacesMessage("Menu agregado correctamente",Constante.INFORMACION);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -133,7 +133,7 @@ public class MenuModuloMB extends GenericBeans implements Serializable{
 			
 		}
 		
-		/*
+		
 		if(this.editar){
 			if(!this.padre){//si no es padre se edita
 				
@@ -162,7 +162,7 @@ public class MenuModuloMB extends GenericBeans implements Serializable{
 				 //context.update("sms");
 			}
 		}
-		*/
+		
 		//regenerando el trees en cualquier caso
 		try {
 			this.listaMenu = this.menuServices.listMenuxSistemaId(new Long(this.sistemaId));
