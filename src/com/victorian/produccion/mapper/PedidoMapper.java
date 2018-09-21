@@ -49,7 +49,8 @@ public interface PedidoMapper {
 
 	@Update("UPDATE victorian.t_pedido "
 			+ "SET tipo_prenda=#{tipo_prenda}, cantidad_prenda=#{cantidad_prenda}, fecha_registro=#{fechapedido}, "
-			+ "fecha_entrega=#{fecha_entrega}, id_tipoconfeccion=#{id_tipoconfeccion},  id_estado=#{id_estado}"
+			+ "fecha_entrega=#{fecha_entrega}, id_tipoconfeccion=#{id_tipoconfeccion},  id_estado=#{id_estado}, "
+			+ "id_planproduccion=#{id_planproduccion} "
 			+ "WHERE id_pedido=#{id_pedido}")
 	@Options(flushCache=true,useCache=true)
     public void actualizarPedido(Pedido pedido) throws Exception;

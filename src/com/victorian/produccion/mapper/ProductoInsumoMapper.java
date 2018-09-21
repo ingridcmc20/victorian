@@ -7,10 +7,10 @@ import org.apache.ibatis.annotations.Options;
 import com.victorian.produccion.domain.ProductoInsumo;
 
 public interface ProductoInsumoMapper {
-	@Insert("INSERT INTO victorian.t_producto_insumo(id_producto, id_insumo) VALUES (#{id_producto}, #{id_insumo})")
+	@Insert("INSERT INTO victorian.t_producto_insumo(idproducto, idinsumo) VALUES (#{idproducto}, #{idinsumo})")
 	public void insert(ProductoInsumo productoInsumo) throws Exception;
 	
-	@Delete("delete from victorian.t_producto_insumo where id_producto = #{id_producto} and id_insumo = #{id_insumo}")
+	@Delete("delete from victorian.t_producto_insumo where idproducto = #{idproducto} and idinsumo = #{idinsumo}")
 	@Options(flushCache=true)
 	public void delete(ProductoInsumo productoInsumo) throws Exception;
 }
