@@ -49,7 +49,7 @@
 				</p:panelGrid>
 				<p:dataTable id="dataTable" var="p" value="#{planProduccionMB.listaPedidos}"
 					rowKey="#{p.id_pedido}"  
-					selection="#{planProduccionMB.pedidoSelected}"
+					selection="#{planProduccionMB.listaPedidosSelected}"
 					widgetVar="dtPedido" 
 					emptyMessage="NO EXISTEN PEDIDOS EN ESTADO ACEPTADO." rowIndexVar="nro" 
 					scrollRows="10" scrollable="true" scrollHeight="250"
@@ -57,7 +57,7 @@
 					 disabledSelection="#{!p.bool_ficha_tecnica}">
 										 
 					<f:facet name="header">Lista Pedidos</f:facet>
-					<p:column selectionMode="single" style="width:16px;text-align:center"/>
+					<p:column selectionMode="multiple" style="width:16px;text-align:center"/>
 					<p:column headerText="#" style="width:6%" >
 						#{nro+1}
 					</p:column>
@@ -137,28 +137,28 @@
 							</p:dataTable>
 						</p:column>
 					</p:row>
-					<p:row>
-						<p:column colspan="3"><h:outputText value="Subtotal:" /></p:column>
-						<p:column style="width: 20%;">
-							<h:outputText value="#{planProduccionMB.pedidoSelec.subTotalProducto}">
-								<f:convertNumber type="currency" currencySymbol="S/." maxFractionDigits="2"/>
-							</h:outputText>
-						</p:column>
-					</p:row>
-					<p:row>
-						<p:column colspan="3"><h:outputText value="Cantidad:" /></p:column>
-						<p:column style="width: 20%;">
-							<h:outputText value="#{planProduccionMB.pedidoSelec.cantidad_prenda}" />
-						</p:column>
-					</p:row>
-					<p:row>
-						<p:column colspan="3"><h:outputText value="Subtotal Pedido:" /></p:column>
-						<p:column style="width: 20%;">
-							<h:outputText value="#{planProduccionMB.pedidoSelec.subTotalPedido}" >
-								<f:convertNumber type="currency" currencySymbol="S/." maxFractionDigits="2"/>
-							</h:outputText>
-						</p:column>
-					</p:row>
+<!-- 					<p:row> -->
+<!-- 						<p:column colspan="3"><h:outputText value="Subtotal:" /></p:column> -->
+<!-- 						<p:column style="width: 20%;"> -->
+<!-- 							<h:outputText value="#{planProduccionMB.pedidoSelec.subTotalProducto}"> -->
+<!-- 								<f:convertNumber type="currency" currencySymbol="S/." maxFractionDigits="2"/> -->
+<!-- 							</h:outputText> -->
+<!-- 						</p:column> -->
+<!-- 					</p:row> -->
+<!-- 					<p:row> -->
+<!-- 						<p:column colspan="3"><h:outputText value="Cantidad:" /></p:column> -->
+<!-- 						<p:column style="width: 20%;"> -->
+<!-- 							<h:outputText value="#{planProduccionMB.pedidoSelec.cantidad_prenda}" /> -->
+<!-- 						</p:column> -->
+<!-- 					</p:row> -->
+<!-- 					<p:row> -->
+<!-- 						<p:column colspan="3"><h:outputText value="Subtotal Pedido:" /></p:column> -->
+<!-- 						<p:column style="width: 20%;"> -->
+<!-- 							<h:outputText value="#{planProduccionMB.pedidoSelec.subTotalPedido}" > -->
+<!-- 								<f:convertNumber type="currency" currencySymbol="S/." maxFractionDigits="2"/> -->
+<!-- 							</h:outputText> -->
+<!-- 						</p:column> -->
+<!-- 					</p:row> -->
 				</p:panelGrid>
 				
 				<p:commandButton value="Cancelar" type="button" onclick="PF('dlgFichaTecnica').hide()" icon="icon-cancel" />

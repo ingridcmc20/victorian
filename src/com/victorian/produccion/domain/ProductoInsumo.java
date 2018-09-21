@@ -1,22 +1,23 @@
 package com.victorian.produccion.domain;
 
 public class ProductoInsumo {
-	private Integer id_producto;
-	private Integer id_insumo;
+	private Integer idproducto;
+	private Integer idinsumo;
 
-	public Integer getId_producto() {
-		return id_producto;
+	public Integer getIdproducto() {
+		return idproducto;
 	}
 
-	public void setId_producto(Integer id_producto) {
-		this.id_producto = id_producto;
+	public void setIdproducto(Integer idproducto) {
+		this.idproducto = idproducto;
 	}
 
-	public Integer getId_insumo() {
-		return id_insumo;
+	public Integer getIdinsumo() {
+		return idinsumo;
 	}
 
-	public void setId_insumo(Integer id_insumo) {
-		this.id_insumo = id_insumo;
+	public void setIdinsumo(Integer idinsumo) {
+		this.idinsumo = idinsumo;
 	}
+
 }

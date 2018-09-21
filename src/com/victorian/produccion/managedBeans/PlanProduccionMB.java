@@ -42,8 +42,8 @@ public class PlanProduccionMB extends GenericBeans implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Pedido pedido;
 	private ListaPedidos<Pedido> listaPedidos;
-//	private List<Pedido> listaPedidosSelected;
-	private Pedido pedidoSelected;
+	private List<Pedido> listaPedidosSelected;
+//	private Pedido pedidoSelected;
 	private List<Producto> listaProducto;
 	private List<TipoConfeccion> listaTipoConfeccion;
 
@@ -227,7 +227,7 @@ public class PlanProduccionMB extends GenericBeans implements Serializable {
 		context.addCallbackParam("esValido", valido);
 
 		try {
-			if (pedidoSelected !=null) {
+			if(listaPedidosSelected.size()>0){
 				if (this.cantidad_maquina_confeccionista > 0 && this.cantidad_maquina_cortadora > 0
 						&& this.cantidad_personal_confeccionistas > 0 && this.cantidad_personal_cortadores > 0
 						&& this.cantidad_personal_diseniadores > 0 && this.cantidad_empaquetadores > 0) {
@@ -240,18 +240,20 @@ public class PlanProduccionMB extends GenericBeans implements Serializable {
 					pp.setFecha_inicioplan(new java.sql.Date(fechaActual.getTime()));
 					pp.setFecha_finplan(new java.sql.Date(calPP.getTime().getTime()));
 					pp.setId_estado(Constante.PP_PENDIENTE);
-					pp.setId_pedido(pedidoSelected.getId_pedido());
+					pp.setFecha_registro(new java.sql.Date(fechaActual.getTime()));
 					this.planProduccionServices.insert(pp);
 
-					Calendar cal = Calendar.getInstance();
-					cal.setTime(pedidoSelected.getFechapedido());
-					cal.add(Calendar.MONTH, 1);
-
-					pedidoSelected.setFecha_entrega(new java.sql.Date(cal.getTime().getTime()));
-					pedidoSelected.setId_estado(Constante.REGISTRADO);
-
-					this.pedidoServices.actualizarPedido(pedidoSelected);
-
+					for (Pedido p : listaPedidosSelected) {
+						Calendar cal = Calendar.getInstance();
+						cal.setTime(p.getFechapedido());
+						cal.add(Calendar.MONTH, 1);
+	
+						p.setFecha_entrega(new java.sql.Date(cal.getTime().getTime()));
+						p.setId_estado(Constante.EN_PROCESO);
+						p.setId_planproduccion(pp.getId_planproduccion());
+	
+						this.pedidoServices.actualizarPedido(p);
+					}
 					FacesUtils.showFacesMessage("Pendiente de aprobación por parte del Jefe de Producción", 3);
 				} else {
 					FacesUtils.showFacesMessage("No hay recursos disponibles para generar el plan", 1);
@@ -530,11 +532,20 @@ public class PlanProduccionMB extends GenericBeans implements Serializable {
 		this.cantidad_personal_diseniadores = cantidad_personal_diseniadores;
 	}
 
-	public Pedido getPedidoSelected() {
-		return pedidoSelected;
+	public List<Pedido> getListaPedidosSelected() {
+		return listaPedidosSelected;
 	}
 
-	public void setPedidoSelected(Pedido pedidoSelected) {
-		this.pedidoSelected = pedidoSelected;
+	public void setListaPedidosSelected(List<Pedido> listaPedidosSelected) {
+		this.listaPedidosSelected = listaPedidosSelected;
 	}
+
+//	public Pedido getPedidoSelected() {
+//		return pedidoSelected;
+//	}
+//
+//	public void setPedidoSelected(Pedido pedidoSelected) {
+//		this.pedidoSelected = pedidoSelected;
+//	}
+	
 }

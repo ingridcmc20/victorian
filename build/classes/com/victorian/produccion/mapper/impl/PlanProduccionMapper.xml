@@ -6,8 +6,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.victorian.produccion.mapper.PlanProduccionMapper">
 
 	<insert id="insert" parameterType="com.victorian.produccion.domain.PlanProduccion">
-		INSERT INTO victorian.t_plan_produccion(fecha_inicioplan, fecha_finplan, cantidad_operarios, cantidad_maquinaria, id_estado, id_pedido)
-		VALUES (#{fecha_inicioplan}, #{fecha_finplan}, #{cantidad_operarios}, #{cantidad_maquinaria}, #{id_estado}, #{id_pedido})
+		INSERT INTO victorian.t_plan_produccion(fecha_inicioplan, fecha_finplan, cantidad_operarios, cantidad_maquinaria, id_estado, fecha_registro)
+		VALUES (#{fecha_inicioplan}, #{fecha_finplan}, #{cantidad_operarios}, #{cantidad_maquinaria}, #{id_estado}, #{fecha_registro})
 		
 		<selectKey resultType="Integer" keyProperty="id_planproduccion">
 			select max(id_planproduccion) as id_planproduccion from victorian.t_plan_produccion

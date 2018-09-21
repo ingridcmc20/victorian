@@ -113,8 +113,8 @@ public class ProductoMB extends GenericBeans implements Serializable {
 	public void retirarMaterial(FichaTecnica ft) {
 		try {
 			ProductoInsumo productoInsumo = new ProductoInsumo();
-			productoInsumo.setId_producto(ft.getId_producto());
-			productoInsumo.setId_insumo(ft.getId_insumo());
+			productoInsumo.setIdproducto(ft.getId_producto());
+			productoInsumo.setIdinsumo(ft.getId_insumo());
 
 			fichaTecnicaServices.delete(ft.getId_fichatecnica());
 			productoInsumoService.delete(productoInsumo);
@@ -129,8 +129,8 @@ public class ProductoMB extends GenericBeans implements Serializable {
 	public void agregarMaterial() {
 		try {
 			ProductoInsumo productoInsumo = new ProductoInsumo();
-			productoInsumo.setId_producto(this.fichaTecnica.getId_producto());
-			productoInsumo.setId_insumo(this.fichaTecnica.getId_insumo());
+			productoInsumo.setIdproducto(this.fichaTecnica.getId_producto());
+			productoInsumo.setIdinsumo(this.fichaTecnica.getId_insumo());
 
 			this.fichaTecnica.setPrecio_total(
 					(this.fichaTecnica.getPrecio_unidad() != null ? this.fichaTecnica.getPrecio_unidad() : 0)
