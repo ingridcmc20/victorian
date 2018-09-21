@@ -19,7 +19,6 @@ public class OrdenTrabajo {
 	private String des_etapa;
 	private Date fecha_inicio;
 	private Date fecha_fin;
-	private Integer id_planproduccion;
 
 	public Date getFecha_inicio() {
 		return fecha_inicio;
@@ -133,11 +132,4 @@ public class OrdenTrabajo {
 		this.fecha_entrega = fecha_entrega;
 	}
 
-	public Integer getId_planproduccion() {
-		return id_planproduccion;
-	}
-
-	public void setId_planproduccion(Integer id_planproduccion) {
-		this.id_planproduccion = id_planproduccion;
-	}
 }

@@ -83,68 +83,20 @@
 							<h:inputText id="nroPedido" value="#{registroOrdenTrabajoMB.ordenTrabajoSelected.id_pedido}" required="true"
 									disabled="#{registroOrdenTrabajoMB.ordenTrabajoSelected.id_pedido ne null}" 
 									requiredMessage="Se necesita un pedido" style="font-size: 13px;">
-								<p:ajax  listener="#{registroOrdenTrabajoMB.obtenerDatosPedido}" update="pnlPedido pnlCosto msgNuevo"/>
+								<p:ajax  listener="#{registroOrdenTrabajoMB.obtenerDatosPedido}" update="pnlPedido msgNuevo"/>
 							</h:inputText>
-						</p:column>
-						<p:column rowspan="3" colspan="2">
-							<p:panel id="pnlCosto" header="Costo total">
-								<p:panelGrid style="width:100%">
-									<p:row>
-										<p:column><p:outputLabel value="SubTotal pedido:"/></p:column>
-										<p:column style="text-align: right;">
-											<p:outputLabel value="#{registroOrdenTrabajoMB.pedidoSelected.subTotalPedido}">
-												<f:convertNumber type="currency" currencySymbol="S/." maxFractionDigits="2"/>
-											</p:outputLabel>
-										</p:column>
-									</p:row>
-									<p:row>
-										<p:column><p:outputLabel value="Gastos generales:"/></p:column>
-										<p:column style="text-align: right;">
-											<p:outputLabel value="#{registroOrdenTrabajoMB.pedidoSelected.gastosGenerales}">
-												<f:convertNumber type="currency" currencySymbol="S/." maxFractionDigits="2"/>
-											</p:outputLabel>
-										</p:column>
-									</p:row>
-									<p:row>
-										<p:column><p:outputLabel value="Utilidades:"/></p:column>
-										<p:column style="text-align: right;">
-											<p:outputLabel value="#{registroOrdenTrabajoMB.pedidoSelected.utilidades}">
-												<f:convertNumber type="currency" currencySymbol="S/." maxFractionDigits="2"/>
-											</p:outputLabel>
-										</p:column>
-									</p:row>
-									<p:row>
-										<p:column><p:outputLabel value="SubTotal:"/></p:column>
-										<p:column style="text-align: right;">
-											<p:outputLabel value="#{registroOrdenTrabajoMB.pedidoSelected.subTotal}">
-												<f:convertNumber type="currency" currencySymbol="S/." maxFractionDigits="2"/>
-											</p:outputLabel>
-										</p:column>
-									</p:row>
-									<p:row>
-										<p:column><p:outputLabel value="IGV:"/></p:column>
-										<p:column style="text-align: right;">
-											<p:outputLabel value="#{registroOrdenTrabajoMB.pedidoSelected.igv}">
-												<f:convertNumber type="currency" currencySymbol="S/." maxFractionDigits="2"/>
-											</p:outputLabel>
-										</p:column>
-									</p:row>
-									<p:row>
-										<p:column><p:outputLabel value="Total:"/></p:column>
-										<p:column style="text-align: right;">
-											<p:outputLabel value="#{registroOrdenTrabajoMB.pedidoSelected.total}">
-												<f:convertNumber type="currency" currencySymbol="S/." maxFractionDigits="2"/>
-											</p:outputLabel>
-										</p:column>
-									</p:row>
-								</p:panelGrid>
-							</p:panel>
 						</p:column>
 					</p:row>
 					<p:row>
 						<p:column><p:outputLabel value="Prioridad"/></p:column>
 						<p:column>
 							<p:inputText value="#{registroOrdenTrabajoMB.ordenTrabajoSelected.prioridad}" required="true" requiredMessage="Seleccione una prioridad"/>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column><p:outputLabel value="Fecha de entrega orden"/></p:column>
+						<p:column>
+							<p:outputLabel value="#{registroOrdenTrabajoMB.ordenTrabajoSelected.fecha_entrega}"/>
 						</p:column>
 					</p:row>
 					<p:row>

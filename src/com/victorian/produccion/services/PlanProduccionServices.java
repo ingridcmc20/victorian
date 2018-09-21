@@ -33,4 +33,16 @@ public class PlanProduccionServices implements PlanProduccionMapper {
 		return planProduccionMapper.findById(idplan);
 	}
 
+	@Override
+	public void updateCantidadOperariosByOT(Integer id_ordentrabajo, int cantidadOperarios) {
+		// TODO Auto-generated method stub
+		planProduccionMapper.updateCantidadOperariosByOT(id_ordentrabajo, cantidadOperarios); 
+	}
+
+	@Override
+	public void updateCantidadMaquinariasByOT(Integer id_ordentrabajo, int cantidadMaquinaria) {
+		planProduccionMapper.updateCantidadMaquinariasByOT(id_ordentrabajo, cantidadMaquinaria); 
+		
+	}
+
 }

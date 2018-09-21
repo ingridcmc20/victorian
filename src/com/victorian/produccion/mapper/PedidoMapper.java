@@ -55,7 +55,7 @@ public interface PedidoMapper {
 	@Options(flushCache=true,useCache=true)
     public void actualizarPedido(Pedido pedido) throws Exception;
 	
-	@Select("SELECT distinct p.id_pedido, p.tipo_prenda, p.cantidad_prenda, p.id_modo_pago, p.fecha_registro as fechapedido, p.fecha_entrega, p.id_estado, p.id_tipoconfeccion, p.id_cliente "
+	@Select("SELECT distinct p.id_pedido, p.tipo_prenda, p.cantidad_prenda, p.id_modo_pago, p.fecha_registro as fechapedido, p.fecha_entrega, p.id_estado, p.id_tipoconfeccion, p.id_cliente, pp.id_planproduccion "
 			+ "FROM victorian.t_pedido p inner join victorian.t_plan_produccion pp on pp.id_planproduccion=p.id_planproduccion where pp.id_planproduccion=#{id_planproduccion}")
 	public List<Pedido> findByPlanProduccion(@Param("id_planproduccion") Integer idplan) throws Exception;
 	
@@ -79,8 +79,8 @@ public interface PedidoMapper {
 			+ "inner join victorian.t_tipo_confeccion tc on tc.id_tipoconfeccion=p.id_tipoconfeccion "
 			+ "inner join victorian.t_cliente c on c.id_cliente=p.id_cliente "
 			+ "inner join victorian.t_modo_pago m on p.id_modo_pago=m.id_modo_pago "
-			+ "inner join victorian.t_plan_produccion pp on pp.id_pedido=p.id_pedido "
-			+ "WHERE p.id_pedido=#{id_pedido} and p.id_estado=#{id_estado} "
+			+ "inner join victorian.t_plan_produccion pp on pp.id_planproduccion=p.id_planproduccion "
+			+ "WHERE p.id_pedido=#{id_pedido} and pp.id_estado=#{id_estado} "
 			+ "order by c.nombre_cliente, p.fecha_registro")
 	public Pedido findByIdAndByEstado(@Param("id_pedido") Integer id_pedido, @Param("id_estado") Integer id_estado) throws Exception;
 	

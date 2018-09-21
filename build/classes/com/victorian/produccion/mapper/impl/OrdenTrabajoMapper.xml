@@ -66,9 +66,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<insert id="insert" parameterType="com.victorian.produccion.domain.OrdenTrabajo">
 		INSERT INTO victorian.t_orden_trabajo(prioridad, id_pedido, fecha_registro, fecha_entrega,
-			id_estado,id_planproduccion)
+			id_estado)
 		VALUES (#{prioridad}, #{id_pedido}, #{fecha_registro}, #{fecha_entrega}, 
-			#{id_estado},#{id_planproduccion});
+			#{id_estado});
 		<selectKey resultType="Integer" keyProperty="id_ordentrabajo">
 			select max(id_ordentrabajo) as id_ordentrabajo from victorian.t_orden_trabajo
 		</selectKey>

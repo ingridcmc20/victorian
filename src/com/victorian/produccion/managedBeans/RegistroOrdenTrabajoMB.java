@@ -33,6 +33,7 @@ import com.victorian.produccion.services.OrdenTrabajoMaquinariaServices;
 import com.victorian.produccion.services.OrdenTrabajoOperarioServices;
 import com.victorian.produccion.services.OrdenTrabajoServices;
 import com.victorian.produccion.services.PedidoServices;
+import com.victorian.produccion.services.PlanProduccionServices;
 
 @ManagedBean(name = "registroOrdenTrabajoMB")
 @ViewScoped
@@ -50,6 +51,7 @@ public class RegistroOrdenTrabajoMB extends GenericBeans implements Serializable
 	private EtapaServices etapaServices;
 	private OrdenTrabajoOperarioServices ordenTrabajoOperarioServices;
 	private OrdenTrabajoMaquinariaServices ordenTrabajoMaquinariaServices;
+	private PlanProduccionServices planProduccionServices;
 
 	private List<OrdenTrabajo> lstOrdenTrabajo;
 	private OrdenTrabajo ordenTrabajoSelected;
@@ -87,6 +89,7 @@ public class RegistroOrdenTrabajoMB extends GenericBeans implements Serializable
 			this.etapaServices = new EtapaServices();
 			this.ordenTrabajoOperarioServices = new OrdenTrabajoOperarioServices();
 			this.ordenTrabajoMaquinariaServices = new OrdenTrabajoMaquinariaServices();
+			this.planProduccionServices = new PlanProduccionServices();
 
 			// Iniciar objetos
 			this.ordenTrabajoSelected = new OrdenTrabajo();
@@ -120,6 +123,11 @@ public class RegistroOrdenTrabajoMB extends GenericBeans implements Serializable
 
 	public void nuevo() {
 		this.ordenTrabajoSelected = new OrdenTrabajo();
+		Date fechaActual = new Date();
+		Calendar calPP = Calendar.getInstance();
+		calPP.setTime(fechaActual);
+		calPP.add(Calendar.MONTH, 1);
+		this.ordenTrabajoSelected.setFecha_entrega(new java.sql.Date(calPP.getTime().getTime()));
 	}
 
 	public void editar(OrdenTrabajo ot) {
@@ -199,7 +207,7 @@ public class RegistroOrdenTrabajoMB extends GenericBeans implements Serializable
 			System.out.println(
 					"obtenerDatosPedido>>>> ordenTrabajoSelected.id_pedido" + this.ordenTrabajoSelected.getId_pedido());
 			pedidoSelected = this.pedidoServices.findByIdAndByEstado(this.ordenTrabajoSelected.getId_pedido(),
-					Constante.ACEPTADO);
+					Constante.PP_APROBADO);
 			if (pedidoSelected != null) {
 				ordenTrabajoSelected.setNombre_cliente(pedidoSelected.getNombre_cliente());
 				ordenTrabajoSelected.setDes_tipo_prenda(pedidoSelected.getDes_tipo_prenda());
@@ -250,7 +258,7 @@ public class RegistroOrdenTrabajoMB extends GenericBeans implements Serializable
 			ordenTrabajoSelected.setFecha_registro(new java.sql.Date(fechaActual.getTime()));
 			ordenTrabajoSelected.setId_estado(Constante.OT_PENDIENTE);
 			ordenTrabajoSelected.setId_etapa(Constante.OT_ETAPA_DISENIO);
-			ordenTrabajoSelected.setId_planproduccion(pedidoSelected.getId_planproduccion());
+			ordenTrabajoSelected.setId_pedido(pedidoSelected.getId_pedido());
 
 			if (ordenTrabajoSelected.getId_ordentrabajo() != null) {
 				ordenTrabajoServices.update(ordenTrabajoSelected);
@@ -465,7 +473,11 @@ public class RegistroOrdenTrabajoMB extends GenericBeans implements Serializable
 				
 				ordenTrabajoOperarioServices.insert(oto);
 			}
-
+			
+			int cantidadOperarios = lstPDisenoSelected.size() + lstMCorteSelected.size() + lstPConfeccionSelected.size() + lstPEmpaquetadoSelected.size();
+			
+			planProduccionServices.updateCantidadOperariosByOT(ordenTrabajoSelected.getId_ordentrabajo(), cantidadOperarios);
+			
 			this.lstOrdenTrabajo = this.ordenTrabajoServices.findAll();
 			context.update("dataTable");
 			context.execute("PF('dlgPersonal').hide();");
@@ -480,6 +492,7 @@ public class RegistroOrdenTrabajoMB extends GenericBeans implements Serializable
 			RequestContext context = RequestContext.getCurrentInstance();
 			System.out.println("lstMCorteSelected: " + lstMCorteSelected.size());
 			System.out.println("lstMConfeccionSelected: " + lstMConfeccionSelected.size());
+			int cantidadMaquinaria = lstMCorteSelected.size() + lstMConfeccionSelected.size();
 
 			ordenTrabajoMaquinariaServices.delete(this.ordenTrabajoSelected.getId_ordentrabajo());
 
@@ -500,6 +513,8 @@ public class RegistroOrdenTrabajoMB extends GenericBeans implements Serializable
 
 				ordenTrabajoMaquinariaServices.insert(oto);
 			}
+			
+			planProduccionServices.updateCantidadMaquinariasByOT(ordenTrabajoSelected.getId_ordentrabajo(), cantidadMaquinaria);
 
 			this.lstOrdenTrabajo = this.ordenTrabajoServices.findAll();
 
