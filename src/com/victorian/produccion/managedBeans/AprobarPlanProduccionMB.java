@@ -36,7 +36,7 @@ public class AprobarPlanProduccionMB extends GenericBeans implements Serializabl
 	 */
 	private static final long serialVersionUID = 1L;
 	private PlanProduccion pedido;
-	private List<PlanProduccion> listaPedidos;
+	private List<PlanProduccion> listaPlanProduccion;
 	private List<Producto> listaProducto;
 	private List<TipoConfeccion> listaTipoConfeccion;
 
@@ -87,7 +87,11 @@ public class AprobarPlanProduccionMB extends GenericBeans implements Serializabl
 		this.fecha_entrega = new Date();
 
 		try {
-			this.listaPedidos = this.planProduccionServices.findByEstado(Constante.PP_PENDIENTE);
+			this.listaPlanProduccion = this.planProduccionServices.findByEstado(Constante.PP_PENDIENTE);
+			for(PlanProduccion planProduccion : this.listaPlanProduccion){
+				List<Pedido> listaPedidos = pedidoServices.findByPlanProduccion(planProduccion.getId_planproduccion());
+				planProduccion.setListaPedido(listaPedidos);
+			}
 			this.listaProducto = this.productoServices.findAll();
 			this.listaTipoConfeccion = this.tipoConfeccionServices.findAll();
 
@@ -177,14 +181,14 @@ public class AprobarPlanProduccionMB extends GenericBeans implements Serializabl
 				asignacionRecursoServices.insert(ar);
 			}
 
-			this.listaPedidos = this.planProduccionServices.findByEstado(Constante.PP_APROBADO);
+			this.listaPlanProduccion = this.planProduccionServices.findByEstado(Constante.PP_APROBADO);
 		} catch (Exception e) { // TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 	}
 
-	public void guardarPedido(PlanProduccion p) {
+	public void guardarPlan(PlanProduccion p) {
 		List<Pedido> lstPedidos;
 		Boolean valido = Boolean.TRUE;
 		RequestContext context = RequestContext.getCurrentInstance();
@@ -194,7 +198,7 @@ public class AprobarPlanProduccionMB extends GenericBeans implements Serializabl
 			lstPedidos = this.pedidoServices.findByPlanProduccion(p.getId_planproduccion());
 
 			for (Pedido pedido : lstPedidos) {
-				pedido.setId_estado(Constante.ACEPTADO);
+				pedido.setId_estado(Constante.EN_PROCESO);
 				this.pedidoServices.actualizarPedido(pedido);
 			}
 
@@ -203,7 +207,7 @@ public class AprobarPlanProduccionMB extends GenericBeans implements Serializabl
 
 			FacesUtils.showFacesMessage("Se aprobo correctamente el plan de producción.", 3);
 
-			this.listaPedidos = this.planProduccionServices.findByEstado(Constante.PP_PENDIENTE);
+			this.listaPlanProduccion = this.planProduccionServices.findByEstado(Constante.PP_PENDIENTE);
 
 			context.update("msgGeneral");
 
@@ -246,14 +250,6 @@ public class AprobarPlanProduccionMB extends GenericBeans implements Serializabl
 
 	public void setPedido(PlanProduccion pedido) {
 		this.pedido = pedido;
-	}
-
-	public List<PlanProduccion> getListaPedidos() {
-		return listaPedidos;
-	}
-
-	public void setListaPedidos(List<PlanProduccion> listaPedidos) {
-		this.listaPedidos = listaPedidos;
 	}
 
 	public PlanProduccion getPedidoSelec() {
@@ -382,5 +378,13 @@ public class AprobarPlanProduccionMB extends GenericBeans implements Serializabl
 
 	public void setAsignacionRecursoSelected(AsignacionRecurso asignacionRecursoSelected) {
 		this.asignacionRecursoSelected = asignacionRecursoSelected;
+	}
+
+	public List<PlanProduccion> getListaPlanProduccion() {
+		return listaPlanProduccion;
+	}
+
+	public void setListaPlanProduccion(List<PlanProduccion> listaPlanProduccion) {
+		this.listaPlanProduccion = listaPlanProduccion;
 	}
 }

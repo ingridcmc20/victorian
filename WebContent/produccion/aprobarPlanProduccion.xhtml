@@ -22,14 +22,16 @@
 			
 				<!-- listado de Pedido -->
 			<h:form id="formLista">
-				<p:dataTable id="dataTable" var="p" value="#{aprobarPlanProduccionMB.listaPedidos}" widgetVar="dtPedido" 
-					emptyMessage="No hay Pedido Disponibles." rowIndexVar="nro" 
+				<p:dataTable id="dataTable" var="p" value="#{aprobarPlanProduccionMB.listaPlanProduccion}" widgetVar="dtPedido" 
+					emptyMessage="No hay planes disponibles." rowIndexVar="nro" 
 					paginator="true"
 					rows="10" paginatorPosition="bottom" 
 					 style="FONT-SIZE: 10px; width: 100%">
 										 
 					<f:facet name="header">Lista Planes</f:facet>
-					
+			        <p:column style="width:16px">
+			            <p:rowToggler />
+			        </p:column>
 					<p:column headerText="Orden" style="width:6%" >
 						#{nro+1}
 					</p:column>
@@ -47,9 +49,32 @@
 					</p:column>
 					<p:column headerText="Aprobar" style="width:10%;text-align: center">	
 						<p:commandButton   
-							actionListener="#{aprobarPlanProduccionMB.guardarPedido(p)}" update=":formLista"
+							actionListener="#{aprobarPlanProduccionMB.guardarPlan(p)}" update=":formLista"
 							title="Editar" icon="icon-disk" />
 					</p:column>
+					<p:rowExpansion>
+						<p:dataTable var="pedido" value="#{p.listaPedido}" widgetVar="dtPedidoDetalle" 
+								emptyMessage="No hay pedidos disponibles." rowIndexVar="nro" >
+							<p:column headerText="Orden" style="width:6%" >
+								#{nro+1}
+							</p:column>
+							<p:column headerText="Nro. Pedido">
+								<h:outputText value="#{pedido.id_pedido}" />
+							</p:column>
+							<p:column headerText="Prenda">
+								<h:outputText value="#{pedido.tipo_prenda}" />
+							</p:column>
+							<p:column headerText="Cantidad">
+								<h:outputText value="#{pedido.cantidad_prenda}" />
+							</p:column>
+							<p:column headerText="Fecha pedido">
+								<h:outputText value="#{pedido.fechapedido}" />
+							</p:column>
+							<p:column headerText="Fecha entrega">
+								<h:outputText value="#{pedido.fecha_entrega}" />
+							</p:column>
+						</p:dataTable>
+					</p:rowExpansion>
 				</p:dataTable>
 			</h:form>
 			
