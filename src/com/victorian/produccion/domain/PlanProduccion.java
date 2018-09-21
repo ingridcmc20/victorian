@@ -1,6 +1,7 @@
 package com.victorian.produccion.domain;
 
 import java.sql.Date;
+import java.util.List;
 
 public class PlanProduccion {
 	private Integer id_planproduccion;
@@ -12,6 +13,7 @@ public class PlanProduccion {
 	private Date fecha_registro;
 	private Integer id_estado;
 	private String des_estado;
+	private List<Pedido> listaPedido;
 
 	public Integer getId_planproduccion() {
 		return id_planproduccion;
@@ -84,4 +86,13 @@ public class PlanProduccion {
 	public void setDes_estado(String des_estado) {
 		this.des_estado = des_estado;
 	}
+
+	public List<Pedido> getListaPedido() {
+		return listaPedido;
+	}
+
+	public void setListaPedido(List<Pedido> listaPedido) {
+		this.listaPedido = listaPedido;
+	}
+
 }
