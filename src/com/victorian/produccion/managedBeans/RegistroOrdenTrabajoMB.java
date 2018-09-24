@@ -77,6 +77,8 @@ public class RegistroOrdenTrabajoMB extends GenericBeans implements Serializable
 	private List<String> lstMCorteSelected;
 	private List<String> lstMConfeccionSelected;
 
+	private boolean mostrarPedido;
+
 	@PostConstruct
 	public void inicia() {
 		try {
@@ -128,11 +130,13 @@ public class RegistroOrdenTrabajoMB extends GenericBeans implements Serializable
 		calPP.setTime(fechaActual);
 		calPP.add(Calendar.MONTH, 1);
 		this.ordenTrabajoSelected.setFecha_entrega(new java.sql.Date(calPP.getTime().getTime()));
+		mostrarPedido = true;
 	}
 
 	public void editar(OrdenTrabajo ot) {
 		System.out.println("editar");
 		try {
+			mostrarPedido = false;
 			double subtotalproducto = 0;
 			double subtotalpedido = 0;
 			double gastosadicionales = 0;
@@ -144,7 +148,7 @@ public class RegistroOrdenTrabajoMB extends GenericBeans implements Serializable
 			this.ordenTrabajoSelected = ot;
 			this.pedidoSelected = this.pedidoServices.findByIdAndByEstado(this.ordenTrabajoSelected.getId_pedido(),
 					Constante.EN_PROCESO);
-			
+
 			if (pedidoSelected != null) {
 				ordenTrabajoSelected.setNombre_cliente(pedidoSelected.getNombre_cliente());
 				ordenTrabajoSelected.setDes_tipo_prenda(pedidoSelected.getDes_tipo_prenda());
@@ -258,7 +262,9 @@ public class RegistroOrdenTrabajoMB extends GenericBeans implements Serializable
 			ordenTrabajoSelected.setFecha_registro(new java.sql.Date(fechaActual.getTime()));
 			ordenTrabajoSelected.setId_estado(Constante.OT_PENDIENTE);
 			ordenTrabajoSelected.setId_etapa(Constante.OT_ETAPA_DISENIO);
-			ordenTrabajoSelected.setId_pedido(pedidoSelected.getId_pedido());
+			if(mostrarPedido){
+				ordenTrabajoSelected.setId_pedido(pedidoSelected.getId_pedido());
+			}
 
 			if (ordenTrabajoSelected.getId_ordentrabajo() != null) {
 				ordenTrabajoServices.update(ordenTrabajoSelected);
@@ -336,8 +342,10 @@ public class RegistroOrdenTrabajoMB extends GenericBeans implements Serializable
 			this.lstPConfeccion = this.operarioServices.findByEstadoDisponible(Constante.OP_CONFECCIONISTA);
 			this.lstPEmpaquetado = this.operarioServices.findByEstadoDisponible(Constante.OP_EMPAQUETADOR);
 
-			this.lstPDisenoSelected = this.operarioServices.findByTipoAndByIdOrden(Constante.OP_DISENADOR, ot.getId_ordentrabajo());
-			this.lstPCorteSelected = this.operarioServices.findByTipoAndByIdOrden(Constante.OP_CORTADOR, ot.getId_ordentrabajo());
+			this.lstPDisenoSelected = this.operarioServices.findByTipoAndByIdOrden(Constante.OP_DISENADOR,
+					ot.getId_ordentrabajo());
+			this.lstPCorteSelected = this.operarioServices.findByTipoAndByIdOrden(Constante.OP_CORTADOR,
+					ot.getId_ordentrabajo());
 			this.lstPConfeccionSelected = this.operarioServices.findByTipoAndByIdOrden(Constante.OP_CONFECCIONISTA,
 					ot.getId_ordentrabajo());
 			this.lstPEmpaquetadoSelected = this.operarioServices.findByTipoAndByIdOrden(Constante.OP_EMPAQUETADOR,
@@ -392,16 +400,16 @@ public class RegistroOrdenTrabajoMB extends GenericBeans implements Serializable
 				oto.setId_ordentrabajo(this.ordenTrabajoSelected.getId_ordentrabajo());
 				oto.setId_operario(new Integer(o));
 				oto.setId_etapa(Constante.OT_ETAPA_DISENIO);
-				
-				if(operario.getPuntaje_acumulado()<5){
-					oto.setId_nivel(Constante.NIVEL_1);	
-				}else if(operario.getPuntaje_acumulado()<10){
+
+				if (operario.getPuntaje_acumulado() < 5) {
+					oto.setId_nivel(Constante.NIVEL_1);
+				} else if (operario.getPuntaje_acumulado() < 10) {
 					oto.setId_nivel(Constante.NIVEL_2);
-				}else if(operario.getPuntaje_acumulado()<15){
+				} else if (operario.getPuntaje_acumulado() < 15) {
 					oto.setId_nivel(Constante.NIVEL_3);
-				}else if(operario.getPuntaje_acumulado()<20){
+				} else if (operario.getPuntaje_acumulado() < 20) {
 					oto.setId_nivel(Constante.NIVEL_4);
-				}else{
+				} else {
 					oto.setId_nivel(Constante.NIVEL_5);
 				}
 
@@ -415,18 +423,18 @@ public class RegistroOrdenTrabajoMB extends GenericBeans implements Serializable
 				oto.setId_operario(new Integer(o));
 				oto.setId_etapa(Constante.OT_ETAPA_CORTE);
 
-				if(operario.getPuntaje_acumulado()<5){
-					oto.setId_nivel(Constante.NIVEL_1);	
-				}else if(operario.getPuntaje_acumulado()<10){
+				if (operario.getPuntaje_acumulado() < 5) {
+					oto.setId_nivel(Constante.NIVEL_1);
+				} else if (operario.getPuntaje_acumulado() < 10) {
 					oto.setId_nivel(Constante.NIVEL_2);
-				}else if(operario.getPuntaje_acumulado()<15){
+				} else if (operario.getPuntaje_acumulado() < 15) {
 					oto.setId_nivel(Constante.NIVEL_3);
-				}else if(operario.getPuntaje_acumulado()<20){
+				} else if (operario.getPuntaje_acumulado() < 20) {
 					oto.setId_nivel(Constante.NIVEL_4);
-				}else{
+				} else {
 					oto.setId_nivel(Constante.NIVEL_5);
 				}
-				
+
 				ordenTrabajoOperarioServices.insert(oto);
 			}
 
@@ -437,18 +445,18 @@ public class RegistroOrdenTrabajoMB extends GenericBeans implements Serializable
 				oto.setId_operario(new Integer(o));
 				oto.setId_etapa(Constante.OT_ETAPA_CONFECCION);
 
-				if(operario.getPuntaje_acumulado()<5){
-					oto.setId_nivel(Constante.NIVEL_1);	
-				}else if(operario.getPuntaje_acumulado()<10){
+				if (operario.getPuntaje_acumulado() < 5) {
+					oto.setId_nivel(Constante.NIVEL_1);
+				} else if (operario.getPuntaje_acumulado() < 10) {
 					oto.setId_nivel(Constante.NIVEL_2);
-				}else if(operario.getPuntaje_acumulado()<15){
+				} else if (operario.getPuntaje_acumulado() < 15) {
 					oto.setId_nivel(Constante.NIVEL_3);
-				}else if(operario.getPuntaje_acumulado()<20){
+				} else if (operario.getPuntaje_acumulado() < 20) {
 					oto.setId_nivel(Constante.NIVEL_4);
-				}else{
+				} else {
 					oto.setId_nivel(Constante.NIVEL_5);
 				}
-				
+
 				ordenTrabajoOperarioServices.insert(oto);
 			}
 
@@ -459,25 +467,27 @@ public class RegistroOrdenTrabajoMB extends GenericBeans implements Serializable
 				oto.setId_operario(new Integer(o));
 				oto.setId_etapa(Constante.OT_ETAPA_EMPAQUETADO);
 
-				if(operario.getPuntaje_acumulado()<5){
-					oto.setId_nivel(Constante.NIVEL_1);	
-				}else if(operario.getPuntaje_acumulado()<10){
+				if (operario.getPuntaje_acumulado() < 5) {
+					oto.setId_nivel(Constante.NIVEL_1);
+				} else if (operario.getPuntaje_acumulado() < 10) {
 					oto.setId_nivel(Constante.NIVEL_2);
-				}else if(operario.getPuntaje_acumulado()<15){
+				} else if (operario.getPuntaje_acumulado() < 15) {
 					oto.setId_nivel(Constante.NIVEL_3);
-				}else if(operario.getPuntaje_acumulado()<20){
+				} else if (operario.getPuntaje_acumulado() < 20) {
 					oto.setId_nivel(Constante.NIVEL_4);
-				}else{
+				} else {
 					oto.setId_nivel(Constante.NIVEL_5);
 				}
-				
+
 				ordenTrabajoOperarioServices.insert(oto);
 			}
-			
-			int cantidadOperarios = lstPDisenoSelected.size() + lstMCorteSelected.size() + lstPConfeccionSelected.size() + lstPEmpaquetadoSelected.size();
-			
-			planProduccionServices.updateCantidadOperariosByOT(ordenTrabajoSelected.getId_ordentrabajo(), cantidadOperarios);
-			
+
+			int cantidadOperarios = lstPDisenoSelected.size() + lstMCorteSelected.size() + lstPConfeccionSelected.size()
+					+ lstPEmpaquetadoSelected.size();
+
+			planProduccionServices.updateCantidadOperariosByOT(ordenTrabajoSelected.getId_ordentrabajo(),
+					cantidadOperarios);
+
 			this.lstOrdenTrabajo = this.ordenTrabajoServices.findAll();
 			context.update("dataTable");
 			context.execute("PF('dlgPersonal').hide();");
@@ -513,8 +523,9 @@ public class RegistroOrdenTrabajoMB extends GenericBeans implements Serializable
 
 				ordenTrabajoMaquinariaServices.insert(oto);
 			}
-			
-			planProduccionServices.updateCantidadMaquinariasByOT(ordenTrabajoSelected.getId_ordentrabajo(), cantidadMaquinaria);
+
+			planProduccionServices.updateCantidadMaquinariasByOT(ordenTrabajoSelected.getId_ordentrabajo(),
+					cantidadMaquinaria);
 
 			this.lstOrdenTrabajo = this.ordenTrabajoServices.findAll();
 
@@ -662,6 +673,14 @@ public class RegistroOrdenTrabajoMB extends GenericBeans implements Serializable
 
 	public void setOrdenTrabajoSelected(OrdenTrabajo ordenTrabajoSelected) {
 		this.ordenTrabajoSelected = ordenTrabajoSelected;
+	}
+
+	public boolean isMostrarPedido() {
+		return mostrarPedido;
+	}
+
+	public void setMostrarPedido(boolean mostrarPedido) {
+		this.mostrarPedido = mostrarPedido;
 	}
 
 }
