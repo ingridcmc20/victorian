@@ -218,6 +218,13 @@ public class ActualizarOrdenTrabajoPorPerfilMB extends GenericBeans implements S
 			ordenTrabajoOperarioServices.updateOrdenTrabajoOperario(ordenTrabajoOperario);
 			ordenTrabajoServices.updateEstado(ordenTrabajoSelected);
 			ordenTrabajoDetalleServices.updateFechaReal(otd);
+			if(this.login.getPerfilUsuario().getCod_perfil().intValue() < (Constante.PERFIL_USUARIO_EMPAQUETADOR.intValue())){
+				otd.setFecha_real_fin(null);
+				otd.setId_etapa(otd.getId_etapa()+1);
+				otd.setId_estado(otd.getId_estado()+1);
+				ordenTrabajoDetalleServices.updateFechaReal(otd);	
+			}
+			
 			
 			context.execute("PF('dlgNuevo').hide();");
 			
