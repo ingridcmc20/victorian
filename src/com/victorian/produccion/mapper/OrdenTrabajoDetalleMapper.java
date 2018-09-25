@@ -13,12 +13,11 @@ public interface OrdenTrabajoDetalleMapper {
 			+ "#{fecha_fin}, #{fecha_inicio}, #{fecha_real_fin}, #{id_estado})")
 	public void insert(OrdenTrabajoDetalle ordenTrabajoDetalle);
 	
-	@Select("SELECT id_ordentrabajo, id_etapa, id_plan_produccion, fecha_fin, fecha_inicio, fecha_real_termino, "
-				+ "id_prioridad "
+	@Select("SELECT id_ordentrabajo, id_etapa, fecha_fin, fecha_inicio, fecha_real_fin "
 				+ "FROM victorian.t_orden_trabajo_detalle "
 				+ "where id_ordentrabajo=#{id_ordentrabajo} and id_etapa=#{id_etapa}")
 	public OrdenTrabajoDetalle findByIdOrdenByEstapa(@Param("id_ordentrabajo") Integer id_ordentrabajo, @Param("id_etapa") Integer id_etapa);
 	
-	@Update("UPDATE victorian.t_orden_trabajo_detalle SET fecha_real_termino=#{fecha_real_termino} WHERE id_ordentrabajo=#{id_ordentrabajo} and id_etapa=#{id_etapa}")
+	@Update("UPDATE victorian.t_orden_trabajo_detalle SET fecha_real_fin=#{fecha_real_fin}, id_estado=#{id_estado} WHERE id_ordentrabajo=#{id_ordentrabajo} and id_etapa=#{id_etapa}")
 	public void updateFechaReal(OrdenTrabajoDetalle ordenTrabajoDetalle);
 }

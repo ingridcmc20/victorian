@@ -24,14 +24,14 @@ public interface OrdenTrabajoMapper {
 				"FROM victorian.t_orden_trabajo ot " +
 				"inner join victorian.t_orden_trabajo_detalle otd on otd.id_ordentrabajo=ot.id_ordentrabajo " +
 				"inner join victorian.t_pedido p on p.id_pedido=ot.id_pedido "+
-				"inner join victorian.t_cliente cl on cl.idcliente=p.idcliente "+
+				"inner join victorian.t_cliente cl on cl.id_cliente=p.id_cliente "+
 				"inner join victorian.t_producto pr on pr.id_producto=p.tipo_prenda "+
 				"inner join victorian.t_tipo_confeccion tc on tc.id_tipoconfeccion=p.id_tipoconfeccion "+
-				"inner join victorian.t_etapa e on e.id_etapa=ot.id_etapa "+
+				"inner join victorian.t_etapa e on e.id_etapa=otd.id_etapa "+
 				"inner join victorian.t_estado es on es.id_estado=ot.id_estado "+
-				"inner join victorian.t_orden_trabajo_detalle otd on otd.id_ordentrabajo=ot.id_ordentrabajo and otd.id_etapa=ot.id_etapa "+
 				"inner join victorian.t_ordentrabajo_operario oto on oto.id_ordentrabajo=ot.id_ordentrabajo "+
-				"WHERE	ot.id_estado in (7,8) and otd.id_etapa=#{id_etapa} and oto.id_operario=#{idUsuario} "+
+				"inner join victorian.t_operario o on o.id_operario=oto.id_operario "+
+				"WHERE	ot.id_estado in (7,8) and otd.id_estado in (7,8) and otd.id_etapa=#{id_etapa} and o.id_usuario=#{idUsuario} "+
 				"ORDER BY otd.id_etapa desc, ot.fecha_entrega desc")
 	public List<OrdenTrabajo> findByEtapaYUsuario(@Param("id_etapa") Integer id_etapa, @Param("idUsuario") Integer idUsuario) throws Exception;
 	

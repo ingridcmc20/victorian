@@ -1,11 +1,14 @@
 package com.victorian.produccion.domain;
 
+import java.sql.Timestamp;
+
 public class OrdenTrabajoOperario {
 	private Integer id_operario;
 	private Integer id_ordentrabajo;
 	private Integer id_etapa;
 	private Integer id_nivel;
 	private Integer puntaje_obtenido;
+	private Timestamp fecha_nivel;
 
 	public Integer getId_operario() {
 		return id_operario;
@@ -45,5 +48,13 @@ public class OrdenTrabajoOperario {
 
 	public void setPuntaje_obtenido(Integer puntaje_obtenido) {
 		this.puntaje_obtenido = puntaje_obtenido;
+	}
+
+	public Timestamp getFecha_nivel() {
+		return fecha_nivel;
+	}
+
+	public void setFecha_nivel(Timestamp fecha_nivel) {
+		this.fecha_nivel = fecha_nivel;
 	}
 }
