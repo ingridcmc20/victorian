@@ -16,7 +16,7 @@ public interface MaquinariaMapper {
 			+ "where tipo=#{tipo} and id_maquinaria not in ("
 			+ 	"select x.id_maquinaria "
 			+ "from victorian.t_ordentrabajo_maquinaria x inner join victorian.t_orden_trabajo y on y.id_ordentrabajo=x.id_ordentrabajo "
-			+ "where y.id_estado not in (6))")
+			+ "where y.id_estado not in (7, 8))")
 	public List<Maquinaria> findByEstadoDisponible(@Param("tipo") String id_tipooperario) throws Exception;
 	
 	@Select("SELECT m.id_maquinaria, m.descripcion, m.modelo, m.serie, m.activo, m.tipo "

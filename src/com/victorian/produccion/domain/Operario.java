@@ -11,7 +11,6 @@ public class Operario {
 	private String nombre_operario;
 	private Integer num_pedidos;
 	private Integer id_nivel;
-	private Integer puntaje_obtenido;
 	private Timestamp fecha_subida_nivel;
 
 	public Integer getId_operario() {
@@ -76,14 +75,6 @@ public class Operario {
 
 	public void setId_nivel(Integer id_nivel) {
 		this.id_nivel = id_nivel;
-	}
-
-	public Integer getPuntaje_obtenido() {
-		return puntaje_obtenido;
-	}
-
-	public void setPuntaje_obtenido(Integer puntaje_obtenido) {
-		this.puntaje_obtenido = puntaje_obtenido;
 	}
 
 	public Timestamp getFecha_subida_nivel() {

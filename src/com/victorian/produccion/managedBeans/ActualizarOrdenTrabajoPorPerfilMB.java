@@ -17,11 +17,13 @@ import com.victorian.produccion.domain.Merma;
 import com.victorian.produccion.domain.Operario;
 import com.victorian.produccion.domain.OrdenTrabajo;
 import com.victorian.produccion.domain.OrdenTrabajoDetalle;
+import com.victorian.produccion.domain.OrdenTrabajoOperario;
 import com.victorian.produccion.domain.Usuario;
 import com.victorian.produccion.services.MermaServices;
 import com.victorian.produccion.services.NivelServices;
 import com.victorian.produccion.services.OperarioServices;
 import com.victorian.produccion.services.OrdenTrabajoDetalleServices;
+import com.victorian.produccion.services.OrdenTrabajoOperarioServices;
 import com.victorian.produccion.services.OrdenTrabajoServices;
 
 @ManagedBean(name = "actualizarOrdenTrabajoPorPerfilMB")
@@ -35,6 +37,7 @@ public class ActualizarOrdenTrabajoPorPerfilMB extends GenericBeans implements S
 	private List<Merma> listaMerma;
 	private OrdenTrabajoServices ordenTrabajoServices;
 	private OrdenTrabajoDetalleServices ordenTrabajoDetalleServices;
+	private OrdenTrabajoOperarioServices ordenTrabajoOperarioServices;
 	private MermaServices mermaServices;
 	private OperarioServices operarioServices;
 	private NivelServices nivelServices;
@@ -43,12 +46,12 @@ public class ActualizarOrdenTrabajoPorPerfilMB extends GenericBeans implements S
 
 	@ManagedProperty(value = "#{loginMB.usuario}")
 	private Usuario usuarioLogin;
-	
+
 	OrdenTrabajo ordenTrabajoSelected;
 	Merma mermaSelected;
-	
+
 	private boolean gamification = false;
-	
+
 	@PostConstruct
 	public void inicia() {
 		try {
@@ -57,16 +60,16 @@ public class ActualizarOrdenTrabajoPorPerfilMB extends GenericBeans implements S
 			mermaServices = new MermaServices();
 			operarioServices = new OperarioServices();
 			nivelServices = new NivelServices();
-			
+			ordenTrabajoOperarioServices = new OrdenTrabajoOperarioServices();
 			ordenTrabajoSelected = new OrdenTrabajo();
 			mermaSelected = new Merma();
-			
+
 			obtenerListaOrdenTrabajo();
-			
-			if(this.login.getPerfilUsuario().getCod_perfil().equals(Constante.PERFIL_USUARIO_CORTADOR) || this.login.getPerfilUsuario().getCod_perfil().equals(Constante.PERFIL_USUARIO_CONFECCIONISTA)){
-				gamification = true; 
-			}	
-			else{
+
+			if (this.login.getPerfilUsuario().getCod_perfil().equals(Constante.PERFIL_USUARIO_CORTADOR)
+					|| this.login.getPerfilUsuario().getCod_perfil().equals(Constante.PERFIL_USUARIO_CONFECCIONISTA)) {
+				gamification = true;
+			} else {
 				gamification = false;
 			}
 		} catch (Exception e) {
@@ -78,30 +81,30 @@ public class ActualizarOrdenTrabajoPorPerfilMB extends GenericBeans implements S
 	public void obtenerListaOrdenTrabajo() throws Exception {
 		int etapa = -1;
 		System.out.println(this.login.getPerfilUsuario().getCod_perfil());
-		if (this.login.getPerfilUsuario().getCod_perfil().intValue() == (Constante.PERFIL_USUARIO_DISENIADOR.intValue())) {
+		if (this.login.getPerfilUsuario().getCod_perfil()
+				.intValue() == (Constante.PERFIL_USUARIO_DISENIADOR.intValue())) {
 			etapa = Constante.OT_ETAPA_DISENIO;
-		}
-		else if (this.login.getPerfilUsuario().getCod_perfil().intValue() == (Constante.PERFIL_USUARIO_CORTADOR.intValue())) {
+		} else if (this.login.getPerfilUsuario().getCod_perfil()
+				.intValue() == (Constante.PERFIL_USUARIO_CORTADOR.intValue())) {
 			etapa = Constante.OT_ETAPA_CORTE;
-		}
-		else if (this.login.getPerfilUsuario().getCod_perfil().intValue() == (Constante.PERFIL_USUARIO_CONFECCIONISTA.intValue())) {
+		} else if (this.login.getPerfilUsuario().getCod_perfil()
+				.intValue() == (Constante.PERFIL_USUARIO_CONFECCIONISTA.intValue())) {
 			etapa = Constante.OT_ETAPA_CONFECCION;
-		}
-		else if (this.login.getPerfilUsuario().getCod_perfil().intValue() == (Constante.PERFIL_USUARIO_EMPAQUETADOR.intValue())) {
+		} else if (this.login.getPerfilUsuario().getCod_perfil()
+				.intValue() == (Constante.PERFIL_USUARIO_EMPAQUETADOR.intValue())) {
 			etapa = Constante.OT_ETAPA_EMPAQUETADO;
 		}
-		
-		if(etapa!=-1){
+
+		if (etapa != -1) {
 			System.out.println(etapa);
 			System.out.println(this.login.getIdUsuario());
-			listaOrdenTrabajo = ordenTrabajoServices.findByEtapaYUsuario(etapa, this.login.getIdUsuario());	
-		}
-		else{
+			listaOrdenTrabajo = ordenTrabajoServices.findByEtapaYUsuario(etapa, this.login.getIdUsuario());
+		} else {
 			listaOrdenTrabajo = ordenTrabajoServices.findAll();
 		}
 	}
-	
-	public void terminar(OrdenTrabajo ot){
+
+	public void terminar(OrdenTrabajo ot) {
 		try {
 			ordenTrabajoSelected = ot;
 		} catch (Exception e) {
@@ -109,8 +112,8 @@ public class ActualizarOrdenTrabajoPorPerfilMB extends GenericBeans implements S
 			e.printStackTrace();
 		}
 	}
-	
-	public void obtenerMermas(OrdenTrabajo ot){
+
+	public void obtenerMermas(OrdenTrabajo ot) {
 		try {
 			ordenTrabajoSelected = ot;
 			listaMerma = mermaServices.findByOrdenTrabajo(ordenTrabajoSelected.getId_ordentrabajo());
@@ -120,22 +123,22 @@ public class ActualizarOrdenTrabajoPorPerfilMB extends GenericBeans implements S
 			e.printStackTrace();
 		}
 	}
-	
-	public void registrarMerma(){
+
+	public void registrarMerma() {
 		RequestContext context = RequestContext.getCurrentInstance();
 		mermaSelected.setId_estado(8);
 		mermaSelected.setId_ordentrabajo(ordenTrabajoSelected.getId_ordentrabajo());
 		mermaServices.insert(mermaSelected);
 		mermaSelected = new Merma();
 		listaMerma = mermaServices.findByOrdenTrabajo(ordenTrabajoSelected.getId_ordentrabajo());
-//		context.update("merma");
-//		context.update("dtbMermas");
-//		context.update("msgMermas");
+		// context.update("merma");
+		// context.update("dtbMermas");
+		// context.update("msgMermas");
 	}
-	
-	public void cerrarMerma(){
+
+	public void cerrarMerma() {
 		try {
-			RequestContext context = RequestContext.getCurrentInstance();  
+			RequestContext context = RequestContext.getCurrentInstance();
 			context.execute("PF('dlgMerma').hide();");
 			obtenerListaOrdenTrabajo();
 		} catch (Exception e) {
@@ -143,60 +146,62 @@ public class ActualizarOrdenTrabajoPorPerfilMB extends GenericBeans implements S
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void actualizarRegistro(){
 		RequestContext context = RequestContext.getCurrentInstance();  
 		boolean logro = false;		
 		Date fechaActual = new Date();
 		System.out.println("actualizarRegistro");
-		int etapa = -1;
+//		int etapa = -1;
 		int estado = -1;
 		
 		
 		OrdenTrabajoDetalle otd = ordenTrabajoDetalleServices.findByIdOrdenByEstapa(ordenTrabajoSelected.getId_ordentrabajo(), ordenTrabajoSelected.getId_etapa());
 		otd.setFecha_real_fin(new java.sql.Date((fechaActual).getTime()));
+		otd.setId_estado(Constante.OT_TERMINADO);
 		
 		if (this.login.getPerfilUsuario().getCod_perfil().intValue() == (Constante.PERFIL_USUARIO_DISENIADOR.intValue())) {
-			etapa = Constante.OT_ETAPA_CORTE;
+//			etapa = Constante.OT_ETAPA_CORTE;
 			estado = Constante.OT_EN_CURSO;
 		}
 		else if (this.login.getPerfilUsuario().getCod_perfil().intValue() == (Constante.PERFIL_USUARIO_CORTADOR.intValue())) {
-			etapa = Constante.OT_ETAPA_CONFECCION;
+//			etapa = Constante.OT_ETAPA_CONFECCION;
 			estado = Constante.OT_EN_CURSO;
 		}
 		else if (this.login.getPerfilUsuario().getCod_perfil().intValue() == (Constante.PERFIL_USUARIO_CONFECCIONISTA.intValue())) {
-			etapa = Constante.OT_ETAPA_EMPAQUETADO;
+//			etapa = Constante.OT_ETAPA_EMPAQUETADO;
 			estado = Constante.OT_EN_CURSO;
 		}
 		else if (this.login.getPerfilUsuario().getCod_perfil().intValue() == (Constante.PERFIL_USUARIO_EMPAQUETADOR.intValue())) {
-			etapa = Constante.OT_ETAPA_EMPAQUETADO;
+//			etapa = Constante.OT_ETAPA_EMPAQUETADO;
 			estado = Constante.OT_TERMINADO;
 		}
 		
 		ordenTrabajoSelected.setId_estado(estado);
-		ordenTrabajoSelected.setId_etapa(etapa);
+//		ordenTrabajoSelected.setId_etapa(etapa);
 		
 		try {
 			Operario operario = operarioServices.findById(this.login.getIdUsuario());
+			OrdenTrabajoOperario ordenTrabajoOperario = ordenTrabajoOperarioServices.findByOperarioYOrdenTrabajo(ordenTrabajoSelected.getId_ordentrabajo(), operario.getId_operario());
 			
 			if(gamification){
 				// Se valida si el operario termino su tarea a tiempo
 				if(otd.getFecha_fin().getTime()>=otd.getFecha_real_fin().getTime()){
 					logro = true;
 					System.out.println("Lo logro");
-					operario.setPuntaje_obtenido((operario.getPuntaje_obtenido()!=null?operario.getPuntaje_obtenido():0)+1);	
+					ordenTrabajoOperario.setPuntaje_obtenido((ordenTrabajoOperario.getPuntaje_obtenido()!=null?ordenTrabajoOperario.getPuntaje_obtenido():0)+1);	
 				}
 				else{
 					logro = false;
 					System.out.println("No lo logro");
-					operario.setPuntaje_obtenido((operario.getPuntaje_obtenido()!=null?operario.getPuntaje_obtenido():0));
+					ordenTrabajoOperario.setPuntaje_obtenido((ordenTrabajoOperario.getPuntaje_obtenido()!=null?ordenTrabajoOperario.getPuntaje_obtenido():0));
 				}				
 			}
 			else{
-				operario.setPuntaje_obtenido((operario.getPuntaje_obtenido()!=null?operario.getPuntaje_obtenido():0));
+				ordenTrabajoOperario.setPuntaje_obtenido((ordenTrabajoOperario.getPuntaje_obtenido()!=null?ordenTrabajoOperario.getPuntaje_obtenido():0));
 			}
 			
-			int puntaje = (operario.getPuntaje_acumulado()!=null?operario.getPuntaje_acumulado():0) + operario.getPuntaje_obtenido();
+			int puntaje = (operario.getPuntaje_acumulado()!=null?operario.getPuntaje_acumulado():0) + ordenTrabajoOperario.getPuntaje_obtenido();
 			
 			Integer id_nivel = nivelServices.findIdNivelByPuntaje(puntaje);
 			
@@ -204,13 +209,14 @@ public class ActualizarOrdenTrabajoPorPerfilMB extends GenericBeans implements S
 			
 			if(operario.getId_nivel().intValue() < id_nivel.intValue()){
 				operario.setPuntaje_acumulado(puntaje);
-				operario.setPuntaje_obtenido(0);
-				operario.setId_nivel(id_nivel);
-				operario.setFecha_subida_nivel(new java.sql.Timestamp((fechaActual).getTime()));
+				ordenTrabajoOperario.setPuntaje_obtenido(0);
+				ordenTrabajoOperario.setId_nivel(id_nivel);
+				ordenTrabajoOperario.setFecha_nivel(new java.sql.Timestamp((fechaActual).getTime()));
 			}
 			
 			operarioServices.updateOperario(operario);
-			ordenTrabajoServices.updateEstadoYEtapa(ordenTrabajoSelected);
+			ordenTrabajoOperarioServices.updateOrdenTrabajoOperario(ordenTrabajoOperario);
+			ordenTrabajoServices.updateEstado(ordenTrabajoSelected);
 			ordenTrabajoDetalleServices.updateFechaReal(otd);
 			
 			context.execute("PF('dlgNuevo').hide();");

@@ -6,9 +6,9 @@ import com.pe.victorian.produccion.commons.ServiceFinder;
 import com.victorian.produccion.domain.Operario;
 import com.victorian.produccion.mapper.OperarioMapper;
 
-public class OperarioServices implements OperarioMapper{
-	OperarioMapper operarioMapper = (OperarioMapper)ServiceFinder.findBean("operarioMapper");
-	
+public class OperarioServices implements OperarioMapper {
+	OperarioMapper operarioMapper = (OperarioMapper) ServiceFinder.findBean("operarioMapper");
+
 	@Override
 	public List<Operario> findByEstado(Integer id_tipooperario) throws Exception {
 		// TODO Auto-generated method stub
@@ -16,9 +16,9 @@ public class OperarioServices implements OperarioMapper{
 	}
 
 	@Override
-	public Operario findById(Integer id_operario) throws Exception {
+	public Operario findById(Integer id_usuario) throws Exception {
 		// TODO Auto-generated method stub
-		return operarioMapper.findById(id_operario);
+		return operarioMapper.findById(id_usuario);
 	}
 
 	@Override
@@ -44,4 +44,5 @@ public class OperarioServices implements OperarioMapper{
 		// TODO Auto-generated method stub
 		operarioMapper.updateOperario(operario);
 	}
+
 }
