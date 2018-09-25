@@ -19,6 +19,7 @@ public class OrdenTrabajo {
 	private String des_etapa;
 	private Date fecha_inicio;
 	private Date fecha_fin;
+	private String des_estado;
 
 	public Date getFecha_inicio() {
 		return fecha_inicio;
@@ -130,6 +131,14 @@ public class OrdenTrabajo {
 
 	public void setFecha_entrega(Date fecha_entrega) {
 		this.fecha_entrega = fecha_entrega;
+	}
+
+	public String getDes_estado() {
+		return des_estado;
+	}
+
+	public void setDes_estado(String des_estado) {
+		this.des_estado = des_estado;
 	}
 
 }
