@@ -395,12 +395,13 @@ public class RegistroOrdenTrabajoMB extends GenericBeans implements Serializable
 			ordenTrabajoOperarioServices.delete(this.ordenTrabajoSelected.getId_ordentrabajo());
 
 			for (String o : lstPDisenoSelected) {
-				Operario operario = operarioServices.findById(new Integer(o));
+//				Operario operario = operarioServices.findById(new Integer(o));
 				OrdenTrabajoOperario oto = new OrdenTrabajoOperario();
 				oto.setId_ordentrabajo(this.ordenTrabajoSelected.getId_ordentrabajo());
 				oto.setId_operario(new Integer(o));
 				oto.setId_etapa(Constante.OT_ETAPA_DISENIO);
-
+				oto.setId_nivel(Constante.NIVEL_1);
+/*
 				if (operario.getPuntaje_acumulado() < 5) {
 					oto.setId_nivel(Constante.NIVEL_1);
 				} else if (operario.getPuntaje_acumulado() < 10) {
@@ -412,7 +413,7 @@ public class RegistroOrdenTrabajoMB extends GenericBeans implements Serializable
 				} else {
 					oto.setId_nivel(Constante.NIVEL_5);
 				}
-
+*/
 				ordenTrabajoOperarioServices.insert(oto);
 			}
 
@@ -461,12 +462,13 @@ public class RegistroOrdenTrabajoMB extends GenericBeans implements Serializable
 			}
 
 			for (String o : lstPEmpaquetadoSelected) {
-				Operario operario = operarioServices.findById(new Integer(o));
+//				Operario operario = operarioServices.findById(new Integer(o));
 				OrdenTrabajoOperario oto = new OrdenTrabajoOperario();
 				oto.setId_ordentrabajo(this.ordenTrabajoSelected.getId_ordentrabajo());
 				oto.setId_operario(new Integer(o));
 				oto.setId_etapa(Constante.OT_ETAPA_EMPAQUETADO);
-
+				oto.setId_nivel(Constante.NIVEL_1);
+/*
 				if (operario.getPuntaje_acumulado() < 5) {
 					oto.setId_nivel(Constante.NIVEL_1);
 				} else if (operario.getPuntaje_acumulado() < 10) {
@@ -478,7 +480,7 @@ public class RegistroOrdenTrabajoMB extends GenericBeans implements Serializable
 				} else {
 					oto.setId_nivel(Constante.NIVEL_5);
 				}
-
+*/
 				ordenTrabajoOperarioServices.insert(oto);
 			}
 

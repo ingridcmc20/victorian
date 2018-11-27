@@ -14,7 +14,7 @@
 				<p:breadCrumb style="font-size: 11px; height: 13px; margin-top: 0px">  
     				<p:menuitem value="Home" url="#" />  
     				<p:menuitem value="Configuracion" url="#" />
-    				<p:menuitem value="Gestion de Producto" url="producto" />   
+    				<p:menuitem value="Gestion de prenda" url="producto" />   
 				</p:breadCrumb>	
 			</h:form>
 			
@@ -26,8 +26,8 @@
 				
 				
 			<h:form id="formLista">
-				<p:commandButton value="Nuevo Producto" icon="icon-add" update=":dlgDetNuevo :formNew" oncomplete="PF('dlgNuevo').show();"
-						actionListener="#{productoMB.nuevoProducto()}"/>
+<!-- 				<p:commandButton value="Nuevo Producto" icon="icon-add" update=":dlgDetNuevo :formNew" oncomplete="PF('dlgNuevo').show();" -->
+<!-- 						actionListener="#{productoMB.nuevoProducto()}"/> -->
 				
 				<p:dataTable id="selProductos" var="p" value="#{productoMB.listaProductos}" widgetVar="dtProducto" filteredValue="#{productoMB.listaProductosFilter}"
 					emptyMessage="No hay Producto Disponibles." rowIndexVar="nro" 
@@ -43,33 +43,29 @@
 						<h:outputText value="#{p.descripcion}" />
 					</p:column>
 														
-					<p:column style="width:2px" headerText="Estado">
-					
-						<p:commandLink update="@form :msgGeneral" actionListener="#{productoMB.cambiarEstado(p)}"  > 
-							<h:graphicImage value="#{p.estado?'/resources/img/icon-ok.png':'/resources/img/icon-block.png'}" 
-							title="#{p.estado?'Activo':'Bloqueado'}" />
-						</p:commandLink>
-						
-					</p:column>
+<!-- 					<p:column style="width:2px" headerText="Estado"> -->
+<!-- 						<p:commandLink update="@form :msgGeneral" actionListener="#{productoMB.cambiarEstado(p)}"  >  -->
+<!-- 							<h:graphicImage value="#{p.estado?'/resources/img/icon-ok.png':'/resources/img/icon-block.png'}"  -->
+<!-- 							title="#{p.estado?'Activo':'Bloqueado'}" /> -->
+<!-- 						</p:commandLink> -->
+<!-- 					</p:column> -->
 					<p:column headerText="Ficha tecnica" style="width:10%;text-align: center">					
 						<p:commandButton   
 							actionListener="#{productoMB.abrirFichaTecnica(p)}" update=":dlgDetFichaTecnica"
 							oncomplete="PF('dlgFichaTecnica').show();" title="Ficha Tecnica" icon="icon-report" />
 					</p:column>
-					<p:column headerText="Opciones" style="width:40px;text-align: center">
-					
+					<!-- p:column headerText="Opciones" style="width:40px;text-align: center">
 						<p:commandButton title="Editar"  update=":dlgDetNuevo :formNew" actionListener="#{productoMB.editarProducto(p)}"
 						 	oncomplete="PF('dlgNuevo').show();" icon="icon-edit">
 						 	<f:setPropertyActionListener value="#{p}" target="#{productoMB.productoSelec}" />
 						</p:commandButton>
-
 						<ui:remove>
 						<p:commandButton
 							actionListener="#{productoMB.eliminarProducto(p)}"
 							oncomplete="PF('dlgEliminar').show();" title="Eliminar"
 							icon="icon-delete" />
 						</ui:remove>							
-					</p:column>
+					</p:column-->
 
 				</p:dataTable>
 			</h:form>

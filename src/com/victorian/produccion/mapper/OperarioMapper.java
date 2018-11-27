@@ -25,8 +25,8 @@ public interface OperarioMapper {
 			+ "case when o.puntaje_acumulado <5 then 1 when o.puntaje_acumulado <10 then 2 when o.puntaje_acumulado <15 then 3 when o.puntaje_acumulado <20 then 4 "
 			+ "when o.puntaje_acumulado >=20 then 5 end id_nivel,o.puntaje_acumulado "
 			+ "FROM victorian.t_operario o inner join victorian.t_usuario u on u.id_usuario=o.id_usuario "
-			+ "where o.id_usuario=#{id_usuario}")
-	public Operario findById(@Param("id_usuario") Integer id_usuario) throws Exception;
+			+ "where o.id_operario=#{id_operario}")
+	public Operario findById(@Param("id_operario") Integer id_operario) throws Exception;
 
 	@Select("SELECT o.id_operario||'' as id_operario "
 			+ "FROM victorian.t_operario o inner join victorian.t_usuario u on u.id_usuario=o.id_usuario inner join victorian.t_ordentrabajo_operario oto on oto.id_operario=o.id_operario "

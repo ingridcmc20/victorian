@@ -22,6 +22,7 @@ public class Constante {
 	public static final Integer OT_PENDIENTE = 7;
 	public static final Integer OT_EN_CURSO = 8;
 	public static final Integer OT_TERMINADO = 9;
+	public static final Integer OT_POR_APROBAR = 10;
 	
 	public static final Integer OT_ETAPA_DISENIO = 1;
 	public static final Integer OT_ETAPA_CORTE = 2;

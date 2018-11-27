@@ -16,9 +16,9 @@ public class OperarioServices implements OperarioMapper {
 	}
 
 	@Override
-	public Operario findById(Integer id_usuario) throws Exception {
+	public Operario findById(Integer id_operario) throws Exception {
 		// TODO Auto-generated method stub
-		return operarioMapper.findById(id_usuario);
+		return operarioMapper.findById(id_operario);
 	}
 
 	@Override
