@@ -57,4 +57,10 @@ public class OrdenTrabajoServices implements OrdenTrabajoMapper {
 		ordenTrabajoMapper.update(ordenTrabajo);
 	}
 
+	@Override
+	public OrdenTrabajo findById(Integer id_ordentrabajo) throws Exception {
+		// TODO Auto-generated method stub
+		return ordenTrabajoMapper.findById(id_ordentrabajo);
+	}
+
 }

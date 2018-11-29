@@ -58,11 +58,14 @@
 					scrollRows="10" scrollable="true" liveScroll="true" scrollHeight="250"	
 					style="FONT-SIZE: 14px; width: 100%">
 	
-					<f:facet name="header">Lista ordenes de trabajo</f:facet>
+					<f:facet name="header">Lista plan de producción</f:facet>
 	
 					<p:column headerText="#" style="width:3%">
 							#{nro+1}
 						</p:column>
+					<p:column headerText="Nro. Plan" style="width:9%; text-align: center;" >
+						<h:outputText value="#{p.id_planproduccion}"/>
+					</p:column>
 					<p:column headerText="Nro. Orden trabajo" style="width:9%; text-align: center;" >
 						<h:outputText value="#{p.id_ordentrabajo}"/>
 					</p:column>

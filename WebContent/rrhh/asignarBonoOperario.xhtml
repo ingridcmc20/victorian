@@ -35,16 +35,42 @@
 					<h:outputText value="#{p.nombre_operario}" />
 				</p:column>
 				<p:column headerText="Cargo">
-					<h:outputText value="#{p.id_tipooperario}" />
+					<h:outputText value="#{p.des_tipooperario}" />
 				</p:column>			
 				<p:column headerText="Nivel" style="width:15%">
 					<h:outputText value="#{p.id_nivel}" />
 				</p:column>
 				<p:column headerText="Accion" style="width:15%">
-					<h:outputText value="#{p.id_nivel}" />
+					<p:commandButton title="Aprobar" icon="icon-validate"
+						actionListener="#{asignarBonoOperarioMB.aprobar(p)}" />
+					<p:commandButton title="Rechazar" icon="icon-cancel"
+						actionListener="#{asignarBonoOperarioMB.rechazar(p)}" />
 				</p:column>
 			</p:dataTable>
 		</h:form>
+		<p:dialog header="Felicitaciones" widgetVar="dlgPuntual" appendTo="@(body)">
+			<h:panelGrid columns="3" style="FONT-SIZE: 14px;">
+				<p:graphicImage url="/resources/img/52025.png"/>
+				<p:graphicImage url="/resources/img/exito.png"/>
+				<p:graphicImage url="/resources/img/trofeo.png"/>
+			</h:panelGrid>
+			<p:commandButton value="Terminar" icon="icon-validate" actionListener="#{asignarBonoOperarioMB.obtenerListaOperarios()}" update=":formLista" oncomplete="PF('dlgPuntual').hide();" />
+		</p:dialog>
+		<p:dialog header="Perdiste" widgetVar="dlgTarde" appendTo="@(body)">
+			<h:panelGrid columns="3" style="FONT-SIZE: 14px;">
+				<p:graphicImage url="/resources/img/don_ramon.png"/>
+				<p:graphicImage url="/resources/img/perdiste.png"/>
+				<p:graphicImage url="/resources/img/sorteo.png"/>
+			</h:panelGrid>
+			<p:commandButton value="Terminar" icon="icon-validate" actionListener="#{asignarBonoOperarioMB.obtenerListaOperarios()}" update=":formLista" oncomplete="PF('dlgTarde').hide();" />
+		</p:dialog>
+		<p:dialog header="Rechazado" widgetVar="dlgRechazo" appendTo="@(body)">
+			<h:panelGrid columns="2" style="FONT-SIZE: 14px;">
+				<p:graphicImage url="/resources/img/don_ramon.png"/>
+				<h:outputText value="Rechazado, corregir" />
+			</h:panelGrid>
+			<p:commandButton value="Terminar" icon="icon-validate" actionListener="#{asignarBonoOperarioMB.obtenerListaOperarios()}" update=":formLista" oncomplete="PF('dlgRechazo').hide();" />
+		</p:dialog>
 	</ui:define>
 </ui:composition>
 </html>

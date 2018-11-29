@@ -1,10 +1,12 @@
 package com.victorian.produccion.domain;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 
 public class Operario {
 	private Integer id_operario;
 	private Integer id_tipooperario;
+	private String des_tipooperario;
 	private Integer puntaje_acumulado;
 	private Integer disponible;
 	private Boolean activo;
@@ -12,6 +14,12 @@ public class Operario {
 	private Integer num_pedidos;
 	private Integer id_nivel;
 	private Timestamp fecha_subida_nivel;
+
+	// Datos de la orden de trabajo detalle
+	private Integer id_ordentrabajo;
+	private Integer id_etapa;
+	private Date fecha_fin;
+	private Date fecha_real_fin;
 
 	public Integer getId_operario() {
 		return id_operario;
@@ -84,4 +92,45 @@ public class Operario {
 	public void setFecha_subida_nivel(Timestamp fecha_subida_nivel) {
 		this.fecha_subida_nivel = fecha_subida_nivel;
 	}
+
+	public String getDes_tipooperario() {
+		return des_tipooperario;
+	}
+
+	public void setDes_tipooperario(String des_tipooperario) {
+		this.des_tipooperario = des_tipooperario;
+	}
+
+	public Integer getId_ordentrabajo() {
+		return id_ordentrabajo;
+	}
+
+	public void setId_ordentrabajo(Integer id_ordentrabajo) {
+		this.id_ordentrabajo = id_ordentrabajo;
+	}
+
+	public Integer getId_etapa() {
+		return id_etapa;
+	}
+
+	public void setId_etapa(Integer id_etapa) {
+		this.id_etapa = id_etapa;
+	}
+
+	public Date getFecha_fin() {
+		return fecha_fin;
+	}
+
+	public void setFecha_fin(Date fecha_fin) {
+		this.fecha_fin = fecha_fin;
+	}
+
+	public Date getFecha_real_fin() {
+		return fecha_real_fin;
+	}
+
+	public void setFecha_real_fin(Date fecha_real_fin) {
+		this.fecha_real_fin = fecha_real_fin;
+	}
+
 }

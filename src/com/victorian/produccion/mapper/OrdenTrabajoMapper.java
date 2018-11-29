@@ -43,4 +43,7 @@ public interface OrdenTrabajoMapper {
 	
 	@Update("UPDATE victorian.t_orden_trabajo SET prioridad=#{prioridad} WHERE id_ordentrabajo=#{id_ordentrabajo}")
 	public void update(OrdenTrabajo ordenTrabajo) throws Exception;
+	
+	@Select("select * from victorian.t_orden_trabajo where id_ordentrabajo=#{id_ordentrabajo}")
+	public OrdenTrabajo findById(@Param("id_ordentrabajo") Integer id_ordentrabajo) throws Exception;
 }
