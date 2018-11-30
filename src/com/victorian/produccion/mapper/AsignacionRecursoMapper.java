@@ -28,10 +28,12 @@ public interface AsignacionRecursoMapper {
 	@Select("select * from ( "+
 			"SELECT 'PERSONAL ' || top.descripcion as tipo_recurso, count(o.id_operario) AS cantidad "+ 
 			"FROM victorian.t_operario o inner join victorian.t_tipooperario top on o.id_tipooperario=top.id_tipooperario " +
-			"where o.disponible=1 and o.activo=true "+ 
+			"where o.activo=true and (select count(x.id_ordentrabajo) from victorian.t_ordentrabajo_operario x where x.id_operario=o.id_operario)<2 "+ 
 			"group by top.descripcion "+
-			"union SELECT 'MAQUINA ' || tipo as tipo_recurso, count(id_maquinaria) AS cantidad "+ 
-			"FROM victorian.t_maquinaria where disponible=1 AND activo=true "+ 
+			"union " + 
+			"SELECT 'MAQUINA ' || m.tipo as tipo_recurso, count(m.id_maquinaria) AS cantidad "+ 
+			"FROM victorian.t_maquinaria m "+
+			"where m.activo=true and (select count(x.id_ordentrabajo) from victorian.t_ordentrabajo_maquinaria x where x.id_maquinaria=m.id_maquinaria)<2 "+ 
 			"group by tipo) as a "+ 
 			"order by a.tipo_recurso")
 	public List<Recurso> listarRecursosDisponibles() throws Exception;

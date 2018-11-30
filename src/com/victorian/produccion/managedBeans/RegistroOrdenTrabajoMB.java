@@ -401,19 +401,6 @@ public class RegistroOrdenTrabajoMB extends GenericBeans implements Serializable
 				oto.setId_operario(new Integer(o));
 				oto.setId_etapa(Constante.OT_ETAPA_DISENIO);
 				oto.setId_nivel(Constante.NIVEL_1);
-/*
-				if (operario.getPuntaje_acumulado() < 5) {
-					oto.setId_nivel(Constante.NIVEL_1);
-				} else if (operario.getPuntaje_acumulado() < 10) {
-					oto.setId_nivel(Constante.NIVEL_2);
-				} else if (operario.getPuntaje_acumulado() < 15) {
-					oto.setId_nivel(Constante.NIVEL_3);
-				} else if (operario.getPuntaje_acumulado() < 20) {
-					oto.setId_nivel(Constante.NIVEL_4);
-				} else {
-					oto.setId_nivel(Constante.NIVEL_5);
-				}
-*/
 				ordenTrabajoOperarioServices.insert(oto);
 			}
 
@@ -468,19 +455,6 @@ public class RegistroOrdenTrabajoMB extends GenericBeans implements Serializable
 				oto.setId_operario(new Integer(o));
 				oto.setId_etapa(Constante.OT_ETAPA_EMPAQUETADO);
 				oto.setId_nivel(Constante.NIVEL_1);
-/*
-				if (operario.getPuntaje_acumulado() < 5) {
-					oto.setId_nivel(Constante.NIVEL_1);
-				} else if (operario.getPuntaje_acumulado() < 10) {
-					oto.setId_nivel(Constante.NIVEL_2);
-				} else if (operario.getPuntaje_acumulado() < 15) {
-					oto.setId_nivel(Constante.NIVEL_3);
-				} else if (operario.getPuntaje_acumulado() < 20) {
-					oto.setId_nivel(Constante.NIVEL_4);
-				} else {
-					oto.setId_nivel(Constante.NIVEL_5);
-				}
-*/
 				ordenTrabajoOperarioServices.insert(oto);
 			}
 
