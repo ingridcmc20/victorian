@@ -37,7 +37,7 @@ public class Constante {
 	public static final Integer PERFIL_USUARIO_EMPAQUETADOR = 45;
 	
 	// Menu oculto
-	public static final Integer MENU_LOGIN = 230;
+	public static final Integer MENU_LOGIN = 18;
 	
 	// Perfiles
 	public static final Integer OP_DISENADOR = 1;
